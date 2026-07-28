@@ -83,7 +83,9 @@ export const PhaseTimeline = (props: PhaseTimelineProps) => {
 
 const Hexagon = ({ children }: { children: React.ReactNode }) => (
   <span
-    className="flex size-[4.75rem] items-center justify-center bg-neutral-darkest text-large font-bold text-white"
+    // Terracotta rather than midnight: the pathway is an identity moment, and
+    // §4.1 puts the core colour on exactly this kind of element.
+    className="flex size-[4.75rem] items-center justify-center bg-brand-terracotta text-large font-bold text-white"
     style={{
       clipPath: "polygon(25% 2%, 75% 2%, 100% 50%, 75% 98%, 25% 98%, 0% 50%)",
     }}
