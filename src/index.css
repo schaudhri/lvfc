@@ -1,0 +1,228 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ------------------------------------------------------------------ */
+/* Fonts — Tiller (display/headings) + Futura PT (body/UI)             */
+/* Files live in /assets/fonts and are bundled by Vite via url().      */
+/* ------------------------------------------------------------------ */
+
+/* Futura PT — body & UI */
+@font-face {
+  font-family: "Futura PT";
+  src: url("../assets/fonts/futura-pt/FuturaCyrillicBook.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Futura PT";
+  src: url("../assets/fonts/futura-pt/FuturaCyrillicMedium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Futura PT";
+  src: url("../assets/fonts/futura-pt/FuturaCyrillicDemi.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Futura PT";
+  src: url("../assets/fonts/futura-pt/FuturaCyrillicBold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Tiller — display / headings */
+@font-face {
+  font-family: "Tiller";
+  src: url("../assets/fonts/tiller-font-family/TillerTest-Regular-BF65c2eac4ea33f.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Tiller";
+  src: url("../assets/fonts/tiller-font-family/TillerTest-Medium-BF65c2eac4ea2a6.otf") format("opentype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Tiller";
+  src: url("../assets/fonts/tiller-font-family/TillerTest-Bold-BF65c2eac415eb4.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Tiller";
+  src: url("../assets/fonts/tiller-font-family/TillerTest-Heavy-BF65c2eac4f2602.otf") format("opentype");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --color-scheme-background: #ffffff;
+  --font-body:
+    "Futura PT", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial,
+    sans-serif;
+  --font-heading: "Tiller", var(--font-body);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  color: #000000;
+  background-color: #ffffff;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+}
+
+/* ------------------------------------------------------------------ */
+/* Depth Tiles Infinite Loop (Osmo Supply) — used by the coach slider. */
+/* Layout styles below are from the source resource; the card styles   */
+/* (.coach-card*) adapt the demo card to LVFC coach data.              */
+/* ------------------------------------------------------------------ */
+
+.depth-tiles {
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  /* 100dvh minus 40px of slack top and bottom — the cards sit centred, so the
+     surrounding whitespace was reading as a gap rather than breathing room. */
+  height: calc(100dvh - 80px);
+  display: flex;
+  position: relative;
+  overflow: clip;
+}
+
+.depth-tiles__collection {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  position: relative;
+}
+
+.depth-tiles__list {
+  place-items: center;
+  display: grid;
+}
+
+.depth-tiles__item {
+  will-change: transform, opacity, filter;
+  grid-area: 1 / 1;
+  justify-content: center;
+  align-items: center;
+  width: max-content;
+  height: max-content;
+  display: flex;
+}
+
+.cover-image {
+  object-fit: cover;
+  border-radius: inherit;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* Coach card — replaces .demo-card, same sizing/hover behaviour */
+.coach-card {
+  /* Portrait, matching the proportions of the programme cards. Was 1:1. */
+  aspect-ratio: 3 / 4;
+  color: #fff;
+  border-radius: 1.5em;
+  width: clamp(18em, 30vw, 38em);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.4s cubic-bezier(0.35, 1.5, 0.6, 1);
+  transform: scale(1) rotate(0.001deg);
+}
+
+[data-depth-tiles-item]:hover .coach-card {
+  transform: scale(0.95) rotate(0.001deg);
+}
+
+.coach-card__info {
+  grid-row-gap: 0.35em;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  padding: 1.5em;
+  font-size: clamp(0.8em, 1.25vw, 1em);
+  display: flex;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background-image: linear-gradient(to top, rgb(0 0 0 / 85%), rgb(0 0 0 / 0%));
+}
+
+.coach-card__name {
+  letter-spacing: -0.02em;
+  font-family: var(--font-heading);
+  font-size: 1.5em;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.coach-card__position {
+  letter-spacing: -0.01em;
+  font-size: 1em;
+  opacity: 0.85;
+}
+
+.coach-card__cert {
+  border: 1px solid rgb(255 255 255 / 70%);
+  border-radius: 100em;
+  margin-top: 0.25em;
+  padding: 0.2em 0.75em;
+  font-size: 0.85em;
+}
+
+.coach-card__line {
+  margin-top: 0.5em;
+  font-size: 0.9em;
+  line-height: 1.45;
+  opacity: 0.8;
+}
+
+/*
+ * Respect the OS "reduce motion" setting site-wide.
+ *
+ * This covers every CSS transition and animation, including the ones Framer
+ * Motion drives through style properties. GSAP animates inline styles from
+ * JavaScript and cannot be stopped from CSS — CoachSlider checks the same media
+ * query itself and skips its scroll-driven timeline.
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}

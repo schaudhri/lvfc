@@ -1,0 +1,117 @@
+"use client";
+
+import { useRef } from "react";
+import { useScroll, useTransform, motion, type MotionStyle } from "motion/react";
+import { Button, type ButtonProps } from "@/components/ui/button";
+import { ChevronRight } from "relume-icons";
+import { ClubBadge } from "@/components/ClubBadge";
+
+type FeaturesProps = {
+  heading: string;
+  description: string;
+};
+
+type Props = {
+  tagline: string;
+  heading: string;
+  buttons: ButtonProps[];
+  features: FeaturesProps[];
+};
+
+export type Layout121Props = React.ComponentPropsWithoutRef<"section"> & Partial<Props>;
+
+export const Layout121 = (props: Layout121Props) => {
+  const { heading, buttons, features } = {
+    ...Layout121Defaults,
+    ...props,
+  };
+
+  return (
+    <section className="px-[5%] py-16 md:py-24 lg:py-28">
+      <div className="container">
+        <div className="grid grid-cols-1 items-start gap-y-8 md:grid-cols-2 md:gap-x-12 lg:gap-x-20">
+          <div>
+            <h2 className="mb-5 text-h2 font-bold md:mb-6">{heading}</h2>
+            <div className="mt-6 flex flex-wrap items-center gap-4 md:mt-8">
+              {buttons.map((button, index) => (
+                <Button key={index} {...button}>
+                  {button.title}
+                </Button>
+              ))}
+            </div>
+          </div>
+          <div className="relative">
+            <AnimationSection />
+            {features.map((feature, index) => (
+              <div key={index} className="grid grid-cols-[max-content_1fr] gap-x-6 lg:gap-x-10">
+                <div className="relative flex flex-col items-center justify-start py-10">
+                  <div className="relative z-10 -mt-4 bg-scheme-background px-2 py-4 md:px-4">
+                    <ClubBadge className="size-12 text-scheme-text" />
+                  </div>
+                </div>
+                <div className="py-10">
+                  <h3 className="mb-3 text-h6 font-bold md:mb-4">{feature.heading}</h3>
+                  <p>{feature.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const AnimationSection = () => {
+  const scrollSection = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: scrollSection,
+    offset: ["start 55%", "start start"],
+  });
+  const height = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+  return (
+    <div className="absolute top-[10%] right-auto left-8 h-3/4 w-0.5 bg-neutral-darkest/15 md:left-[2.4375rem]">
+      <motion.div
+        ref={scrollSection}
+        className="bg-neutral-darkest"
+        style={{ height } as MotionStyle}
+      />
+    </div>
+  );
+};
+
+export const Layout121Defaults: Props = {
+  tagline: "Tagline",
+  heading: "Medium length section heading goes here",
+  buttons: [
+    { title: "Button", variant: "secondary" },
+    {
+      title: "Button",
+      variant: "link",
+      size: "link",
+      iconRight: <ChevronRight className="text-scheme-text" />,
+    },
+  ],
+  features: [
+    {
+      heading: "Subheading one",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.",
+    },
+    {
+      heading: "Subheading two",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.",
+    },
+    {
+      heading: "Subheading three",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.",
+    },
+    {
+      heading: "Subheading four",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.",
+    },
+  ],
+};
