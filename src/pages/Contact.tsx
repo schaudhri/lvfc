@@ -1,5 +1,6 @@
 import { Header54 } from "@/components/sections/Header54";
 import { BranchWeek } from "@/components/sections/BranchWeek";
+import { ContactForm } from "@/components/sections/ContactForm";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { club, safeguardingContacts, leaguesContact } from "@/data/club";
@@ -88,6 +89,8 @@ export const Contact = () => {
           </div>
         </div>
       </section>
+
+      <ContactForm className="border-t border-scheme-border/20" />
 
       <section className="border-t border-scheme-border/20 px-[5%] py-16 md:py-24 lg:py-28">
         <div className="container">

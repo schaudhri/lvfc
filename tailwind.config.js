@@ -34,13 +34,18 @@ module.exports = {
       },
       colors: {
         /**
-         * LVFC primary palette — "LVFC Brand Guidelines Final.pdf", §4.1.
-         * These five are the whole approved palette; §3.5 forbids "altering
-         * colours outside the approved palette", so do not add to this list.
+         * LVFC primary palette, verified against "LVFC Brand Guidelines
+         * Final.pdf" §4.1. These five are the entire approved palette — §3.5
+         * forbids "altering colours outside the approved palette".
          *
-         * A sixth colour, `gold: #C0A054`, used to sit here. It appears
-         * nowhere in the guidelines and nothing referenced it, so it has been
-         * removed rather than left as a licence to drift off-palette.
+         * NOT CURRENTLY APPLIED. The site renders greyscale by choice; the
+         * palette is kept here, verified, so switching it on is a change to
+         * the `scheme` and `neutral` tokens below rather than a re-reading of
+         * the brand document. What that switch looked like is in git history
+         * (`Apply the brand palette from the guidelines`, reverted).
+         *
+         * A sixth entry, `gold: #C0A054`, was removed: it appears nowhere in
+         * the guidelines and nothing referenced it.
          */
         brand: {
           /** §4.1 "a deep near-black used for contrast, typography, and anchoring layouts". */
@@ -49,32 +54,18 @@ module.exports = {
           terracotta: "#540E17",
           /** §4.1 "Flower", the bloom in the club's fable. */
           flower: "#AD4050",
-          /** §4.1 "energy... and the forward momentum of the club". */
+          /** §4.1 "energy... and the forward momentum of the club". Only 3.95:1
+           *  behind white text — pair it with midnight (5.13:1), not white. */
           flame: "#D35A42",
           /** §4.1 "a warm neutral drawn from the texture of local stone". */
           sandstone: "#FFF1D7",
         },
-        /**
-         * The scheme tokens most components style against. Pointing them at
-         * the palette is what carries the brand through the existing markup —
-         * `text-scheme-text`, `bg-neutral-darkest` and friends did not need to
-         * change at ~400 call sites.
-         */
         scheme: {
           background: "#ffffff",
           foreground: "#ffffff",
-          // Midnight, not pure black — §4.1 names it the typography colour.
-          text: "#140101",
-          border: "#140101",
+          text: "#000000",
+          border: "#000000",
           "btn-text": "#ffffff",
-        },
-        neutral: {
-          // Relume ships #111111 here; midnight is the brand's own near-black
-          // and is what "anchors layouts" (footer, primary buttons, hexagons).
-          darkest: "#140101",
-          // Relume ships #eeeeee; sandstone is the palette's designated warm
-          // neutral, and is what the card surface now sits on.
-          lightest: "#FFF1D7",
         },
       },
       borderRadius: {

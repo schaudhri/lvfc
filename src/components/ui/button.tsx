@@ -12,9 +12,7 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        // Terracotta is §4.1's "core identity colour", so the primary action
-        // carries it. White on terracotta is 14.5:1 — comfortably AAA.
-        default: "border border-brand-terracotta bg-brand-terracotta text-white hover:bg-brand-midnight hover:border-brand-midnight",
+        default: "border border-scheme-border bg-neutral-darkest text-white",
         alternate: "border border-white bg-white text-neutral-darkest",
         secondary: "border border-scheme-border text-scheme-text",
         "secondary-alt": "border border-white text-white",
