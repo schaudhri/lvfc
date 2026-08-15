@@ -35,17 +35,15 @@ module.exports = {
       colors: {
         /**
          * LVFC primary palette, verified against "LVFC Brand Guidelines
-         * Final.pdf" §4.1. These five are the entire approved palette — §3.5
-         * forbids "altering colours outside the approved palette".
+         * Final.pdf" §4.1. §3.5 forbids "altering colours outside the
+         * approved palette" from that document — `gold` and `maroon` below
+         * are later, separately-sourced additions (stakeholder hex + the
+         * "virgil-homepage-branding" Figma file) layered on top, not part of
+         * the original five.
          *
-         * NOT CURRENTLY APPLIED. The site renders greyscale by choice; the
-         * palette is kept here, verified, so switching it on is a change to
-         * the `scheme` and `neutral` tokens below rather than a re-reading of
-         * the brand document. What that switch looked like is in git history
-         * (`Apply the brand palette from the guidelines`, reverted).
-         *
-         * A sixth entry, `gold: #C0A054`, was removed: it appears nowhere in
-         * the guidelines and nothing referenced it.
+         * A sixth entry, `gold: #C0A054`, used to sit here from the PDF read.
+         * It appeared nowhere in the guidelines and nothing referenced it, so
+         * it was removed — unrelated to the Figma-sourced `gold` below.
          */
         brand: {
           /** §4.1 "a deep near-black used for contrast, typography, and anchoring layouts". */
@@ -59,13 +57,43 @@ module.exports = {
           flame: "#D35A42",
           /** §4.1 "a warm neutral drawn from the texture of local stone". */
           sandstone: "#FFF1D7",
+          /**
+           * Site accent colour, given directly by the stakeholder (Aug 2026
+           * colour update) for headers and filter pills. One hex step off
+           * `terracotta` (#540E17 vs #530E16) — kept as its own token rather
+           * than assumed to be the same colour.
+           */
+          maroon: "#530E16",
+          /**
+           * The brighter gold from the "virgil-homepage-branding" Figma file
+           * (node 1:1052). Was the solid CTA colour until the stakeholder
+           * replaced it with `champagne` site-wide (Aug 2026). Kept as a token
+           * because it is still the colour of record in that Figma file, but
+           * nothing renders it — do not reintroduce it for CTAs.
+           */
+          gold: "#fdd311",
+          /**
+           * Solid CTA colour site-wide — every default `<Button>`, including
+           * the nav (stakeholder direction, Aug 2026). Muted gold, and the only
+           * colour a primary button should be. `maroon` stays the header/pill
+           * colour.
+           */
+          champagne: "#B19855",
         },
         scheme: {
-          background: "#ffffff",
+          background: "#EEEEEE",
           foreground: "#ffffff",
           text: "#000000",
           border: "#000000",
           "btn-text": "#ffffff",
+        },
+        // Figma's dark section band (#130101) is effectively the brand.midnight
+        // black-maroon (#140101) — reused here at the token level so every
+        // existing bg-neutral-darkest section (footer, stats band, pathway
+        // hexagons, image overlays) re-themes to match without touching each
+        // component individually.
+        neutral: {
+          darkest: "#130101",
         },
       },
       borderRadius: {

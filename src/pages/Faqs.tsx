@@ -3,8 +3,7 @@ import { Faqs as FaqsSection } from "@/components/sections/Faqs";
 import { faqCategories } from "@/data/faqs";
 import { cta } from "@/data/cta";
 import { useDocumentMeta } from "@/hooks/use-document-meta";
-
-const IMG = "/placeholder-image.svg";
+import { clubPhotos } from "@/data/clubPhotos";
 
 export const Faqs = () => {
   useDocumentMeta(
@@ -16,7 +15,7 @@ export const Faqs = () => {
       <Header54
         heading="Frequently asked questions"
         description="Fees, kit, attendance, refunds, safeguarding and everything else parents ask before their child's first session."
-        image={{ src: IMG, alt: "LVFC players at training" }}
+        image={{ src: clubPhotos[6].src, alt: "LVFC players at training" }}
       />
 
       <FaqsSection

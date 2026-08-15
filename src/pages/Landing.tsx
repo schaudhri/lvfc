@@ -17,12 +17,12 @@ import { branches } from "@/data/locations";
 import { landingFaqs } from "@/data/faqs";
 import { launchPosts } from "@/data/blog";
 import { leadership } from "@/data/people";
+import { heroImages } from "@/data/club";
 import { cta, programmeCta } from "@/data/cta";
 import { useDocumentMeta } from "@/hooks/use-document-meta";
+import { clubPhotos, coachPhotos, phase5Photos, phase8Photos } from "@/data/clubPhotos";
 
-const IMG = "/placeholder-image.svg";
-const LAND = "/placeholder-image-landscape.svg";
-const MAP = "https://d22po4pjz3o32e.cloudfront.net/placeholder-map-image.jpeg";
+const MAP = "/lvfc-map-lahore.png";
 
 export const Landing = () => {
   useDocumentMeta(
@@ -39,7 +39,11 @@ export const Landing = () => {
           { ...cta.programmes, variant: "alternate" },
           { ...cta.about, variant: "secondary-alt" },
         ]}
-        image={{ src: IMG, alt: "LVFC players training in Lahore" }}
+        image={{ src: clubPhotos[13].src, alt: "LVFC players training in Lahore" }}
+        // Rotates through the club's own photos once uploaded in the Studio;
+        // with none uploaded yet, `Header54` falls back to `image` above.
+        images={heroImages}
+        video={{ src: "/videos/hero.mp4", poster: "/videos/hero-poster.jpg" }}
       />
 
       <ClubIntro buttons={[{ ...cta.about, variant: "secondary" }]} />
@@ -48,9 +52,9 @@ export const Landing = () => {
         heading="Programmes"
         description="Every route into the club — pick the one that fits."
         layout="slider"
-        programmes={programmes.map((programme) => ({
+        programmes={programmes.map((programme, index) => ({
           url: `/programmes/${programme.slug}`,
-          image: { src: LAND, alt: programme.name },
+          image: programme.image ?? clubPhotos[index % clubPhotos.length],
           title: programme.name,
           ages: programme.agesLabel,
           description: programme.summary,
@@ -71,7 +75,7 @@ export const Landing = () => {
             iconRight: <ChevronRight className="text-white" />,
           },
         ]}
-        image={{ src: IMG, alt: "LVFC coaches supervising a training session" }}
+        image={{ src: phase8Photos[0].src, alt: "LVFC coaches supervising a training session" }}
       />
 
       <PhaseTimeline
@@ -108,24 +112,38 @@ export const Landing = () => {
         id="locations"
         heading="Where we train"
         description="Four branches across Lahore, each serving a different part of the city. Pick one to see the pitch and how to find it."
-        locations={branches.map((branch) => ({
-          name: branch.name,
-          address: branch.address,
-          url: `/locations#${branch.slug}`,
-          map: { src: MAP, alt: `Map of the ${branch.name} branch` },
-        }))}
+        locations={branches.map((branch) => {
+          // The branch's own photo once uploaded in the Studio; failing that,
+          // the real training shots we have for Phase V and Phase VIII, then
+          // the shared placeholder map for branches with neither yet.
+          const fallback =
+            branch.slug === "dha-phase-v"
+              ? phase5Photos[0]
+              : branch.slug === "dha-phase-viii"
+                ? phase8Photos[0]
+                : undefined;
+          return {
+            name: branch.name,
+            address: branch.address,
+            url: `/locations/${branch.slug}`,
+            map: {
+              src: branch.image?.src ?? fallback?.src ?? MAP,
+              alt: branch.image?.alt || fallback?.alt || `Map of the ${branch.name} branch`,
+            },
+          };
+        })}
       />
 
       {/*
-        Leadership rather than branch coaches — individual coach bios and
-        headshots are still outstanding from the club. Swap in the coaching
-        staff here once received, and move leadership to the About page.
+        Leadership rather than branch coaches — branch-level bios are still
+        outstanding from the club. Swap in per-branch coaching staff here once
+        received, and move leadership to the About page.
       */}
       <CoachSlider
         heading="Meet our coaches"
         description="The team setting the standard across all four branches."
-        coaches={leadership.map((person) => ({
-          image: { src: IMG, alt: person.name },
+        coaches={leadership.map((person, index) => ({
+          image: { src: coachPhotos[index % coachPhotos.length].src, alt: person.name },
           name: person.name,
           position: person.role,
           certification: person.alsoRole ?? "",
@@ -151,13 +169,7 @@ export const Landing = () => {
       <Gallery9
         heading="Life at LVFC"
         description="Weekends, fixtures, showcases and the everyday grind that builds players."
-        images={[
-          { url: "#", src: IMG, alt: "Life at LVFC 1" },
-          { url: "#", src: IMG, alt: "Life at LVFC 2" },
-          { url: "#", src: IMG, alt: "Life at LVFC 3" },
-          { url: "#", src: IMG, alt: "Life at LVFC 4" },
-          { url: "#", src: IMG, alt: "Life at LVFC 5" },
-        ]}
+        images={clubPhotos.slice(0, 5).map((photo) => ({ src: photo.src, alt: photo.alt }))}
       />
 
       <Faqs
@@ -176,18 +188,19 @@ export const Landing = () => {
         heading="Coming with the new season"
         description="The first articles going live alongside 2026–27 — club news, match reports and coaching insight."
         button={{ ...cta.blog, variant: "secondary" }}
-        blogPosts={launchPosts.slice(0, 3).map((post) => ({
+        blogPosts={launchPosts.slice(0, 3).map((post, index) => ({
           url: "/blog",
-          image: { src: LAND, alt: post.title },
+          image: post.image ?? clubPhotos[index % clubPhotos.length],
           category: post.category,
           readTime: "Coming soon",
           title: post.title,
           description: post.brief,
+          // "link-alt" and a white chevron: these sit on the dark card body.
           button: {
             ...cta.blog,
-            variant: "link",
+            variant: "link-alt",
             size: "link",
-            iconRight: <ChevronRight className="text-scheme-text" />,
+            iconRight: <ChevronRight className="text-white" />,
           },
         }))}
       />

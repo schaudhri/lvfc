@@ -7,8 +7,7 @@ import { club, safeguardingContacts, leaguesContact } from "@/data/club";
 import { branches } from "@/data/locations";
 import { cta } from "@/data/cta";
 import { useDocumentMeta } from "@/hooks/use-document-meta";
-
-const IMG = "/placeholder-image.svg";
+import { clubPhotos } from "@/data/clubPhotos";
 
 type Channel = {
   title: string;
@@ -76,7 +75,7 @@ export const Contact = () => {
       <Header54
         heading="Get in touch"
         description="Questions about programmes, fees or which branch suits your family? Reach us however works best — or come and stand on the touchline at a session."
-        image={{ src: IMG, alt: "LVFC coaches and families at a session" }}
+        image={{ src: clubPhotos[8].src, alt: "LVFC coaches and families at a session" }}
       />
 
       <section className="px-[5%] py-16 md:py-24 lg:py-28">

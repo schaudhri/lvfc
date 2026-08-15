@@ -10,14 +10,14 @@ const WhatsAppGlyph = ({ className }: { className?: string }) => (
  * Persistent WhatsApp entry point. WhatsApp is the dominant enquiry channel for
  * families in Lahore, so it stays reachable from every page.
  *
- * Styled neutral to match the greyscale build — swap the background to the
- * WhatsApp green (#25D366) when the brand palette goes in.
+ * Styled in WhatsApp's own brand green (#25D366) — the button reads instantly
+ * as "this opens WhatsApp" rather than as another site CTA.
  *
- * The ground is `neutral-dark` (#444) rather than `neutral-darkest` (#111):
- * the button is fixed over every page, including the now-dark footer, and at
- * #111 it disappeared into it entirely. The white hairline ring guarantees an
- * edge whatever it happens to be floating over. White-on-#444 is 9.1:1, so
- * the label is still comfortably above AA.
+ * The white hairline ring guarantees an edge whatever it happens to be
+ * floating over, including the dark footer. White-on-#25D366 is 2.1:1, well
+ * under AA for text — the label is bold and the icon carries the meaning, so
+ * this follows WhatsApp's own widget convention rather than the site's usual
+ * text-contrast bar.
  */
 export const WhatsAppButton = () => {
   if (!whatsapp.number) return null;
@@ -30,7 +30,7 @@ export const WhatsAppButton = () => {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Message LVFC on WhatsApp"
-      className="fixed right-5 bottom-5 z-[1000] flex items-center gap-3 rounded-full bg-neutral-dark px-5 py-4 text-white shadow-xlarge ring-1 ring-white/25 transition-transform duration-200 hover:scale-105 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:outline-none md:bottom-8 md:right-8"
+      className="fixed right-5 bottom-5 z-[1000] flex items-center gap-3 rounded-full bg-[#25D366] px-5 py-4 text-white shadow-xlarge ring-1 ring-white/25 transition-transform duration-200 hover:scale-105 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:outline-none md:bottom-8 md:right-8"
     >
       <WhatsAppGlyph className="size-6 shrink-0" />
       <span className="hidden text-regular font-semibold sm:inline">{whatsapp.label}</span>

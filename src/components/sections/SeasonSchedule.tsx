@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { ChevronRight } from "relume-icons";
 import { branches } from "@/data/locations";
-import { scheduleDays, weeklySchedule } from "@/data/schedule";
+import { daySummary } from "@/data/schedule";
 import { programmes } from "@/data/programmes";
 import { cn } from "@/lib/utils";
 
@@ -31,23 +31,6 @@ export const SeasonSchedule = (props: SeasonScheduleProps) => {
     description = "Every programme across the 2026–27 season — when it runs, where, and on which evenings.",
     className,
   } = props;
-
-  /** "Mon–Sat" from a branch's day cells, collapsing consecutive days. */
-  const daySummary = (slug: string) => {
-    const cells = weeklySchedule[slug] ?? [];
-    const active = scheduleDays.map((d, i) => (cells[i] ? d : null)).filter(Boolean) as string[];
-    if (active.length === 0) return null;
-    const short = (d: string) => d.slice(0, 3);
-    // Contiguous run in the source order? Render as a range.
-    const firstIndex = scheduleDays.indexOf(active[0] as never);
-    const contiguous = active.every((d, i) => scheduleDays[firstIndex + i] === d);
-    const days =
-      active.length > 2 && contiguous
-        ? `${short(active[0])}–${short(active[active.length - 1])}`
-        : active.map(short).join(", ");
-    const times = [...new Set(active.map((d) => cells[scheduleDays.indexOf(d as never)]))];
-    return `${days} · ${times.join(" / ")}`;
-  };
 
   return (
     <section className={cn("px-[5%] py-16 md:py-24 lg:py-28", className)}>

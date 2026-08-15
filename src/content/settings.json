@@ -1,0 +1,34 @@
+{
+  "absenceLine": "0329 1444333",
+  "bookingPortal": {
+    "label": "virgil-sports.odoo.com",
+    "programmes": "https://virgil-sports.odoo.com/programmes",
+    "url": "https://virgil-sports.odoo.com"
+  },
+  "email": "info@virgilsports.com",
+  "instagram": {
+    "handle": "@lahorevirgilfootballacademy",
+    "url": "https://www.instagram.com/lahorevirgilfootballacademy/"
+  },
+  "leaguesContact": {
+    "email": "zain@virgilsports.com",
+    "name": "Zain Shoukat",
+    "role": "President of Leagues"
+  },
+  "name": "Lahore Virgil Football Club",
+  "parent": "Virgil Sports (Pvt.) Ltd.",
+  "safeguarding": {
+    "clubWelfareOfficer": {
+      "name": "Abdul Rehman",
+      "role": "Club Welfare Officer"
+    },
+    "designatedSafeguardingLead": {
+      "name": "Steve Hamilton",
+      "role": "Director of Football"
+    },
+    "welfareEmail": "hamza@virgilsports.com",
+    "welfarePhone": "+92 309 1444428"
+  },
+  "shortName": "LVFC",
+  "whatsappNumber": "923291444333"
+}

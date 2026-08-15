@@ -20,9 +20,11 @@ const FilterPills = ({
   onChange: (value: string) => void;
 }) => (
   <div className="flex flex-col gap-3">
-    <span className="text-tiny font-semibold uppercase tracking-wider text-scheme-text/60">
-      {label}
-    </span>
+    {/*
+      No visible label: the pills read "All / Gulberg / DHA Phase V …", which
+      says what they filter without an eyebrow repeating it. `label` still names
+      the group for screen readers, which have no such visual context.
+    */}
     <div className="flex flex-wrap gap-2" role="group" aria-label={label}>
       {options.map((option) => {
         const isActive = option === active;
@@ -35,8 +37,8 @@ const FilterPills = ({
             className={cn(
               "rounded-full border px-4 py-2 text-small font-semibold transition-colors",
               isActive
-                ? "border-scheme-border bg-neutral-darkest text-white"
-                : "border-scheme-border/40 text-scheme-text hover:bg-neutral-lightest",
+                ? "border-brand-maroon bg-brand-maroon text-white"
+                : "border-brand-maroon text-scheme-text hover:bg-neutral-lightest",
             )}
           >
             {option}
@@ -134,7 +136,14 @@ export const ScheduleGrid = (props: ScheduleGridProps) => {
                         !row.cells[index] && "text-scheme-text/60",
                       )}
                     >
-                      {row.cells[index] ?? "No session"}
+                      {row.cells[index] ?? (
+                        <>
+                          {/* A dash reads as an empty cell at a glance; the
+                              screen-reader text says what the dash means. */}
+                          <span aria-hidden="true">–</span>
+                          <span className="sr-only">No session</span>
+                        </>
+                      )}
                     </td>
                   ))}
                 </tr>

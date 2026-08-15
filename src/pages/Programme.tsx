@@ -10,9 +10,7 @@ import { branches } from "@/data/locations";
 import { cta, programmeCta } from "@/data/cta";
 import { cn } from "@/lib/utils";
 import { useDocumentMeta } from "@/hooks/use-document-meta";
-
-const IMG = "/placeholder-image.svg";
-const LAND = "/placeholder-image-landscape.svg";
+import { clubPhotos } from "@/data/clubPhotos";
 
 const ALL = "all";
 
@@ -52,8 +50,8 @@ const FilterPills = ({
             className={cn(
               "rounded-full border px-4 py-2 text-small font-semibold transition-colors",
               isActive
-                ? "border-scheme-border bg-neutral-darkest text-white"
-                : "border-scheme-border/40 text-scheme-text hover:bg-neutral-lightest",
+                ? "border-brand-maroon bg-brand-maroon text-white"
+                : "border-brand-maroon text-scheme-text hover:bg-neutral-lightest",
             )}
           >
             {option.label}
@@ -82,7 +80,7 @@ export const Programme = () => {
       <Header54
         heading="Every player has a path"
         description="Designed and directed by UEFA-licensed coaches, blending international methodology with local understanding."
-        image={{ src: IMG, alt: "LVFC programmes" }}
+        image={{ src: clubPhotos[12].src, alt: "LVFC programmes" }}
       />
 
       <section className="px-[5%] py-16 md:py-24 lg:py-28">
@@ -163,9 +161,9 @@ export const Programme = () => {
           heading={undefined}
           description={undefined}
           className="py-12 md:py-16"
-          programmes={visible.map((programme) => ({
+          programmes={visible.map((programme, index) => ({
             url: `/programmes/${programme.slug}`,
-            image: { src: LAND, alt: programme.name },
+            image: programme.image ?? clubPhotos[index % clubPhotos.length],
             title: programme.name,
             ages: programme.agesLabel,
             description: programme.summary,

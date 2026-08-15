@@ -1,6 +1,7 @@
 import { Link, Navigate, useParams } from "react-router-dom";
 import { ChevronRight } from "relume-icons";
 import { Header62 } from "@/components/sections/Header62";
+import { RichText } from "@/components/RichText";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { getPost, launchPosts } from "@/data/blog";
@@ -8,18 +9,17 @@ import { cardMedia, cardBody } from "@/lib/surface";
 import { cta } from "@/data/cta";
 import { cn } from "@/lib/utils";
 import { useDocumentMeta } from "@/hooks/use-document-meta";
-
-const LAND = "/placeholder-image-landscape.svg";
+import { clubPhotos } from "@/data/clubPhotos";
 
 /**
  * A single article.
  *
  * The template is complete — hero, meta row, standfirst, prose body, byline and
  * related reading — but the club has not written the articles yet. The content
- * pack gives a commissioning brief for each of the five launch posts, not the
- * copy, so a post without a `body` renders its brief plus an explicit
- * "still being written" state rather than inventing club news. Fill in `body`
- * in `data/blog.ts` and the same page becomes the published article.
+ * pack gives a commissioning brief for each of the launch posts, not the copy,
+ * so a post without a `body` renders its brief plus an explicit "still being
+ * written" state rather than inventing club news. Write the body in the Studio
+ * and the same page becomes the published article.
  */
 export const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -61,9 +61,10 @@ export const BlogPost = () => {
         <div className="px-[5%] py-12 md:py-16">
           <div className="container max-w-3xl">
             <img
-              src={LAND}
-              alt=""
-              aria-hidden="true"
+              src={post.image?.src ?? clubPhotos[post.slug.length % clubPhotos.length].src}
+              alt={post.image?.alt ?? ""}
+              /** A real photo, but not necessarily this post's — decorative until one is. */
+              aria-hidden={post.image ? undefined : "true"}
               className="aspect-[3/2] w-full rounded-image object-cover"
             />
           </div>
@@ -72,22 +73,7 @@ export const BlogPost = () => {
         <div className="px-[5%] pb-16 md:pb-24 lg:pb-28">
           <div className="container max-w-3xl">
             {isPublished ? (
-              // Prose body. Paragraphs and sub-headings only — enough for the
-              // articles the content pack describes, without a rich-text
-              // pipeline nothing yet produces.
-              <div className="flex flex-col gap-6">
-                {post.body!.map((block, index) =>
-                  block.type === "heading" ? (
-                    <h2 key={index} className="mt-4 text-h4 font-bold">
-                      {block.text}
-                    </h2>
-                  ) : (
-                    <p key={index} className="text-medium">
-                      {block.text}
-                    </p>
-                  ),
-                )}
-              </div>
+              <RichText value={post.body!} />
             ) : (
               <div className={cn("flex flex-col items-start p-6 md:p-8", "rounded-card bg-neutral-lightest")}>
                 <h2 className="mb-3 text-h5 font-bold">This one's still being written</h2>
@@ -113,14 +99,14 @@ export const BlogPost = () => {
               <p className="text-medium">The rest of the launch line-up.</p>
             </div>
             <ul className="grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-2 md:gap-y-16 lg:grid-cols-3">
-              {related.map((item) => (
+              {related.map((item, index) => (
                 <li key={item.slug} className={cn("flex flex-col", cardMedia)}>
                   <Link to={`/blog/${item.slug}`} aria-label={item.title}>
                     <img
-                      src={LAND}
+                      src={item.image?.src ?? clubPhotos[index % clubPhotos.length].src}
                       alt=""
                       aria-hidden="true"
-                      className="aspect-[3/2] w-full object-cover opacity-60"
+                      className="aspect-[3/2] w-full object-cover"
                     />
                   </Link>
                   <div className={cn("flex flex-1 flex-col", cardBody)}>
@@ -132,13 +118,13 @@ export const BlogPost = () => {
                         {item.title}
                       </Link>
                     </h3>
-                    <p className="mb-3 text-small text-scheme-text/80">{item.brief}</p>
+                    <p className="mb-3 text-small text-white/80">{item.brief}</p>
                     <Link
                       to={`/blog/${item.slug}`}
                       className="mt-auto flex min-h-6 items-center gap-2 pt-2 text-small font-semibold"
                     >
                       {item.body?.length ? "Read article" : "See what's coming"}
-                      <ChevronRight className="size-4 text-scheme-text" />
+                      <ChevronRight className="size-4 text-white" />
                     </Link>
                   </div>
                 </li>

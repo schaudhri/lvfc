@@ -5,8 +5,7 @@ import { Header62 } from "@/components/sections/Header62";
 import { resourceLinks } from "@/data/resources";
 import { cta } from "@/data/cta";
 import { useDocumentMeta } from "@/hooks/use-document-meta";
-
-const IMG = "/placeholder-image.svg";
+import { clubPhotos } from "@/data/clubPhotos";
 
 const JUMP_LINKS = [
   { label: "For parents & players", href: "#parents" },
@@ -25,7 +24,7 @@ export const Resources = () => {
       <Header54
         heading="Resources"
         description="Club documents, registration forms and a growing library of coaching material for everyone around the club — coaches, players, parents and referees. We've searched the globe for the most current, credible information the game has to offer, and we're adding to it every week."
-        image={{ src: IMG, alt: "LVFC resource centre" }}
+        image={{ src: clubPhotos[10].src, alt: "LVFC resource centre" }}
       />
 
       <div className="border-y border-scheme-border/20 px-[5%] py-5">
@@ -34,7 +33,7 @@ export const Resources = () => {
             <a
               key={link.href}
               href={link.href}
-              className="rounded-full border border-scheme-border/40 px-4 py-2 text-small font-semibold transition-colors hover:bg-neutral-lightest"
+              className="rounded-full border border-brand-maroon px-4 py-2 text-small font-semibold transition-colors hover:bg-neutral-lightest"
             >
               {link.label}
             </a>

@@ -123,7 +123,7 @@ export const Footer2 = (props: Footer2Props) => {
                   column.wide && "sm:col-span-2 lg:col-span-2",
                 )}
               >
-                <h2 className="mb-3 font-semibold md:mb-4">{column.title}</h2>
+                <h2 className="mb-3 font-semibold text-white md:mb-4">{column.title}</h2>
                 {/*
                   Multi-column rather than a grid: it flows down the first
                   column and into the second, which is the order a footer list
@@ -156,7 +156,7 @@ export const Footer2 = (props: Footer2Props) => {
             and drop the mail-client hop. The markup below won't need to change.
           */}
           <div className="flex flex-col">
-            <h2 className="mb-3 font-semibold md:mb-4">{newsletterHeading}</h2>
+            <h2 className="mb-3 font-semibold text-white md:mb-4">{newsletterHeading}</h2>
             <p className="mb-4 text-small md:mb-5">{newsletterDescription}</p>
             <form onSubmit={handleSubscribe} className="flex flex-col gap-3 sm:flex-row">
               <Input

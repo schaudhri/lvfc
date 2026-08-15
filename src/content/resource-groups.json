@@ -1,0 +1,97 @@
+[
+  {
+    "description": "Club policies, forms and guides for families. Everything here is free to download — no account needed.",
+    "id": "parents",
+    "items": [
+      {
+        "kind": "Web page",
+        "name": "LVFC Safeguarding Policy",
+        "note": "Implemented March 2026 · reviewed annually",
+        "status": "available",
+        "url": "/safeguarding"
+      },
+      {
+        "kind": "PDF",
+        "name": "Code of Conduct — Players",
+        "status": "awaiting"
+      },
+      {
+        "kind": "PDF",
+        "name": "Code of Conduct — Parents & Spectators",
+        "status": "awaiting"
+      },
+      {
+        "kind": "PDF",
+        "name": "Medical & Consent Form",
+        "status": "awaiting"
+      },
+      {
+        "kind": "PDF",
+        "name": "Fee Structure & Payment Guide 2026–27",
+        "status": "awaiting"
+      },
+      {
+        "kind": "PDF",
+        "name": "LVFC Academy Programme Overview",
+        "status": "awaiting"
+      },
+      {
+        "kind": "PDF",
+        "name": "Player Development Framework",
+        "status": "awaiting"
+      }
+    ],
+    "title": "For parents & players"
+  },
+  {
+    "description": "League documentation for visiting clubs, and partnership information for sponsors.",
+    "id": "clubs",
+    "items": [
+      {
+        "kind": "PDF",
+        "name": "ELJPL Club Registration Pack",
+        "status": "awaiting"
+      },
+      {
+        "kind": "PDF",
+        "name": "ELJPL Season Guidelines",
+        "status": "awaiting"
+      },
+      {
+        "kind": "PDF",
+        "name": "Sponsorship & Partnership Opportunities",
+        "status": "awaiting"
+      }
+    ],
+    "title": "For clubs & partners"
+  },
+  {
+    "description": "Register a player, apply for a trial, or get in touch about a partnership.",
+    "id": "forms",
+    "items": [
+      {
+        "kind": "Online form",
+        "name": "Player Registration Form",
+        "note": "Opens the LVFC booking portal",
+        "status": "available",
+        "url": "https://virgil-sports.odoo.com/programmes"
+      },
+      {
+        "kind": "Online form",
+        "name": "Trial Registration Form",
+        "status": "awaiting"
+      },
+      {
+        "kind": "Online form",
+        "name": "Club Invitation / Application Form (ELJPL)",
+        "status": "awaiting"
+      },
+      {
+        "kind": "Online form",
+        "name": "Sponsorship Enquiry Form",
+        "status": "awaiting"
+      }
+    ],
+    "title": "Forms"
+  }
+]

@@ -1,0 +1,24 @@
+{
+  "name": "lvfc-studio",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "sanity dev",
+    "build": "sanity build",
+    "deploy": "sanity deploy",
+    "typegen": "sanity schema extract --force && sanity typegen generate"
+  },
+  "dependencies": {
+    "@sanity/icons": "^5.2.1",
+    "@sanity/vision": "^6.9.2",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "sanity": "^6.9.2",
+    "styled-components": "^6.5.2"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.17",
+    "typescript": "^5.9.3"
+  }
+}

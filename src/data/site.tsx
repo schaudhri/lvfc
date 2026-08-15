@@ -11,21 +11,12 @@ const LOGO = { url: "/", src: "/logo.svg", alt: "Lahore Virgil Football Club" };
 /**
  * WhatsApp enquiry channel.
  *
- * TODO: replace `number` with the club's real WhatsApp business number before
- * launch — international format, digits only, no "+" or spaces
- * (e.g. Pakistan 0300 1234567 -> "923001234567").
- * Set it to "" to hide the button entirely.
+ * The number is a club fact and lives in Sanity under "Club settings" —
+ * clearing it there hides the floating button across the whole site. The label
+ * and opening message are copy that belongs with the button, so they stay here.
  */
 export const whatsapp = {
-  /**
-   * The club's WhatsApp number, 0329 1444333, in the international format
-   * wa.me requires: country code, no leading zero, digits only.
-   * Same line as `club.absenceLine`.
-   *
-   * Set this to "" to hide the floating button — never leave a placeholder
-   * number here, since the button renders on every page.
-   */
-  number: "923291444333",
+  number: club.whatsappNumber,
   label: "Chat with us",
   message: "Hi LVFC — I'd like to ask about programmes for my child.",
 };
@@ -92,8 +83,8 @@ export const navbarProps: Navbar23Props = {
         // All four fit, so there is nothing held back here — the button is a
         // route to the fuller page rather than a "there's more" affordance.
         items: branches.map((branch) => ({
-          url: `/locations#${branch.slug}`,
-          image: { src: LAND, alt: branch.name },
+          url: `/locations/${branch.slug}`,
+          image: { src: branch.image?.src ?? LAND, alt: branch.image?.alt || branch.name },
           name: branch.name,
           meta: branch.address,
           detail: "See sessions and directions",
@@ -104,6 +95,8 @@ export const navbarProps: Navbar23Props = {
     { title: "Schedule", url: "/schedule" },
     { title: "Blog", url: "/blog" },
   ],
+  // No colour override: champagne is now the default solid CTA colour site-wide
+  // (stakeholder direction, Aug 2026), so the nav button inherits it.
   buttons: [{ ...cta.bookASpot, size: "sm" }],
 };
 

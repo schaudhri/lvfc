@@ -8,9 +8,9 @@ type Props = {
 };
 
 /**
- * One branch's training week, as a row of day cards. Days the source timetable
- * left blank render as "No session" rather than being hidden — a parent
- * checking Thursday needs to see that Thursday is empty.
+ * One branch's training week, as a row of day cards. Days the branch does not
+ * train on render as a dash rather than being hidden — a parent checking
+ * Thursday needs to see that Thursday is empty.
  */
 export const BranchWeek = ({ slug, className }: Props) => {
   const row = getScheduleRow(slug);
@@ -39,7 +39,12 @@ export const BranchWeek = ({ slug, className }: Props) => {
                 !time && "font-normal text-scheme-text/60",
               )}
             >
-              {time ?? "No session"}
+              {time ?? (
+                <>
+                  <span aria-hidden="true">–</span>
+                  <span className="sr-only">No session</span>
+                </>
+              )}
             </span>
           </li>
         );

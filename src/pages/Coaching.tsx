@@ -9,8 +9,7 @@ import { academyAgeGroups } from "@/data/programmes";
 import { leadership } from "@/data/people";
 import { cta } from "@/data/cta";
 import { useDocumentMeta } from "@/hooks/use-document-meta";
-
-const IMG = "/placeholder-image.svg";
+import { aboutHeroCover, clubPhotos, coachPhotos } from "@/data/clubPhotos";
 
 // Empty until the club supplies real profile URLs. Rendering three "#" links
 // per person put 15 links to nowhere on this page.
@@ -27,7 +26,7 @@ export const Coaching = () => {
       <Header54
         heading="How we coach"
         description="A UEFA-aligned curriculum delivered by qualified staff, consistent across all four branches."
-        image={{ src: IMG, alt: "LVFC coaches on the training pitch" }}
+        image={aboutHeroCover}
       />
 
       {/*
@@ -38,8 +37,8 @@ export const Coaching = () => {
       <Team16
         heading="Who leads the club"
         description="All LVFC head coaches have extensive training and qualifications, with support coaches trained to national standards. Our Director of Football sets the curriculum and coaching standards across every branch."
-        teamMembers={leadership.map((person) => ({
-          image: { src: IMG, alt: person.name },
+        teamMembers={leadership.map((person, index) => ({
+          image: { src: coachPhotos[index % coachPhotos.length].src, alt: person.name },
           name: person.name,
           jobTitle: person.alsoRole ? `${person.role} · ${person.alsoRole}` : person.role,
           description: person.description,
@@ -87,7 +86,7 @@ export const Coaching = () => {
             iconRight: <ChevronRight className="text-white" />,
           },
         ]}
-        image={{ src: IMG, alt: "Safeguarding at LVFC" }}
+        image={{ src: clubPhotos[4].src, alt: "Safeguarding at LVFC" }}
       />
 
       <Layout242

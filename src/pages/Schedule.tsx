@@ -4,8 +4,7 @@ import { ScheduleGrid } from "@/components/sections/ScheduleGrid";
 import { SeasonSchedule } from "@/components/sections/SeasonSchedule";
 import { cta } from "@/data/cta";
 import { useDocumentMeta } from "@/hooks/use-document-meta";
-
-const IMG = "/placeholder-image.svg";
+import { clubPhotos } from "@/data/clubPhotos";
 
 export const Schedule = () => {
   useDocumentMeta(
@@ -18,16 +17,16 @@ export const Schedule = () => {
       <Header54
         heading="Training schedule"
         description="Every programme across the 2026–27 season — when it runs, where, and on which evenings, all on one page."
-        image={{ src: IMG, alt: "LVFC training session in progress" }}
+        image={{ src: clubPhotos[9].src, alt: "LVFC training session in progress" }}
       />
 
       {/* The week first — the at-a-glance answer — then the season broken out
-          programme by programme underneath for the longer view. */}
-      <ScheduleGrid
-        heading="The week, branch by branch"
-        description="The season timetable across all four branches. Filter by branch to find the evenings that fit around yours."
-        buttons={[{ ...cta.bookASpot }, { ...cta.branches, variant: "secondary" }]}
-      />
+          programme by programme underneath for the longer view.
+
+          No heading or description here: the page hero directly above already
+          says "Training schedule" and what the page covers, so repeating it
+          above the table was the same information twice. */}
+      <ScheduleGrid buttons={[{ ...cta.bookASpot }]} />
 
       <SeasonSchedule className="border-t border-scheme-border/20" />
 

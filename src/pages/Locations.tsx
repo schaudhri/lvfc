@@ -1,104 +1,106 @@
+import { Link } from "react-router-dom";
+import { ChevronRight } from "relume-icons";
 import { Header54 } from "@/components/sections/Header54";
-import { BranchWeek } from "@/components/sections/BranchWeek";
 import { Header62 } from "@/components/sections/Header62";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { branches } from "@/data/locations";
-import { scheduleNotes } from "@/data/schedule";
+import { daySummary, scheduleNotes } from "@/data/schedule";
 import { cta } from "@/data/cta";
+import { cardMedia } from "@/lib/surface";
+import { cn } from "@/lib/utils";
 import { useDocumentMeta } from "@/hooks/use-document-meta";
+import { clubPhotos, phase5Photos, phase8Photos } from "@/data/clubPhotos";
 
-const IMG = "/placeholder-image.svg";
-const MAP = "https://d22po4pjz3o32e.cloudfront.net/placeholder-map-image.jpeg";
+const MAP = "/lvfc-map-lahore.png";
 
+/**
+ * The branch index.
+ *
+ * This page used to carry every branch's full detail inline, behind a jump bar
+ * of anchor links — so a parent interested in one ground scrolled past three
+ * others, and could not send anyone a link to their branch. It is now a
+ * chooser: enough per branch to pick one, with the detail on its own page.
+ */
 export const Locations = () => {
   useDocumentMeta(
     "Locations",
     "Four branches across Lahore — Gulberg, DHA Phase V, DHA Phase VIII and Pine Avenue. Addresses, programmes offered and training times for each.",
   );
+
   return (
     <>
       <Header54
         heading="Our locations"
         description="LVFC trains at four branches across Lahore, each chosen to serve a different part of the city. All branches are staffed by qualified coaches and supported by a dedicated operations team."
-        image={{ src: IMG, alt: "LVFC training grounds in Lahore" }}
+        image={{ src: clubPhotos[7].src, alt: "LVFC training grounds in Lahore" }}
       />
 
-      {/* Jump bar — four branches is enough that a parent shouldn't have to scroll to find theirs. */}
-      <div className="border-y border-scheme-border/20 px-[5%] py-5">
-        <div className="container flex flex-wrap items-center gap-2">
-          {branches.map((branch) => (
-            <a
-              key={branch.slug}
-              href={`#${branch.slug}`}
-              className="rounded-full border border-scheme-border/40 px-4 py-2 text-small font-semibold transition-colors hover:bg-neutral-lightest"
-            >
-              {branch.name}
-            </a>
-          ))}
+      <section className="px-[5%] py-16 md:py-24 lg:py-28">
+        <div className="container">
+          <ul className="grid grid-cols-1 gap-8 md:grid-cols-2">
+            {branches.map((branch) => {
+              const week = daySummary(branch.slug);
+              // Real training shots for Phase V and Phase VIII; the shared
+              // placeholder map for branches with neither an uploaded photo
+              // nor one of those two sets.
+              const fallback =
+                branch.slug === "dha-phase-v"
+                  ? phase5Photos[0]
+                  : branch.slug === "dha-phase-viii"
+                    ? phase8Photos[0]
+                    : undefined;
+              return (
+                <li key={branch.slug} className={cn("group flex flex-col", cardMedia)}>
+                  <Link to={`/locations/${branch.slug}`} tabIndex={-1} aria-hidden="true">
+                    <img
+                      src={branch.image?.src ?? fallback?.src ?? MAP}
+                      alt={branch.image?.alt || fallback?.alt || `Map showing the ${branch.name} branch`}
+                      className="aspect-[16/9] w-full object-cover"
+                    />
+                  </Link>
+
+                  <div className="flex flex-1 flex-col p-6 md:p-8">
+                    <div className="mb-3 flex flex-wrap items-center gap-3">
+                      <h2 className="text-h4 font-bold">{branch.name}</h2>
+                      {branch.status && <Badge>{branch.status.label}</Badge>}
+                    </div>
+
+                    <p className="mb-2 text-small font-semibold">{branch.address}</p>
+                    {week && (
+                      <p className="mb-4 text-small tabular-nums text-white/70">{week}</p>
+                    )}
+
+                    <ul className="mb-6 flex flex-wrap gap-2">
+                      {branch.programmes.map((entry) => (
+                        <li
+                          key={entry}
+                          className="rounded-badge bg-white/10 px-3 py-1.5 text-small"
+                        >
+                          {entry}
+                        </li>
+                      ))}
+                    </ul>
+
+                    <div className="mt-auto flex flex-wrap items-center gap-x-6 gap-y-3">
+                      <Button {...cta.bookASpot} size="sm" variant="alternate">
+                        {cta.bookASpot.title}
+                      </Button>
+                      <Link
+                        to={`/locations/${branch.slug}`}
+                        className="inline-flex items-center gap-1.5 font-semibold underline-offset-4 hover:underline"
+                      >
+                        Learn more
+                        <ChevronRight className="size-5 text-white transition-transform duration-200 group-hover:translate-x-0.5" />
+                      </Link>
+                    </div>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
         </div>
-      </div>
-
-      {branches.map((branch, index) => (
-        <section
-          key={branch.slug}
-          id={branch.slug}
-          className={`scroll-mt-24 px-[5%] py-16 md:py-24 lg:py-28 ${
-            index > 0 ? "border-t border-scheme-border/20" : ""
-          }`}
-        >
-          <div className="container">
-            <div className="grid grid-cols-1 gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
-              <div>
-                <div className="mb-4 flex flex-wrap items-center gap-3">
-                  <h2 className="text-h3 font-bold">{branch.name}</h2>
-                  {branch.status && <Badge>{branch.status.label}</Badge>}
-                </div>
-                <p className="mb-5 text-medium font-semibold">{branch.address}</p>
-                <p className="mb-8 max-w-xl text-medium">{branch.about}</p>
-
-                <h3 className="mb-4 text-h6 font-bold">Programmes at this branch</h3>
-                <ul className="mb-8 flex flex-wrap gap-2">
-                  {branch.programmes.map((programme) => (
-                    <li
-                      key={programme}
-                      className="rounded-badge bg-neutral-lightest px-3 py-1.5 text-small"
-                    >
-                      {programme}
-                    </li>
-                  ))}
-                </ul>
-
-                {branch.status && (
-                  <p className="mb-8 max-w-xl text-small text-scheme-text/70">
-                    {branch.status.detail}
-                  </p>
-                )}
-
-                <div className="flex flex-wrap items-center gap-4">
-                  <Button {...cta.bookASpot} size="sm">
-                    {cta.bookASpot.title}
-                  </Button>
-                  <Button {...cta.schedule} variant="secondary" size="sm">
-                    {cta.schedule.title}
-                  </Button>
-                </div>
-              </div>
-
-              <div>
-                {/* TODO: swap for a real map embed or photograph of the ground once supplied. */}
-                <img
-                  src={MAP}
-                  alt={`Map showing the ${branch.name} branch`}
-                  className="mb-6 aspect-[4/3] w-full rounded-image object-cover"
-                />
-                <h3 className="mb-3 text-h6 font-bold">Training week</h3>
-                <BranchWeek slug={branch.slug} />
-              </div>
-            </div>
-          </div>
-        </section>
-      ))}
+      </section>
 
       <section className="border-t border-scheme-border/20 px-[5%] py-10">
         <div className="container flex flex-col gap-2 text-small text-scheme-text/70">

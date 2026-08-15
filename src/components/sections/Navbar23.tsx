@@ -42,18 +42,39 @@ type Props = {
   logo: ImageProps;
   links: LinkProps[];
   buttons: ButtonProps[];
+  /**
+   * Whether this page has a dark hero directly under the nav to overlay.
+   * True renders the bar transparent at the very top of the page (crossfading
+   * to the normal solid bar once scrolled or on pages without one — the blog
+   * article template and the 404 page render straight onto the light page
+   * background, where white nav text would be unreadable).
+   */
+  transparentAtTop?: boolean;
 };
 
 export type Navbar23Props = React.ComponentPropsWithoutRef<"section"> & Partial<Props>;
 
 export const Navbar23 = (props: Navbar23Props) => {
-  const { logo, links, buttons } = {
+  const { logo, links, buttons, transparentAtTop } = {
     ...Navbar23Defaults,
     ...props,
   };
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const isMobile = useMediaQuery("(max-width: 991px)");
+
+  // The open mobile menu needs a solid background of its own regardless of
+  // scroll position — its links render inside this same header.
+  const isTransparent = transparentAtTop && !isScrolled && !isMobileMenuOpen;
+
+  useEffect(() => {
+    if (!transparentAtTop) return;
+    const onScroll = () => setIsScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [transparentAtTop]);
 
   // The open menu covers the viewport, so the page behind it must not scroll —
   // otherwise content slides around underneath the overlay.
@@ -77,11 +98,22 @@ export const Navbar23 = (props: Navbar23Props) => {
   }, [isMobileMenuOpen]);
 
   return (
-    <header className="relative z-[999] flex w-full items-center justify-between border-b border-scheme-border bg-scheme-background lg:min-h-18 lg:px-[5%]">
+    <header
+      className={cn(
+        "fixed inset-x-0 top-0 z-[999] flex w-full items-center justify-between text-white transition-colors duration-300 lg:min-h-18 lg:px-[5%]",
+        isTransparent ? "bg-transparent" : "bg-brand-maroon",
+      )}
+    >
       <nav aria-label="Primary" className="size-full lg:flex lg:items-center lg:justify-between lg:gap-6">
         <div className="flex min-h-16 items-center justify-between px-[5%] md:min-h-18 lg:min-h-full lg:shrink-0 lg:px-0">
             <Link to={logo.url ?? "/"} aria-label="Lahore Virgil Football Club — home">
-              <img src={logo.src} alt={logo.alt} />
+              {/* Champagne gold matches the solid bar; over a transparent bar
+                  it can sit on anything from photo highlights to shadow, so
+                  it switches to a plain white cut of the same mark. */}
+              <img
+                src={isTransparent ? logo.src.replace(/\.svg$/, "-white.svg") : logo.src}
+                alt={logo.alt}
+              />
             </Link>
             <button
               className="-mr-2 flex size-12 flex-col items-center justify-center lg:hidden"
@@ -91,17 +123,17 @@ export const Navbar23 = (props: Navbar23Props) => {
               onClick={() => setIsMobileMenuOpen((prev) => !prev)}
             >
               <motion.span
-                className="my-[3px] h-0.5 w-6 bg-neutral-darkest"
+                className="my-[3px] h-0.5 w-6 bg-white"
                 animate={isMobileMenuOpen ? ["open", "rotatePhase"] : "closed"}
                 variants={topLineVariants}
               />
               <motion.span
-                className="my-[3px] h-0.5 w-6 bg-neutral-darkest"
+                className="my-[3px] h-0.5 w-6 bg-white"
                 animate={isMobileMenuOpen ? "open" : "closed"}
                 variants={middleLineVariants}
               />
               <motion.span
-                className="my-[3px] h-0.5 w-6 bg-neutral-darkest"
+                className="my-[3px] h-0.5 w-6 bg-white"
                 animate={isMobileMenuOpen ? ["open", "rotatePhase"] : "closed"}
                 variants={bottomLineVariants}
               />
@@ -148,7 +180,7 @@ export const Navbar23 = (props: Navbar23Props) => {
         </motion.div>
         <div className="hidden lg:flex lg:shrink-0 lg:gap-4">
           {buttons.map((button, index) => (
-            <Button key={index} {...button}>
+            <Button key={index} {...button} variant={isTransparent ? "alternate" : button.variant}>
               {button.title}
             </Button>
           ))}
@@ -184,7 +216,7 @@ const SubMenu = ({
           animate={isDropdownOpen ? "rotated" : "initial"}
           transition={{ duration: 0.3 }}
         >
-          <KeyboardArrowDown className="text-scheme-text" />
+          <KeyboardArrowDown className="text-white" />
         </motion.span>
       </button>
       <motion.div
@@ -196,7 +228,7 @@ const SubMenu = ({
         exit="close"
         animate={isDropdownOpen ? "open" : "close"}
         transition={{ duration: 0.3 }}
-        className="top-full bottom-auto left-0 w-full max-w-full min-w-full overflow-hidden bg-scheme-background lg:absolute lg:w-[100vw] lg:border-b lg:border-scheme-border lg:px-[5%] lg:[--height-close:auto]"
+        className="top-full bottom-auto left-0 w-full max-w-full min-w-full overflow-hidden bg-scheme-background text-scheme-text lg:absolute lg:w-[100vw] lg:border-b lg:border-scheme-border lg:px-[5%] lg:[--height-close:auto]"
       >
         <div className="flex w-full flex-col items-start justify-start gap-6 pt-6 sm:gap-12 lg:flex-row lg:items-center lg:py-8">
           <div className="lg:max-w-[14rem] lg:shrink-0">
@@ -226,7 +258,14 @@ const SubMenu = ({
                         <img
                           src={item.image.src}
                           alt={item.image.alt}
-                          className="aspect-[4/3] size-full rounded-2xl object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+                          // A fixed height at lg+ (rather than a fluid aspect
+                          // ratio) is what makes the two mega menus match —
+                          // the 3-item Programmes grid and 4-item Locations
+                          // grid have different column widths, so the same
+                          // aspect ratio otherwise produces different image
+                          // (and so panel) heights. 228px matches Programmes,
+                          // the taller of the two.
+                          className="aspect-[4/3] size-full rounded-2xl object-cover transition-transform duration-300 group-hover:scale-[1.03] lg:h-[228px]"
                         />
                       </div>
                     </div>

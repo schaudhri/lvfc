@@ -8,9 +8,7 @@ import { cardMedia, cardBody } from "@/lib/surface";
 import { cn } from "@/lib/utils";
 import { cta } from "@/data/cta";
 import { useDocumentMeta } from "@/hooks/use-document-meta";
-
-const IMG = "/placeholder-image.svg";
-const LAND = "/placeholder-image-landscape.svg";
+import { clubPhotos } from "@/data/clubPhotos";
 
 export const Blog = () => {
   useDocumentMeta(
@@ -22,7 +20,7 @@ export const Blog = () => {
       <Header54
         heading="Club news & coaching insight"
         description="Match reports, coaching articles, club announcements and season updates from across the four branches."
-        image={{ src: IMG, alt: "LVFC match day" }}
+        image={{ src: clubPhotos[5].src, alt: "LVFC match day" }}
       />
 
       <section className="px-[5%] py-16 md:py-24 lg:py-28">
@@ -36,13 +34,13 @@ export const Blog = () => {
           </div>
 
           <ul className="grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-2 md:gap-y-16 lg:grid-cols-3">
-            {launchPosts.map((post) => (
+            {launchPosts.map((post, index) => (
               <li key={post.slug} className={cn("flex flex-col", cardMedia)}>
                 <Link to={`/blog/${post.slug}`} tabIndex={-1} aria-hidden="true">
                   <img
-                    src={LAND}
+                    src={post.image?.src ?? clubPhotos[index % clubPhotos.length].src}
                     alt=""
-                    className="aspect-[3/2] w-full object-cover opacity-60"
+                    className="aspect-[3/2] w-full object-cover"
                   />
                 </Link>
                 <div className={cn("flex flex-1 flex-col", cardBody)}>
@@ -50,7 +48,7 @@ export const Blog = () => {
                     <Badge>{post.category}</Badge>
                     {/* Only the unwritten ones still say "coming soon". */}
                     {!post.body?.length && (
-                      <span className="text-small text-scheme-text/60">Coming soon</span>
+                      <span className="text-small text-white/60">Coming soon</span>
                     )}
                   </div>
                   <h3 className="mb-2 text-h6 font-bold">
@@ -58,16 +56,16 @@ export const Blog = () => {
                       {post.title}
                     </Link>
                   </h3>
-                  <p className="mb-3 text-scheme-text/80">{post.brief}</p>
+                  <p className="mb-3 text-white/80">{post.brief}</p>
                   {post.byline && (
-                    <p className="text-small font-semibold text-scheme-text/60">{post.byline}</p>
+                    <p className="text-small font-semibold text-white/60">{post.byline}</p>
                   )}
                   <Link
                     to={`/blog/${post.slug}`}
                     className="mt-auto flex min-h-6 items-center gap-2 pt-5 text-small font-semibold"
                   >
                     {post.body?.length ? "Read article" : "See what's coming"}
-                    <ChevronRight className="size-4 text-scheme-text" />
+                    <ChevronRight className="size-4 text-white" />
                   </Link>
                 </div>
               </li>

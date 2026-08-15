@@ -8,8 +8,10 @@ import { Header62 } from "@/components/sections/Header62";
 import { programmes } from "@/data/programmes";
 import { cta } from "@/data/cta";
 import { useDocumentMeta } from "@/hooks/use-document-meta";
-
-const IMG = "/placeholder-image.svg";
+import { aboutHeroCover, clubPhotos, coachPhotos } from "@/data/clubPhotos";
+import { internationalPartners } from "@/data/partners";
+import { cardPadded } from "@/lib/surface";
+import { cn } from "@/lib/utils";
 
 export const About = () => {
   useDocumentMeta(
@@ -25,7 +27,7 @@ export const About = () => {
           { ...cta.bookASpot, variant: "alternate" },
           { ...cta.programmes, variant: "secondary-alt" },
         ]}
-        image={{ src: IMG, alt: "LVFC players in Lahore" }}
+        image={aboutHeroCover}
       />
 
       {/*
@@ -46,7 +48,7 @@ export const About = () => {
             iconRight: <ChevronRight className="text-scheme-text" />,
           },
         ]}
-        image={{ src: IMG, alt: "Hamza Syed, CEO of Virgil Sports" }}
+        image={{ src: coachPhotos[0].src, alt: "Hamza Syed, CEO of Virgil Sports" }}
       />
 
       <Layout242
@@ -139,8 +141,58 @@ export const About = () => {
             iconRight: <ChevronRight className="text-white" />,
           },
         ]}
-        image={{ src: IMG, alt: "Safeguarding at LVFC" }}
+        image={{ src: clubPhotos[2].src, alt: "Safeguarding at LVFC" }}
       />
+
+      <section className="px-[5%] py-16 md:py-24 lg:py-28">
+        <div className="container">
+          <div className="mb-12 max-w-lg md:mb-18 lg:mb-20">
+            <h2 className="mb-4 text-h3 font-bold">International partners</h2>
+            <p className="text-medium">
+              Clinics, exchange trips and training pathways that take our players and coaches
+              beyond Lahore.
+            </p>
+          </div>
+          <ul className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8">
+            {internationalPartners.map((partner) => (
+              <li key={partner.name} className={cn("flex flex-col", cardPadded)}>
+                <div
+                  className={cn(
+                    "mb-5 inline-flex w-fit items-center rounded-badge px-4 py-3",
+                    partner.logo.chip === "dark" ? "bg-brand-maroon" : "bg-white",
+                  )}
+                >
+                  <img src={partner.logo.src} alt={partner.logo.alt} className="h-9 w-auto" />
+                </div>
+                <h3 className="text-h5 font-bold">{partner.name}</h3>
+                <p className="mb-3 text-small font-semibold text-scheme-text/70">
+                  {partner.location}
+                </p>
+                <p className="mb-5 text-scheme-text/85">{partner.summary}</p>
+                <ul className="mb-6 flex flex-col gap-2 text-small">
+                  {partner.points.map((point) => (
+                    <li key={point} className="flex gap-2">
+                      <span aria-hidden="true">•</span>
+                      <span>{point}</span>
+                    </li>
+                  ))}
+                </ul>
+                {partner.url && (
+                  <a
+                    href={partner.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-auto inline-flex min-h-6 items-center gap-1.5 text-small font-semibold underline-offset-4 hover:underline"
+                  >
+                    Visit website
+                    <ChevronRight className="size-4" />
+                  </a>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
 
       {/*
         TODO — SCHEME DETAILS NOT YET SUPPLIED. None of the four client documents
@@ -168,7 +220,7 @@ export const About = () => {
             iconRight: <ChevronRight className="text-scheme-text" />,
           },
         ]}
-        image={{ src: IMG, alt: "Young players training at an LVFC branch" }}
+        image={{ src: clubPhotos[3].src, alt: "Young players training at an LVFC branch" }}
       />
 
       <Header62

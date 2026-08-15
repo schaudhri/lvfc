@@ -4,13 +4,13 @@ import { Header54 } from "@/components/sections/Header54";
 import { PhaseTimeline } from "@/components/sections/PhaseTimeline";
 import { ScheduleGrid } from "@/components/sections/ScheduleGrid";
 import { Header62 } from "@/components/sections/Header62";
+import { RichText } from "@/components/RichText";
 import { Button } from "@/components/ui/button";
 import { getProgramme, pathwayFor } from "@/data/programmes";
 import { branches } from "@/data/locations";
 import { cta, programmeCta } from "@/data/cta";
 import { useDocumentMeta } from "@/hooks/use-document-meta";
-
-const IMG = "/placeholder-image.svg";
+import { clubPhotos } from "@/data/clubPhotos";
 
 /**
  * Detail page for a single programme, resolved from the URL slug.
@@ -49,8 +49,18 @@ export const ProgrammeSpecific = () => {
           { ...bookASpot, variant: "alternate" },
           { ...cta.schedule, variant: "secondary-alt" },
         ]}
-        image={{ src: IMG, alt: programme.name }}
+        image={programme.image ?? clubPhotos[programme.slug.length % clubPhotos.length]}
       />
+
+      {/* The full programme page, where the club has written one. Without it the
+          description in the header stands on its own, as it always has. */}
+      {programme.body && programme.body.length > 0 && (
+        <section className="px-[5%] pt-16 md:pt-24 lg:pt-28">
+          <div className="container max-w-3xl">
+            <RichText value={programme.body} />
+          </div>
+        </section>
+      )}
 
       {/* Not every programme has a details list — Seniors deliberately has
           none rather than carrying invented inclusions. */}
@@ -120,7 +130,7 @@ export const ProgrammeSpecific = () => {
                     ))}
                   </ul>
                   <Link
-                    to={`/locations#${branch.slug}`}
+                    to={`/locations/${branch.slug}`}
                     className="mt-auto flex min-h-6 items-center gap-2 text-small font-semibold"
                   >
                     See this branch

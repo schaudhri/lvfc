@@ -26,9 +26,15 @@ dist-ssr
 # Client source documents — not ours to publish, and not part of the build.
 # The .md files in docs/ are engineering notes and DO belong in the repo.
 docs/*.docx
+/*.pdf
 
 # 132MB — over GitHub's 100MB hard limit, and not needed to build the site.
 assets/brand-guidelines/
+
+# Raw camera originals and the uncompressed hero video (176MB — also over
+# GitHub's 100MB hard limit). The web-ready copies actually used by the site
+# live in public/images and public/videos and ARE committed.
+assets/images/
 
 # Scratch
 _to_delete/

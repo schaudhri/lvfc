@@ -8,6 +8,7 @@ import { ProgrammeSpecific } from "@/pages/ProgrammeSpecific";
 import { Coaching } from "@/pages/Coaching";
 import { Resources } from "@/pages/Resources";
 import { Locations } from "@/pages/Locations";
+import { BranchSpecific } from "@/pages/BranchSpecific";
 import { Schedule } from "@/pages/Schedule";
 import { Blog } from "@/pages/Blog";
 import { BlogPost } from "@/pages/BlogPost";
@@ -45,6 +46,7 @@ function App() {
           <Route path="/programmes" element={<Programme />} />
           <Route path="/programmes/:slug" element={<ProgrammeSpecific />} />
           <Route path="/locations" element={<Locations />} />
+          <Route path="/locations/:slug" element={<BranchSpecific />} />
           <Route path="/schedule" element={<Schedule />} />
           <Route path="/resources" element={<Resources />} />
           <Route path="/blog" element={<Blog />} />

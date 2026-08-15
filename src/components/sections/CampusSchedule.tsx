@@ -60,8 +60,8 @@ export const CampusSchedule = (props: CampusScheduleProps) => {
                 className={cn(
                   "rounded-full border px-4 py-2 text-small font-semibold transition-colors",
                   isActive
-                    ? "border-scheme-border bg-neutral-darkest text-white"
-                    : "border-scheme-border/40 text-scheme-text hover:bg-neutral-lightest",
+                    ? "border-brand-maroon bg-brand-maroon text-white"
+                    : "border-brand-maroon text-scheme-text hover:bg-neutral-lightest",
                 )}
               >
                 {branch.name}

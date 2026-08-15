@@ -68,7 +68,7 @@
 }
 
 :root {
-  --color-scheme-background: #ffffff;
+  --color-scheme-background: #eeeeee;
   --font-body:
     "Futura PT", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial,
     sans-serif;
@@ -82,7 +82,7 @@ html {
 body {
   font-family: var(--font-body);
   color: #000000;
-  background-color: #ffffff;
+  background-color: #eeeeee;
 }
 
 h1,
@@ -92,6 +92,7 @@ h4,
 h5,
 h6 {
   font-family: var(--font-heading);
+  color: #530e16;
 }
 
 /* ------------------------------------------------------------------ */
@@ -225,4 +226,86 @@ h6 {
   html {
     scroll-behavior: auto;
   }
+}
+
+/* ------------------------------------------------------------------ */
+/* Programme slider — Osmo Supply "Basic GSAP Slider (Watch CSS)"      */
+/*                                                                     */
+/* Slides per view and the gutter are declared here, not in JS: the    */
+/* script reads these custom properties back at init and on resize,    */
+/* which is what "Watch CSS" means. Change the breakpoints here.       */
+/* ------------------------------------------------------------------ */
+
+.programme-slider[data-gsap-slider-init] {
+  --slider-status: on;
+  --slider-spv: 3;
+  --slider-gap: 1.5rem;
+}
+
+@media screen and (max-width: 991px) {
+  .programme-slider[data-gsap-slider-init] {
+    --slider-status: on;
+    --slider-spv: 2.25;
+    --slider-gap: 1.5rem;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .programme-slider[data-gsap-slider-init] {
+    --slider-status: on;
+    --slider-spv: 1.15;
+    --slider-gap: 1rem;
+  }
+}
+
+.gsap-slider {
+  position: relative;
+  width: 100%;
+}
+
+/* The track is wider than the page; the collection is what clips it. */
+.gsap-slider__collection {
+  width: 100%;
+  overflow: hidden;
+}
+
+.gsap-slider__list {
+  display: flex;
+  user-select: none;
+  will-change: transform;
+  /* Vertical gestures still scroll the page — only horizontal drag is caught. */
+  touch-action: pan-y;
+  backface-visibility: hidden;
+}
+
+.gsap-slider__item {
+  flex: none;
+  width: calc(
+    ((100% - 1px) - (var(--slider-spv) - 1) * var(--slider-gap)) / var(--slider-spv)
+  );
+  margin-right: var(--slider-gap);
+}
+
+[data-gsap-slider-item]:last-child {
+  margin-right: 0;
+}
+
+/* Cursor affordance, driven by the attribute the script sets. */
+[data-gsap-slider-list-status="grab"] {
+  cursor: grab;
+}
+
+[data-gsap-slider-list-status="grabbing"] {
+  cursor: grabbing;
+}
+
+/* The script disables the buttons; this is only the visual state. */
+[data-gsap-slider-control-status="not-active"] {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+/* Slider off (few enough cards to fit) — hide the controls it cannot drive. */
+[data-gsap-slider-status="not-active"] [data-gsap-slider-controls] {
+  display: none;
 }

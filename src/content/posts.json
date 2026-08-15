@@ -1,0 +1,114 @@
+[
+  {
+    "brief": "A warm welcome from Director of Football Steve Hamilton and CEO Hamza Syed, introducing the new website, the 2026–27 season and what's new at LVFC.",
+    "byline": "Steve Hamilton & Hamza Syed",
+    "category": "Club announcement",
+    "slug": "welcome-to-the-new-lvfc-website",
+    "title": "Welcome to the New LVFC Website"
+  },
+  {
+    "body": [
+      {
+        "_key": "b0",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "b0s0",
+            "_type": "span",
+            "text": "Pine Avenue is open. Our fourth branch in Lahore runs out of The Box, on Pine Avenue near Alhamd Garden, and is taking registrations now."
+          }
+        ],
+        "style": "normal"
+      },
+      {
+        "_key": "b1",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "b1s0",
+            "_type": "span",
+            "text": "What runs there"
+          }
+        ],
+        "style": "h2"
+      },
+      {
+        "_key": "b2",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "b2s0",
+            "_type": "span",
+            "text": "Pine Avenue opens with four of our five pathway stages: Fundamentals for two-year-olds, Little Robbins at three to four, Pre Academy at five to eight and Foundation at nine to twelve. Youth Development is not running at Pine Avenue yet — players aged thirteen and over train at Gulberg, DHA Phase V or DHA Phase VIII."
+          }
+        ],
+        "style": "normal"
+      },
+      {
+        "_key": "b3",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "b3s0",
+            "_type": "span",
+            "text": "When it trains"
+          }
+        ],
+        "style": "h2"
+      },
+      {
+        "_key": "b4",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "b4s0",
+            "_type": "span",
+            "text": "Sessions run Monday to Wednesday, 6:00–9:00 PM — a longer evening band than our other three branches, which train 6:00–8:00 PM six days a week. Exact times by age group are confirmed at the branch."
+          }
+        ],
+        "style": "normal"
+      },
+      {
+        "_key": "b5",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "b5s0",
+            "_type": "span",
+            "text": "Getting a place"
+          }
+        ],
+        "style": "h2"
+      },
+      {
+        "_key": "b6",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "b6s0",
+            "_type": "span",
+            "text": "Places are limited while the branch settles in. Register through the booking portal and we will confirm within 24–48 hours, or come and watch a session first — the touchline is the best way to judge whether it suits your child."
+          }
+        ],
+        "style": "normal"
+      }
+    ],
+    "brief": "An introduction to The Box Football Academy on Pine Avenue as LVFC's newest location, with photos of the ground, the coaching team and opening day.",
+    "category": "Branches",
+    "slug": "pine-avenue-is-live",
+    "title": "Pine Avenue Is Live — Meet Our Fourth Branch"
+  },
+  {
+    "brief": "A thought-leadership piece on the impact of European coaching methodology in Pakistani youth football, covering LVFC's development philosophy and player success stories.",
+    "byline": "Steve Hamilton",
+    "category": "Coaching",
+    "slug": "uefa-licensed-coaching-in-pakistan",
+    "title": "How UEFA-Licensed Coaching Is Changing Youth Football in Pakistan"
+  },
+  {
+    "brief": "A match-day preview of the LVFC Summer League 2026 across three branches, with team names, age groups and fixtures.",
+    "category": "Competitions",
+    "slug": "summer-league-2026",
+    "title": "Summer League 2026 — Preview & Draw"
+  }
+]

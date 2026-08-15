@@ -9,8 +9,7 @@ import {
   relatedDocuments,
   type PolicyBlock,
 } from "@/data/safeguarding";
-
-const IMG = "/placeholder-image.svg";
+import { clubPhotos } from "@/data/clubPhotos";
 
 const Block = ({ block }: { block: PolicyBlock }) => {
   switch (block.type) {
@@ -69,7 +68,7 @@ export const Safeguarding = () => {
       <Header54
         heading="Safeguarding at LVFC"
         description="The safety and wellbeing of every child at LVFC is our highest priority. This is our full Safeguarding Children and Young People Policy, reviewed annually and published in full."
-        image={{ src: IMG, alt: "LVFC coaches supervising a training session" }}
+        image={{ src: clubPhotos[11].src, alt: "LVFC coaches supervising a training session" }}
       />
 
       {/* Reporting route sits above the policy — someone with a live concern

@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Button, type ButtonProps } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -6,12 +7,25 @@ type ImageProps = {
   alt?: string;
 };
 
+type VideoProps = {
+  src: string;
+  poster?: string;
+};
+
 type Props = {
   tagline?: string;
   heading: string;
   description: string;
   buttons?: ButtonProps[];
   image: ImageProps;
+  /**
+   * Two or more images rotate the background automatically. Falls back to
+   * `image` where this is omitted or has fewer than two entries, so every
+   * other page keeps its single static banner.
+   */
+  images?: ImageProps[];
+  /** When set, plays as a muted looping background instead of `image`/`images`. */
+  video?: VideoProps;
   /** "full" = the landing hero: ~90vh with content centred both ways. */
   size?: "default" | "full";
 };
@@ -19,14 +33,35 @@ type Props = {
 export type Header54Props = Omit<React.ComponentPropsWithoutRef<"section">, "size"> &
   Partial<Props>;
 
+/** How long each background image shows before crossfading to the next. */
+const SLIDE_DURATION_MS = 6000;
+
 export const Header54 = (props: Header54Props) => {
-  const { heading, description, buttons, image, size } = {
+  const { heading, description, buttons, image, images, video, size } = {
     ...Header54Defaults,
     ...props,
   };
   // "full" is the landing hero: near-full-viewport with everything centred.
   // Interior pages keep the shorter, left-aligned banner.
   const isFull = size === "full";
+
+  const slides = images && images.length > 1 ? images : [image];
+  const [active, setActive] = useState(0);
+
+  useEffect(() => {
+    if (slides.length < 2) return;
+    // Readers who've asked not to see motion get the first image, held still.
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const id = setInterval(() => {
+      setActive((current) => (current + 1) % slides.length);
+    }, SLIDE_DURATION_MS);
+    return () => clearInterval(id);
+  }, [slides.length]);
+
+  // The slide list can shrink between renders (fewer images passed in); keep
+  // the active index in range rather than reading past the end of the array.
+  const current = active % slides.length;
 
   return (
     <section
@@ -38,18 +73,13 @@ export const Header54 = (props: Header54Props) => {
       )}
     >
       <div className="relative z-10 container">
-        <div className={cn("w-full", isFull ? "mx-auto max-w-3xl text-center" : "max-w-lg")}>
+        <div className={cn("mx-auto w-full text-center", isFull ? "max-w-3xl" : "max-w-lg")}>
           <h1 className="mb-5 text-h1 font-bold text-white md:mb-6">{heading}</h1>
-          <p className={cn("text-medium text-white", isFull && "mx-auto max-w-xl")}>
+          <p className={cn("mx-auto text-medium text-white", isFull && "max-w-xl")}>
             {description}
           </p>
           {buttons && buttons.length > 0 && (
-            <div
-              className={cn(
-                "mt-6 flex flex-wrap gap-4 md:mt-8",
-                isFull && "justify-center",
-              )}
-            >
+            <div className="mt-6 flex flex-wrap justify-center gap-4 md:mt-8">
               {buttons.map((button, index) => (
                 <Button key={index} {...button}>
                   {button.title}
@@ -60,9 +90,49 @@ export const Header54 = (props: Header54Props) => {
         </div>
       </div>
       <div className="absolute inset-0 z-0">
-        <img src={image.src} className="size-full object-cover" alt={image.alt} />
-        <div className="absolute inset-0 bg-neutral-darkest/50" />
+        {video ? (
+          <video
+            className="absolute inset-0 size-full object-cover"
+            src={video.src}
+            poster={video.poster}
+            autoPlay
+            loop
+            muted
+            playsInline
+          />
+        ) : (
+          slides.map((slide, index) => (
+            <img
+              key={slide.src + index}
+              src={slide.src}
+              alt={index === current ? (slide.alt ?? "") : ""}
+              aria-hidden={index === current ? undefined : true}
+              className={cn(
+                "absolute inset-0 size-full object-cover transition-opacity duration-1000 ease-in-out",
+                index === current ? "opacity-100" : "opacity-0",
+              )}
+            />
+          ))
+        )}
+        <div className={cn("absolute inset-0", video ? "bg-black/40" : "bg-neutral-darkest/50")} />
       </div>
+      {!video && slides.length > 1 && (
+        <div className="absolute inset-x-0 bottom-6 z-10 flex justify-center gap-2">
+          {slides.map((slide, index) => (
+            <button
+              key={slide.src + index}
+              type="button"
+              onClick={() => setActive(index)}
+              aria-label={`Show background image ${index + 1} of ${slides.length}`}
+              aria-current={index === current}
+              className={cn(
+                "size-2.5 rounded-full transition-colors",
+                index === current ? "bg-white" : "bg-white/40 hover:bg-white/60",
+              )}
+            />
+          ))}
+        </div>
+      )}
     </section>
   );
 };
