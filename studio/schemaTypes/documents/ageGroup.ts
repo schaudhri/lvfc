@@ -18,7 +18,7 @@ export const ageGroup = defineType({
     defineField({
       name: "name",
       type: "string",
-      description: 'The stage name, for example "Little Robbins".',
+      description: 'The stage name, for example "Mini-Kickers".',
       validation: (rule) => rule.required(),
     }),
     defineField({

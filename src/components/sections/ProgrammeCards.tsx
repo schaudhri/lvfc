@@ -10,6 +10,7 @@ import { Button, type ButtonProps } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cardMedia } from "@/lib/surface";
 import { cn } from "@/lib/utils";
+import { formatAges } from "@/data/programmes";
 
 gsap.registerPlugin(Draggable, InertiaPlugin);
 
@@ -372,7 +373,12 @@ export const ProgrammeCards = (props: ProgrammeCardsProps) => {
                 {programme.title}
               </Link>
             </h3>
-            <p className="mt-1 text-large font-bold text-white/70">Ages: {programme.ages}</p>
+            {/* The age is what a parent scans for first, so it reads as a pill
+                with the unit spelled out — "3–4 years", not "Ages: 3–4". */}
+            <p className="mt-3 w-fit rounded-full bg-white/15 px-3 py-1 text-small font-semibold text-white">
+              <span className="sr-only">Ages </span>
+              {formatAges(programme.ages)}
+            </p>
 
             <p className="mt-4 mb-8 flex-1 text-white/85">{programme.description}</p>
 

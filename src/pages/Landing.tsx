@@ -10,6 +10,7 @@ import { LocationsList } from "@/components/sections/LocationsList";
 import { CoachSlider } from "@/components/sections/CoachSlider";
 import { Layout442 } from "@/components/sections/Layout442";
 import { Gallery9 } from "@/components/sections/Gallery9";
+import { PrivateEventsCallout } from "@/components/sections/PrivateEventsCallout";
 import { Faqs } from "@/components/sections/Faqs";
 import { Blog42 } from "@/components/sections/Blog42";
 import { programmes, academyAgeGroups } from "@/data/programmes";
@@ -33,7 +34,7 @@ export const Landing = () => {
     <>
       <Header54
         size="full"
-        heading="Where people bring their fire, the city blooms"
+        heading="Join Lahore's leading youth football club"
         description="Lahore's football club — built on community, ambition, and pride of place."
         buttons={[
           { ...cta.programmes, variant: "alternate" },
@@ -165,6 +166,8 @@ export const Landing = () => {
           </div>
         </div>
       </section>
+
+      <PrivateEventsCallout />
 
       <Gallery9
         heading="Life at LVFC"

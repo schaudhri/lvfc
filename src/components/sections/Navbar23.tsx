@@ -164,7 +164,9 @@ export const Navbar23 = (props: Navbar23Props) => {
                   key={index}
                   to={link.url}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="text-md block py-3 first:pt-7 lg:px-4 lg:py-6 lg:text-base first:lg:pt-6"
+                  // Tighter and smaller between lg and xl: seven links plus
+                  // the CTA otherwise wrap onto two lines at ~1024px.
+                  className="text-md block py-3 first:pt-7 lg:px-2 lg:py-6 lg:text-sm lg:whitespace-nowrap first:lg:pt-6 xl:px-4 xl:text-base"
                 >
                   {link.title}
                 </Link>
@@ -206,7 +208,7 @@ const SubMenu = ({
       onMouseLeave={() => !isMobile && setIsDropdownOpen(false)}
     >
       <button
-        className="text-md flex w-full items-center justify-between gap-x-2 py-3 text-center lg:w-auto lg:flex-none lg:justify-start lg:px-4 lg:py-6 lg:text-base"
+        className="text-md flex w-full items-center justify-between gap-x-2 py-3 text-center lg:w-auto lg:flex-none lg:justify-start lg:gap-x-1 lg:px-2 lg:py-6 lg:text-sm lg:whitespace-nowrap xl:gap-x-2 xl:px-4 xl:text-base"
         aria-expanded={isDropdownOpen}
         onClick={() => setIsDropdownOpen((prev) => !prev)}
       >

@@ -5,6 +5,9 @@ import { Button, type ButtonProps } from "@/components/ui/button";
 import { branches } from "@/data/locations";
 import { scheduleDays, scheduleRows, scheduleNotes } from "@/data/schedule";
 import { cn } from "@/lib/utils";
+import { cardPadded } from "@/lib/surface";
+import { schools } from "@/data/schools";
+import { cta } from "@/data/cta";
 
 const ALL = "All";
 
@@ -161,6 +164,34 @@ export const ScheduleGrid = (props: ScheduleGridProps) => {
               your child in the right group.
             </p>
           </div>
+        )}
+
+        {/* Schools we train at outside the four branches. No per-campus
+            times exist yet, so these sit under the table rather than in it. */}
+        {schools.length > 0 && (
+          <ul className="mt-10 flex flex-col gap-4">
+            {schools.map((school) => (
+              <li
+                key={school.name}
+                className={cn("flex flex-col gap-5 sm:flex-row sm:items-center sm:gap-8", cardPadded)}
+              >
+                <div className="flex h-16 w-40 shrink-0 items-center justify-center rounded-badge bg-white px-4">
+                  {school.logo ? (
+                    <img src={school.logo.src} alt={school.logo.alt} className="max-h-10 w-auto" />
+                  ) : (
+                    <span className="text-center font-bold leading-tight">{school.name}</span>
+                  )}
+                </div>
+                <div className="flex-1">
+                  <h3 className="mb-1 text-h6 font-bold">Also training at {school.name} schools</h3>
+                  <p className="text-scheme-text/80">{school.description}</p>
+                </div>
+                <Button {...cta.contact} variant="secondary" size="sm" className="shrink-0">
+                  Ask about school sessions
+                </Button>
+              </li>
+            ))}
+          </ul>
         )}
 
         {buttons && buttons.length > 0 && (

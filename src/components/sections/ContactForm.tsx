@@ -1,15 +1,29 @@
 "use client";
 
 import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { branches } from "@/data/locations";
 import { club } from "@/data/club";
 import { cn } from "@/lib/utils";
 
+type EnquiryType = { value: string; label: string };
+
 type Props = {
   heading: string;
   description: string;
+  /**
+   * Adds a required "What would you like to book?" choice. It is preselected
+   * from `?type=` in the URL, so a "Book a birthday party" button elsewhere
+   * lands on the form with that answer already filled in.
+   */
+  enquiryTypes?: EnquiryType[];
+  /** Adds an optional date field with this label. */
+  dateLabel?: string;
+  /** Mail subject line; the sender's name is appended. */
+  subject: string;
+  submitLabel: string;
 };
 
 export type ContactFormProps = React.ComponentPropsWithoutRef<"section"> & Partial<Props>;
@@ -38,34 +52,45 @@ export const ContactForm = (props: ContactFormProps) => {
   const {
     heading = "Send us a message",
     description = "Tell us a little about your child and we'll point you to the right group. We usually reply within 24–48 hours.",
+    enquiryTypes,
+    dateLabel,
+    subject = "Website enquiry",
+    submitLabel = "Send message",
+    id,
     className,
   } = props;
 
   const [sent, setSent] = useState(false);
+  const [searchParams] = useSearchParams();
+  const requestedType =
+    enquiryTypes?.find((type) => type.value === searchParams.get("type"))?.value ?? "";
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const get = (k: string) => String(data.get(k) ?? "").trim();
+    const enquiry = enquiryTypes?.find((type) => type.value === get("enquiry"))?.label;
 
     const lines = [
+      enquiry && `Enquiry: ${enquiry}`,
       `Name: ${get("name")}`,
       `Email: ${get("email")}`,
       get("phone") && `Phone: ${get("phone")}`,
       get("childAge") && `Child's age: ${get("childAge")}`,
+      get("date") && `${dateLabel}: ${get("date")}`,
       get("branch") && `Preferred branch: ${get("branch")}`,
       "",
       get("message"),
     ].filter(Boolean);
 
-    const subject = encodeURIComponent(`Website enquiry — ${get("name")}`);
+    const mailSubject = encodeURIComponent(`${subject} — ${get("name")}`);
     const body = encodeURIComponent(lines.join("\n"));
-    window.location.href = `mailto:${club.email}?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:${club.email}?subject=${mailSubject}&body=${body}`;
     setSent(true);
   };
 
   return (
-    <section className={cn("px-[5%] py-16 md:py-24 lg:py-28", className)}>
+    <section id={id} className={cn("scroll-mt-10 px-[5%] py-16 md:py-24 lg:py-28", className)}>
       <div className="container">
         <div className="grid grid-cols-1 gap-x-12 gap-y-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1fr)] lg:gap-x-20">
           <div>
@@ -78,6 +103,46 @@ export const ContactForm = (props: ContactFormProps) => {
           </div>
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+            {(enquiryTypes || dateLabel) && (
+              <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                {enquiryTypes && (
+                  <div>
+                    <label htmlFor="cf-enquiry" className={labelStyle}>
+                      What would you like to book? <span aria-hidden="true">*</span>
+                    </label>
+                    {/* Keyed on the URL's choice so a second "Book a…" click
+                        on the same page re-selects rather than keeping the
+                        first answer. */}
+                    <select
+                      key={requestedType}
+                      id="cf-enquiry"
+                      name="enquiry"
+                      required
+                      defaultValue={requestedType}
+                      className={cn(field, "min-h-11")}
+                    >
+                      <option value="" disabled>
+                        Choose one
+                      </option>
+                      {enquiryTypes.map((type) => (
+                        <option key={type.value} value={type.value}>
+                          {type.label}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                )}
+                {dateLabel && (
+                  <div>
+                    <label htmlFor="cf-date" className={labelStyle}>
+                      {dateLabel} <span className="font-normal text-scheme-text/60">(optional)</span>
+                    </label>
+                    <Input id="cf-date" name="date" type="date" />
+                  </div>
+                )}
+              </div>
+            )}
+
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
               <div>
                 <label htmlFor="cf-name" className={labelStyle}>
@@ -127,7 +192,7 @@ export const ContactForm = (props: ContactFormProps) => {
             </div>
 
             <div className="flex flex-wrap items-center gap-4">
-              <Button type="submit">Send message</Button>
+              <Button type="submit">{submitLabel}</Button>
               {/* Confirms the hand-off actually happened — a mailto gives no
                   feedback of its own, so without this the button looks dead. */}
               <p aria-live="polite" className="text-small text-scheme-text/70">

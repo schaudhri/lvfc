@@ -73,9 +73,18 @@ export type Programme = {
   body?: PortableTextBlock[];
 };
 
-/** Age bands offered as filters — aligned to the portal's own age ranges. */
+/**
+ * An age label as a parent reads it: "2" → "2 years", "3–4" → "3–4 years",
+ * "16+" → "16+ years". Labels that already carry their own unit ("U8–U14",
+ * "All ages") pass through untouched.
+ */
+export const formatAges = (label: string) =>
+  /^\d+(?:[–-]\d+|\+)?$/.test(label) ? `${label} years` : label;
+
+/** Age bands offered as filters — one per pathway stage up to 12. */
 export const ageFilters = [
-  { id: "1-4", label: "1–4 years", min: 1, max: 4 },
+  { id: "2", label: "2 years", min: 2, max: 2 },
+  { id: "3-4", label: "3–4 years", min: 3, max: 4 },
   { id: "5-8", label: "5–8 years", min: 5, max: 8 },
   { id: "9-12", label: "9–12 years", min: 9, max: 12 },
   { id: "13-15", label: "13–15 years", min: 13, max: 15 },

@@ -35,6 +35,7 @@ export const Coaching = () => {
         second Team16 below this one once received.
       */}
       <Team16
+        id="team"
         heading="Who leads the club"
         description="All LVFC head coaches have extensive training and qualifications, with support coaches trained to national standards. Our Director of Football sets the curriculum and coaching standards across every branch."
         teamMembers={leadership.map((person, index) => ({
@@ -42,6 +43,7 @@ export const Coaching = () => {
           name: person.name,
           jobTitle: person.alsoRole ? `${person.role} · ${person.alsoRole}` : person.role,
           description: person.description,
+          email: person.email,
           socialLinks: social,
         }))}
         footerContent={{

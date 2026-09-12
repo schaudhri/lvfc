@@ -65,7 +65,7 @@ const FilterPills = ({
 export const Programme = () => {
   useDocumentMeta(
     "Programmes",
-    "Every route into the club, from Mini-Kickers at one through to Seniors at 16+. Filter by age or branch to see what runs near you.",
+    "Every route into the club, from FUNdamentals at two through to Seniors at 16+. Filter by age or branch to see what runs near you.",
   );
   const [age, setAge] = useState(ALL);
   const [branch, setBranch] = useState(ALL);
@@ -87,8 +87,9 @@ export const Programme = () => {
         <div className="container max-w-3xl">
           <h2 className="mb-5 text-h3 font-bold md:mb-6">Where does my child start?</h2>
           <p className="mb-4 text-medium">
-            Most families start with the age group that matches their child — Mini-Kickers at one to
-            four, then Pre-Academy, Foundation and Youth Development as they grow. Each one runs
+            Most families start with the age group that matches their child — FUNdamentals at two,
+            Mini-Kickers at three to four, then Pre-Academy, Foundation and Youth Development as they
+            grow. Each one runs
             three evenings a week and follows the same curriculum, pitched at that age.
           </p>
           <p className="text-medium">

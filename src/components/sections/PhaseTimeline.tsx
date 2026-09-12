@@ -95,8 +95,8 @@ const Hexagon = ({ children }: { children: React.ReactNode }) => (
 export const PhaseTimelineDefaults: Props = {
   heading: "The player pathway",
   phases: [
-    { age: "2 years", title: "Fundamentals", description: "Play-based introduction" },
-    { age: "3–4 years", title: "Little Robbins", description: "Coordination, confidence" },
+    { age: "2 years", title: "FUNdamentals", description: "Play-based introduction" },
+    { age: "3–4 years", title: "Mini-Kickers", description: "Coordination, confidence" },
     { age: "5–8 years", title: "Pre Academy", description: "Ball mastery, 1v1" },
     { age: "9–12 years", title: "Foundation", description: "Technique, small-sided games" },
     { age: "13+ years", title: "Youth Development", description: "Tactical concepts, team shape" },

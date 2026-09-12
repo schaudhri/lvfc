@@ -1,10 +1,29 @@
 [
   {
     "ageRange": {
-      "max": 4,
-      "min": 1
+      "max": 2,
+      "min": 2
     },
-    "agesLabel": "1–4",
+    "agesLabel": "2",
+    "branchSlugs": [
+      "gulberg",
+      "dha-phase-v",
+      "dha-phase-viii",
+      "pine-avenue"
+    ],
+    "description": "The very first step on the LVFC pathway. FUNdamentals is a fun, play-based introduction to football for two-year-olds — short, playful sessions that get children moving and comfortable around a ball, ready to step up to Mini-Kickers at three.",
+    "name": "FUNdamentals",
+    "season": "2026–27 season",
+    "slug": "fundamentals",
+    "summary": "A fun, play-based first introduction to football for two-year-olds.",
+    "tag": "First steps"
+  },
+  {
+    "ageRange": {
+      "max": 4,
+      "min": 3
+    },
+    "agesLabel": "3–4",
     "bookingKey": "mini_kickers",
     "branchSlugs": [
       "gulberg",

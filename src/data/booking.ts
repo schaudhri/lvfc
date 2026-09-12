@@ -55,7 +55,7 @@ export const bookableProgrammes: BookableProgramme[] = [
   {
     key: "mini_kickers",
     name: "Mini-Kickers",
-    ages: "Ages 1-4",
+    ages: "Ages 3-4",
     description:
       "Mini-Kickers revolves around lots of minigames, establishing a strong foundation in ABCs (Agility, Balance and Coordination).",
     url: `${PROGRAMME_PRODUCT}?club_programme=mini_kickers`,

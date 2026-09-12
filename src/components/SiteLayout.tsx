@@ -36,6 +36,7 @@ const HERO_ROUTES = [
   /^\/safeguarding$/,
   /^\/faqs$/,
   /^\/coaching$/,
+  /^\/private-events$/,
 ];
 
 export const SiteLayout = () => {

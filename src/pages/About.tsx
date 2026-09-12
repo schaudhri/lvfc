@@ -8,7 +8,8 @@ import { Header62 } from "@/components/sections/Header62";
 import { programmes } from "@/data/programmes";
 import { cta } from "@/data/cta";
 import { useDocumentMeta } from "@/hooks/use-document-meta";
-import { aboutHeroCover, clubPhotos, coachPhotos } from "@/data/clubPhotos";
+import { aboutHeroCover, clubPhotos } from "@/data/clubPhotos";
+import { CeoLetter } from "@/components/sections/CeoLetter";
 import { internationalPartners } from "@/data/partners";
 import { cardPadded } from "@/lib/surface";
 import { cn } from "@/lib/utils";
@@ -30,26 +31,7 @@ export const About = () => {
         image={aboutHeroCover}
       />
 
-      {/*
-        TODO: this is placeholder framing, not a supplied CEO letter. The 5 July
-        meeting listed a CEO letter as drafted — replace this copy with it, and
-        point "Read the full letter" at the real document.
-      */}
-      <Layout1
-        heading="Hamza Syed, CEO"
-        description="We started with a simple belief: young footballers in Pakistan deserve the same structure, coaching quality and opportunity that kids get at proper clubs anywhere else in the world. Not a soccer school — a club. That means a complete pathway for players aged 2 to 18, a curriculum aligned to European development standards, and four branches across the city so distance is never the reason a child doesn't play."
-        buttons={[
-          { title: "Read the full letter", url: "/about", variant: "secondary" },
-          {
-            title: "Meet the team",
-            url: "/coaching",
-            variant: "link",
-            size: "link",
-            iconRight: <ChevronRight className="text-scheme-text" />,
-          },
-        ]}
-        image={{ src: coachPhotos[0].src, alt: "Hamza Syed, CEO of Virgil Sports" }}
-      />
+      <CeoLetter />
 
       <Layout242
         heading="Our vision, mission and what we stand for"
@@ -144,7 +126,7 @@ export const About = () => {
         image={{ src: clubPhotos[2].src, alt: "Safeguarding at LVFC" }}
       />
 
-      <section className="px-[5%] py-16 md:py-24 lg:py-28">
+      <section id="partners" className="scroll-mt-10 px-[5%] py-16 md:py-24 lg:py-28">
         <div className="container">
           <div className="mb-12 max-w-lg md:mb-18 lg:mb-20">
             <h2 className="mb-4 text-h3 font-bold">International partners</h2>

@@ -22,6 +22,7 @@ type TeamMember = {
   name: string;
   jobTitle: string;
   description: string;
+  email?: string;
   socialLinks: SocialLink[];
 };
 
@@ -41,7 +42,7 @@ export const Team16 = (props: Team16Props) => {
     ...props,
   };
   return (
-    <section className="px-[5%] py-16 md:py-24 lg:py-28">
+    <section id={props.id} className="scroll-mt-10 px-[5%] py-16 md:py-24 lg:py-28">
       <div className="container grid grid-cols-1 items-start md:grid-flow-row md:gap-x-12 lg:gap-x-20">
         <div className="mb-12 max-w-lg md:mb-18 lg:mb-20">
           <h2 className="mb-5 text-h2 font-bold md:mb-6">{heading}</h2>
@@ -80,6 +81,14 @@ const TeamMember = ({ member }: { member: TeamMember }) => {
           <p className="text-medium">{member.jobTitle}</p>
         </div>
         <p>{member.description}</p>
+        {member.email && (
+          <a
+            href={`mailto:${member.email}`}
+            className="mt-4 inline-flex min-h-6 w-fit items-center font-semibold underline underline-offset-2"
+          >
+            {member.email}
+          </a>
+        )}
         <div className="mt-5 grid grid-flow-col grid-cols-[max-content] gap-3.5 self-start md:mt-6">
           {member.socialLinks.map((link, index) => (
             <a key={index} href={link.href}>

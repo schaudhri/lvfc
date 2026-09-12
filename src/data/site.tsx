@@ -1,10 +1,12 @@
 import { type Navbar23Props } from "@/components/sections/Navbar23";
 import { type Footer2Props } from "@/components/sections/Footer2";
 import { FacebookLogo, InstagramLogo, LinkedinLogo, XLogo, YoutubeLogo } from "relume-icons";
-import { programmes } from "@/data/programmes";
+import { formatAges, programmes } from "@/data/programmes";
 import { branches } from "@/data/locations";
 import { club } from "@/data/club";
 import { cta } from "@/data/cta";
+import { internationalPartners } from "@/data/partners";
+import { aboutHeroCover, clubPhotos, coachPhotos } from "@/data/clubPhotos";
 
 const LOGO = { url: "/", src: "/logo.svg", alt: "Lahore Virgil Football Club" };
 
@@ -33,10 +35,8 @@ const LAND = "/placeholder-image-landscape.svg";
  * Coaching sits directly after Programmes, matching the agreed IA — a parent
  * choosing a programme is the same parent who wants to know who coaches it.
  *
- * Resources is deliberately NOT here. It is a deep reference library rather
- * than a decision-stage destination, so it lives in the footer "Explore"
- * column plus the site-wide `ResourcesCallout` that sits above the footer on
- * every page.
+ * Resources took Blog's slot in the bar (client request, Sept 2026). The blog
+ * stays reachable from the footer "Explore" column.
  *
  * Contact is deliberately NOT here either — "Book A Spot" is the single
  * primary action in the bar, and a competing Contact link next to it split
@@ -48,7 +48,42 @@ const LAND = "/placeholder-image-landscape.svg";
 export const navbarProps: Navbar23Props = {
   logo: LOGO,
   links: [
-    { title: "New to LVFC", url: "/about" },
+    {
+      title: "New to LVFC",
+      url: "/about",
+      // The team and partners are sections of other pages rather than pages of
+      // their own, so their cards deep-link to the section (client request,
+      // Sept 2026).
+      megaMenu: {
+        title: "New to LVFC",
+        description:
+          "Who we are, who leads the club, and the partners who take our players beyond Lahore.",
+        button: { title: "Start here", url: "/about", variant: "secondary", size: "sm" },
+        items: [
+          {
+            url: "/about",
+            image: aboutHeroCover,
+            name: "Who we are",
+            meta: "The club and how to join",
+            detail: "Read our story",
+          },
+          {
+            url: "/coaching#team",
+            image: { src: coachPhotos[0].src, alt: "LVFC coaching staff" },
+            name: "Meet the team",
+            meta: "The people who lead the club",
+            detail: "See who's who",
+          },
+          {
+            url: "/about#partners",
+            image: clubPhotos[5],
+            name: "International partners",
+            meta: internationalPartners.map((partner) => partner.name).join(" and "),
+            detail: "See our partners",
+          },
+        ],
+      },
+    },
     {
       title: "Programmes",
       url: "/programmes",
@@ -58,14 +93,14 @@ export const navbarProps: Navbar23Props = {
           "Every route into the club — from a first touch through to 16+ and selected competitive squads.",
         button: { ...cta.programmes, variant: "secondary", size: "sm" },
         // A preview, not the catalogue. The three youngest entry points cover
-        // ages 1–12 — most of who walks in — and "See all programmes" beside
+        // ages 3–12 — most of who walks in — and "See all programmes" beside
         // them carries the remaining seven. Ten cards in a dropdown is a list
         // to wade through, not a menu.
         items: programmes.slice(0, 3).map((programme) => ({
           url: `/programmes/${programme.slug}`,
           image: { src: LAND, alt: programme.name },
           name: programme.name,
-          meta: programme.tag,
+          meta: `${formatAges(programme.agesLabel)} · ${programme.tag}`,
           detail: programme.summary,
           badge: programme.flagship ? "Flagship" : undefined,
         })),
@@ -93,7 +128,8 @@ export const navbarProps: Navbar23Props = {
       },
     },
     { title: "Schedule", url: "/schedule" },
-    { title: "Blog", url: "/blog" },
+    { title: "Resources", url: "/resources" },
+    { title: "Private Sessions", url: "/private-events" },
   ],
   // No colour override: champagne is now the default solid CTA colour site-wide
   // (stakeholder direction, Aug 2026), so the nav button inherits it.
@@ -114,6 +150,7 @@ export const footerProps: Footer2Props = {
       links: [
         { title: "New to LVFC", url: "/about" },
         { title: "How we coach", url: "/coaching" },
+        { title: "Private sessions & birthdays", url: "/private-events" },
         { title: "Safeguarding", url: "/safeguarding" },
         { title: "Contact", url: "/contact" },
       ],

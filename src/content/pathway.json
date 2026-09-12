@@ -4,14 +4,14 @@
     "focus": "Fun, play-based introduction to football.",
     "max": 2,
     "min": 2,
-    "name": "Fundamentals"
+    "name": "FUNdamentals"
   },
   {
     "ages": "3–4 years",
     "focus": "Fun, play-based introduction to football, coordination and game confidence.",
     "max": 4,
     "min": 3,
-    "name": "Little Robbins"
+    "name": "Mini-Kickers"
   },
   {
     "ages": "5–8 years",

@@ -48,25 +48,42 @@ export const LocationsList = (props: LocationsListProps) => {
 
         <div className="grid grid-cols-1 items-start gap-8 md:grid-cols-2 lg:gap-12">
           <div className="flex flex-col gap-4">
-            {locations.map((location, index) => (
-              <button
-                key={index}
-                type="button"
-                onClick={() => setActive(index)}
-                aria-current={index === active}
-                className={`flex items-center justify-between gap-4 rounded-card px-6 py-5 text-left transition-colors ${
-                  index === active
-                    ? "bg-neutral-lighter ring-1 ring-scheme-border/30"
-                    : "bg-neutral-lightest hover:bg-neutral-lighter"
-                }`}
-              >
-                <span>
-                  <span className="mb-1 block text-large font-bold">{location.name}</span>
-                  <span className="block text-scheme-text/70">{location.address}</span>
-                </span>
-                <ArrowRight className="size-6 shrink-0 text-scheme-text" />
-              </button>
-            ))}
+            {locations.map((location, index) => {
+              const isActive = index === active;
+              return (
+                <button
+                  key={index}
+                  type="button"
+                  onClick={() => setActive(index)}
+                  aria-current={isActive}
+                  // Selected: the redcurrant card surface with a champagne
+                  // title and white text (client direction, Sept 2026).
+                  className={cn(
+                    "flex items-center justify-between gap-4 rounded-card px-6 py-5 text-left transition-colors",
+                    isActive
+                      ? "bg-brand-maroon text-white"
+                      : "bg-neutral-lightest hover:bg-neutral-lighter",
+                  )}
+                >
+                  <span>
+                    <span
+                      className={cn(
+                        "mb-1 block text-large font-bold",
+                        isActive && "text-brand-champagne",
+                      )}
+                    >
+                      {location.name}
+                    </span>
+                    <span className={cn("block", isActive ? "text-white" : "text-scheme-text/70")}>
+                      {location.address}
+                    </span>
+                  </span>
+                  <ArrowRight
+                    className={cn("size-6 shrink-0", isActive ? "text-white" : "text-scheme-text")}
+                  />
+                </button>
+              );
+            })}
           </div>
           <a
             href={activeLocation.url ?? "#"}

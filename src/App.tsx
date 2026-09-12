@@ -15,6 +15,7 @@ import { BlogPost } from "@/pages/BlogPost";
 import { Contact } from "@/pages/Contact";
 import { Safeguarding } from "@/pages/Safeguarding";
 import { Faqs as FaqsPage } from "@/pages/Faqs";
+import { PrivateEvents } from "@/pages/PrivateEvents";
 import { NotFound } from "@/pages/NotFound";
 
 const ScrollToTop = () => {
@@ -55,6 +56,7 @@ function App() {
           <Route path="/safeguarding" element={<Safeguarding />} />
           <Route path="/faqs" element={<FaqsPage />} />
           <Route path="/coaching" element={<Coaching />} />
+          <Route path="/private-events" element={<PrivateEvents />} />
           {/* Catch-all: keeps the nav and footer around an unknown URL. */}
           <Route path="*" element={<NotFound />} />
         </Route>
