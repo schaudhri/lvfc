@@ -72,7 +72,7 @@ export const Header54 = (props: Header54Props) => {
       className={cn(
         "relative px-[5%]",
         isFull
-          ? "flex min-h-[90vh] items-center justify-center py-20"
+          ? "flex min-h-[70svh] items-center justify-center py-20 md:min-h-[90vh]"
           : // Interior heroes hold at 420px on desktop, content centred
             // (Figma template, Sept 2026) — was content-height, ~340px.
             "flex items-center py-16 md:py-24 lg:min-h-[420px] lg:py-28",
@@ -88,7 +88,7 @@ export const Header54 = (props: Header54Props) => {
             {heading}
           </h1>
           {showDescription && (
-            <p className="mx-auto max-w-xl text-medium text-white">{description}</p>
+            <p className="mx-auto max-w-lg text-medium text-white">{description}</p>
           )}
           {hasButtons && (
             <div className="mt-6 flex flex-wrap justify-center gap-4 md:mt-8">

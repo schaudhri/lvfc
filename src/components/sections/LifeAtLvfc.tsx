@@ -33,7 +33,7 @@ export const LifeAtLvfc = ({ heading, description, images }: Props) => {
       <div className="container">
         <div className="mb-10 flex flex-wrap items-end justify-between gap-6 md:mb-12">
           <div className="max-w-lg">
-            <h2 className="mb-4 text-h2 font-medium md:mb-5">{heading}</h2>
+            <h2 className="mb-5 text-h3 font-medium md:mb-6">{heading}</h2>
             {description && <p className="text-medium">{description}</p>}
           </div>
           {/* Same prev/next control shape as the programme slider, so the

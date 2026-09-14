@@ -42,7 +42,7 @@ export const AlsoAtClub = ({ programmes }: { programmes: Programme[] }) => {
               className={cn(
                 // 16px as drawn on desktop; a step down on phones, where six
                 // pills otherwise stack four rows deep above the cards.
-                "rounded-full border px-4 py-2 text-small font-semibold transition-colors md:text-regular",
+                "min-h-11 rounded-full border px-4 py-2 text-small font-semibold lg:min-h-0 transition-colors md:text-regular",
                 isActive
                   ? "border-brand-maroon bg-brand-maroon text-white"
                   : "border-brand-maroon text-scheme-text hover:bg-neutral-lightest",
@@ -67,7 +67,7 @@ export const AlsoAtClub = ({ programmes }: { programmes: Programme[] }) => {
               {formatAges(selected.agesLabel)}
             </span>
           </div>
-          <p className="mt-2 max-w-xl text-scheme-text/85">{selected.summary}</p>
+          <p className="mt-2 max-w-lg text-scheme-text/70">{selected.summary}</p>
         </div>
         <div className="flex shrink-0 flex-wrap items-center gap-x-6 gap-y-3">
           <Button {...programmeCta(selected.bookingKey)} size="sm">

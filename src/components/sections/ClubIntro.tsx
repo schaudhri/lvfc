@@ -37,12 +37,12 @@ export const ClubIntro = (props: ClubIntroProps) => {
                 {eyebrow}
               </p>
             )}
-            <h2 className="text-h2 font-medium">{heading}</h2>
+            <h2 className="text-h3 font-medium">{heading}</h2>
           </div>
 
           <div className="flex flex-col gap-5">
             {body.map((paragraph, index) => (
-              <p key={index} className="text-medium text-scheme-text/85">
+              <p key={index} className="text-medium text-scheme-text/70">
                 {paragraph}
               </p>
             ))}

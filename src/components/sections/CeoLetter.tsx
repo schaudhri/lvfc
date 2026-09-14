@@ -27,7 +27,7 @@ export const CeoLetter = () => {
         </aside>
 
         <article className="max-w-[42rem]">
-          <h2 className="mb-8 text-h2 font-medium md:mb-10">A letter from our CEO</h2>
+          <h2 className="mb-8 text-h3 font-medium md:mb-10">A letter from our CEO</h2>
           <div className="flex flex-col gap-5 text-medium">
             {paragraphs.map((paragraph, index) => (
               <p key={index}>{paragraph}</p>

@@ -8,7 +8,7 @@ import { Layout242 } from "@/components/sections/Layout242";
 import { academyAgeGroups } from "@/data/programmes";
 import { cta } from "@/data/cta";
 import { useDocumentMeta } from "@/hooks/use-document-meta";
-import { aboutHeroCover } from "@/data/clubPhotos";
+import { aboutHeroCover, femaleCoachPhotos } from "@/data/clubPhotos";
 import { coaches } from "@/data/coaches";
 
 export const Coaching = () => {
@@ -38,6 +38,43 @@ export const Coaching = () => {
           button: { ...cta.contact, variant: "secondary" },
         }}
       />
+
+      {/* The club's female coaches (client request, 14 Sept 2026): the group
+          shot wide, two on the pitch beside it. On large screens the portraits
+          take the group photo's height rather than their own. */}
+      <section className="px-[5%] pb-16 md:pb-24 lg:pb-28">
+        <div className="container">
+          <div className="mb-12 max-w-lg md:mb-18 lg:mb-20">
+            <h2 className="mb-5 text-h3 font-medium md:mb-6">Our female coaches</h2>
+            <p className="text-medium">
+              Women are part of our coaching team on the pitch, and every age group is open to
+              girls as well as boys.
+            </p>
+          </div>
+          <div className="grid grid-cols-2 gap-4 md:gap-6 lg:grid-cols-4 lg:gap-8">
+            {femaleCoachPhotos.map((photo) =>
+              photo.portrait ? (
+                <div key={photo.src} className="relative aspect-[3/4] lg:aspect-auto">
+                  <img
+                    src={photo.src}
+                    alt={photo.alt}
+                    loading="lazy"
+                    className="absolute inset-0 size-full rounded-image object-cover"
+                  />
+                </div>
+              ) : (
+                <img
+                  key={photo.src}
+                  src={photo.src}
+                  alt={photo.alt}
+                  loading="lazy"
+                  className="col-span-2 aspect-[3/2] w-full rounded-image object-cover"
+                />
+              ),
+            )}
+          </div>
+        </div>
+      </section>
 
       <PhaseTimeline
         heading="Phase-by-phase development"

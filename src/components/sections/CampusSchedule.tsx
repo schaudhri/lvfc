@@ -39,7 +39,7 @@ export const CampusSchedule = (props: CampusScheduleProps) => {
     <section className={cn("px-[5%] py-16 md:py-24 lg:py-28", className)}>
       <div className="container">
         <div className="mb-12 max-w-lg md:mb-18 lg:mb-20">
-          <h2 className="mb-4 text-h2 font-medium md:mb-5">{heading}</h2>
+          <h2 className="mb-5 text-h3 font-medium md:mb-6">{heading}</h2>
           {description && <p className="text-medium">{description}</p>}
         </div>
 
@@ -58,7 +58,7 @@ export const CampusSchedule = (props: CampusScheduleProps) => {
                 aria-selected={isActive}
                 onClick={() => setActiveSlug(branch.slug)}
                 className={cn(
-                  "rounded-full border px-4 py-2 text-small font-semibold transition-colors",
+                  "min-h-11 rounded-full border px-4 py-2 text-small font-semibold transition-colors lg:min-h-0",
                   isActive
                     ? "border-brand-maroon bg-brand-maroon text-white"
                     : "border-brand-maroon text-scheme-text hover:bg-neutral-lightest",

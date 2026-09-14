@@ -79,7 +79,7 @@ export const Safeguarding = () => {
           should not have to read a governance document to find the phone number. */}
       <section
         id="raising-a-concern"
-        className="scroll-mt-24 border-y border-scheme-border/20 bg-neutral-lightest px-[5%] py-10"
+        className="scroll-mt-24 bg-neutral-lightest px-[5%] py-8 md:py-10"
       >
         <div className="container">
           <h2 className="mb-3 text-h5 font-medium">Raising a concern</h2>
@@ -132,15 +132,15 @@ export const Safeguarding = () => {
       <section className="px-[5%] pb-16 md:pb-24 lg:pb-28">
         <div className="container grid grid-cols-1 gap-12 lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-16">
           <nav aria-label="Policy contents" className="lg:sticky lg:top-24 lg:self-start">
-            <h2 className="mb-4 text-tiny font-semibold uppercase tracking-wider text-scheme-text/60">
+            <p className="mb-4 text-tiny font-semibold uppercase tracking-wider text-scheme-text/60">
               Contents
-            </h2>
+            </p>
             <ol className="flex flex-col gap-2">
               {safeguardingPolicy.map((section) => (
                 <li key={section.number}>
                   <a
                     href={`#section-${section.number}`}
-                    className="inline-flex min-h-6 items-center text-small text-scheme-text/70 transition-colors hover:text-scheme-text"
+                    className="inline-flex min-h-11 items-center text-small text-scheme-text/70 lg:min-h-6 transition-colors hover:text-scheme-text"
                   >
                     {section.number}. {section.title}
                   </a>

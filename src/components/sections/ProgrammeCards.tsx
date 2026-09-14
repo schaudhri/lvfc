@@ -300,8 +300,8 @@ const SliderTrack = ({ children }: { children: React.ReactNode }) => {
                 // area around it — WCAG 2.5.8 wants 24px minimum.
                 "before:absolute before:-inset-2 before:content-['']",
                 index === activeIndex
-                  ? "w-8 bg-neutral-darkest"
-                  : "w-2.5 bg-neutral-darkest/25 hover:bg-neutral-darkest/50",
+                  ? "w-8 bg-brand-terracotta"
+                  : "w-2.5 bg-brand-terracotta/25 hover:bg-brand-terracotta/50",
               )}
             />
           ))}
@@ -400,7 +400,7 @@ export const ProgrammeCards = (props: ProgrammeCardsProps) => {
               </Button>
               <Link
                 to={programme.url}
-                className="inline-flex items-center gap-1.5 font-semibold text-brand-terracotta underline-offset-4 hover:underline"
+                className="inline-flex min-h-11 items-center gap-1.5 font-semibold text-brand-terracotta lg:min-h-0 underline-offset-4 hover:underline"
               >
                 {programme.learnMoreLabel ?? "Learn more"}
                 <ChevronRight className="size-5 text-brand-terracotta transition-transform duration-200 group-hover:translate-x-0.5" />
@@ -434,7 +434,7 @@ export const ProgrammeCards = (props: ProgrammeCardsProps) => {
           // as the Figma draws it; without one the heading keeps its usual gap.
           <div className={cn("max-w-lg", header ? "mb-5" : "mb-12 md:mb-18 lg:mb-20")}>
             {heading && (
-              <h2 className={cn("text-h2 font-medium", description && "mb-5 md:mb-6")}>
+              <h2 className={cn("text-h3 font-medium", description && "mb-5 md:mb-6")}>
                 {heading}
               </h2>
             )}

@@ -5,13 +5,13 @@ import { Header62 } from "@/components/sections/Header62";
 import { Badge } from "@/components/ui/badge";
 import { ClubBadge } from "@/components/ClubBadge";
 import { Button } from "@/components/ui/button";
-import { branches } from "@/data/locations";
+import { branches, branchPhoto } from "@/data/locations";
 import { daySummary, scheduleNotes } from "@/data/schedule";
 import { cta } from "@/data/cta";
 import { cardMedia } from "@/lib/surface";
 import { cn } from "@/lib/utils";
 import { useDocumentMeta } from "@/hooks/use-document-meta";
-import { clubPhotos, phase5Photos, phase8Photos } from "@/data/clubPhotos";
+import { clubPhotos } from "@/data/clubPhotos";
 
 /**
  * The branch index.
@@ -41,14 +41,8 @@ export const Locations = () => {
             {branches.map((branch) => {
               const week = daySummary(branch.slug);
               // The branch's own photo once uploaded in the Studio, then the
-              // real training shots we have for Phase V and Phase VIII.
-              const fallback =
-                branch.slug === "dha-phase-v"
-                  ? phase5Photos[0]
-                  : branch.slug === "dha-phase-viii"
-                    ? phase8Photos[0]
-                    : undefined;
-              const photo = branch.image ?? fallback;
+              // club's selected shots of that ground.
+              const photo = branchPhoto(branch);
               return (
                 <li key={branch.slug} className={cn("group flex flex-col", cardMedia)}>
                   <Link to={`/locations/${branch.slug}`} tabIndex={-1} aria-hidden="true">
@@ -71,7 +65,7 @@ export const Locations = () => {
 
                   <div className="flex flex-1 flex-col p-6 md:p-8">
                     <div className="mb-3 flex flex-wrap items-center gap-3">
-                      <h2 className="text-h4 font-medium">{branch.name}</h2>
+                      <h2 className="text-h5 font-medium">{branch.name}</h2>
                       {branch.status && <Badge>{branch.status.label}</Badge>}
                     </div>
 
@@ -97,7 +91,7 @@ export const Locations = () => {
                       </Button>
                       <Link
                         to={`/locations/${branch.slug}`}
-                        className="inline-flex items-center gap-1.5 font-semibold text-brand-terracotta underline-offset-4 hover:underline"
+                        className="inline-flex min-h-11 items-center gap-1.5 font-semibold text-brand-terracotta lg:min-h-0 underline-offset-4 hover:underline"
                       >
                         Learn more
                         <ChevronRight className="size-5 text-brand-terracotta transition-transform duration-200 group-hover:translate-x-0.5" />
@@ -111,7 +105,7 @@ export const Locations = () => {
         </div>
       </section>
 
-      <section className="border-t border-scheme-border/20 px-[5%] py-10">
+      <section className="px-[5%] py-8 md:py-10">
         <div className="container flex flex-col gap-2 text-small text-scheme-text/70">
           <p>{scheduleNotes.variation}</p>
           <p>{scheduleNotes.weekend}</p>

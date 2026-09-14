@@ -24,7 +24,7 @@ export const Layout242 = (props: Layout242Props) => {
       <div className="container">
         <div className="flex flex-col items-start">
           <div className="mb-12 w-full max-w-lg md:mb-18 lg:mb-20">
-            <h3 className="text-h3 font-medium">{heading}</h3>
+            <h2 className="text-h3 font-medium">{heading}</h2>
           </div>
           {/*
             `items-start` is deliberately absent: as cards these stretch to a

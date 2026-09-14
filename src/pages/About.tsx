@@ -58,7 +58,7 @@ export const About = () => {
             description:
               "Every programme is open to boys and girls of any ability, across all four branches — no trial needed to join. Players who want more can step up to our competitive squads, and end-of-term showcases and certificates mark the progress along the way.",
             button: {
-              title: "See programmes",
+              title: "See all programmes",
               url: "/programmes",
               variant: "link",
               size: "link",
@@ -95,7 +95,7 @@ export const About = () => {
       <section id="partners" className="scroll-mt-10 px-[5%] py-16 md:py-24 lg:py-28">
         <div className="container">
           <div className="mb-12 max-w-lg md:mb-18 lg:mb-20">
-            <h2 className="mb-4 text-h3 font-medium">International partners</h2>
+            <h2 className="mb-5 text-h3 font-medium md:mb-6">International partners</h2>
             <p className="text-medium">
               Clinics, exchange trips and training pathways that take our players and coaches
               beyond Lahore.
@@ -116,7 +116,7 @@ export const About = () => {
                 <p className="mb-3 text-small font-semibold text-scheme-text/70">
                   {partner.location}
                 </p>
-                <p className="mb-5 text-scheme-text/85">{partner.summary}</p>
+                <p className="mb-5 text-scheme-text/70">{partner.summary}</p>
                 <ul className="mb-6 flex flex-col gap-2 text-small">
                   {partner.points.map((point) => (
                     <li key={point} className="flex gap-2">

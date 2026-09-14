@@ -38,12 +38,8 @@ export const BlogPost = () => {
       <article>
         <header className="px-[5%] pt-16 md:pt-24 lg:pt-28">
           <div className="container max-w-[48rem]">
-            <Link
-              to="/blog"
-              className="mb-6 inline-flex min-h-6 items-center text-small font-semibold underline underline-offset-2"
-            >
-              ← Back to all articles
-            </Link>
+            {/* No "← Back to all articles": no other page has a back pattern
+                (client request, 15 Sept 2026) — Blog is in the nav. */}
             <div className="mb-5 flex flex-wrap items-center gap-3">
               <Badge>{post.category}</Badge>
               {!isPublished && (
@@ -51,7 +47,7 @@ export const BlogPost = () => {
               )}
             </div>
             <h1 className="mb-5 text-h1 font-medium md:mb-6">{post.title}</h1>
-            <p className="text-medium text-scheme-text/80">{post.brief}</p>
+            <p className="text-medium text-scheme-text/70">{post.brief}</p>
             {post.byline && (
               <p className="mt-6 text-small font-semibold">By {post.byline}</p>
             )}
@@ -92,10 +88,10 @@ export const BlogPost = () => {
       </article>
 
       {related.length > 0 && (
-        <section className="border-t border-scheme-border/20 px-[5%] py-16 md:py-24 lg:py-28">
+        <section className="px-[5%] py-16 md:py-24 lg:py-28">
           <div className="container">
             <div className="mb-12 max-w-lg md:mb-18 lg:mb-20">
-              <h2 className="mb-4 text-h3 font-medium">More from the club</h2>
+              <h2 className="mb-5 text-h3 font-medium md:mb-6">More from the club</h2>
               <p className="text-medium">The rest of the launch line-up.</p>
             </div>
             <ul className="grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-2 md:gap-y-16 lg:grid-cols-3">
@@ -118,12 +114,12 @@ export const BlogPost = () => {
                         {item.title}
                       </Link>
                     </h3>
-                    <p className="mb-3 text-small text-scheme-text/80">{item.brief}</p>
+                    <p className="mb-3 text-small text-scheme-text/70">{item.brief}</p>
                     <Link
                       to={`/blog/${item.slug}`}
                       className="mt-auto flex min-h-6 items-center gap-2 pt-2 text-small font-semibold text-brand-terracotta"
                     >
-                      {item.body?.length ? "Read article" : "See what's coming"}
+                      {item.body?.length ? "Read article" : "Learn more"}
                       <ChevronRight className="size-4 text-brand-terracotta" />
                     </Link>
                   </div>

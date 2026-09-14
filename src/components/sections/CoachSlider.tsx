@@ -256,7 +256,7 @@ export const CoachSlider = (props: CoachSliderProps) => {
     <section className="px-[5%] pt-16 md:pt-24 lg:pt-28">
       <div className="container">
         <div className="max-w-lg">
-          <h2 className="mb-5 text-h2 font-medium md:mb-6">{heading}</h2>
+          <h2 className="mb-5 text-h3 font-medium md:mb-6">{heading}</h2>
           {description && <p className="text-medium">{description}</p>}
         </div>
       </div>

@@ -61,16 +61,29 @@ export const Navbar23 = (props: Navbar23Props) => {
   };
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  /** Index of the open mega menu, held here so the page can be dimmed behind it. */
+  const [openMenu, setOpenMenu] = useState<number | null>(null);
   const [isScrolled, setIsScrolled] = useState(false);
   const isMobile = useMediaQuery("(max-width: 991px)");
   const { pathname } = useLocation();
   /** The nav item for the section you're in, so you can see where you are. */
   const isCurrent = (url: string) =>
     url === "/" ? pathname === "/" : pathname === url || pathname.startsWith(`${url}/`);
+  const isMegaMenuOpen = !isMobile && openMenu !== null;
 
   // The open mobile menu needs a solid background of its own regardless of
-  // scroll position — its links render inside this same header.
-  const isTransparent = transparentAtTop && !isScrolled && !isMobileMenuOpen;
+  // scroll position — its links render inside this same header. So does an
+  // open mega menu, which hangs off the bar over the dimmed page.
+  const isTransparent =
+    transparentAtTop && !isScrolled && !isMobileMenuOpen && !isMegaMenuOpen;
+
+  // Following a link out of either menu lands on a new page — close them, or
+  // the menu stays hanging over it (the pointer is still inside it on desktop,
+  // so no mouseleave ever fires).
+  useEffect(() => {
+    setOpenMenu(null);
+    setIsMobileMenuOpen(false);
+  }, [pathname]);
 
   useEffect(() => {
     if (!transparentAtTop) return;
@@ -102,6 +115,20 @@ export const Navbar23 = (props: Navbar23Props) => {
   }, [isMobileMenuOpen]);
 
   return (
+    <>
+    {/* Dims the page behind an open mega menu (desktop only — on phones the
+        menu is already a full-screen sheet). Sits just under the header. */}
+    <motion.div
+      aria-hidden
+      initial={false}
+      animate={{ opacity: isMegaMenuOpen ? 1 : 0 }}
+      transition={{ duration: 0.3 }}
+      onClick={() => setOpenMenu(null)}
+      className={cn(
+        "fixed inset-0 z-[998] hidden bg-neutral-darkest/60 lg:block",
+        !isMegaMenuOpen && "pointer-events-none",
+      )}
+    />
     <header
       className={cn(
         "fixed inset-x-0 top-0 z-[999] flex w-full items-center justify-between text-white transition-colors duration-300 lg:min-h-18 lg:px-[5%]",
@@ -168,6 +195,14 @@ export const Navbar23 = (props: Navbar23Props) => {
                   title={link.title}
                   isMobile={isMobile}
                   isCurrent={isCurrent(link.url)}
+                  isOpen={openMenu === index}
+                  onOpenChange={(open) =>
+                    setOpenMenu((current) => (open ? index : current === index ? null : current))
+                  }
+                  onNavigate={() => {
+                    setOpenMenu(null);
+                    setIsMobileMenuOpen(false);
+                  }}
                 />
               ) : (
                 <Link
@@ -193,13 +228,15 @@ export const Navbar23 = (props: Navbar23Props) => {
         </motion.div>
         <div className="hidden lg:flex lg:shrink-0 lg:gap-4">
           {buttons.map((button, index) => (
-            <Button key={index} {...button} variant={isTransparent ? "alternate" : button.variant}>
+            // Gold whether the bar is solid or over a hero photo (Sept 2026).
+            <Button key={index} {...button}>
               {button.title}
             </Button>
           ))}
         </div>
       </nav>
     </header>
+    </>
   );
 };
 
@@ -208,22 +245,28 @@ const SubMenu = ({
   isMobile,
   megaMenu,
   isCurrent,
+  isOpen: isDropdownOpen,
+  onOpenChange,
+  onNavigate,
 }: {
   title: string;
   isMobile: boolean;
   megaMenu: MegaMenuProps;
   isCurrent: boolean;
+  isOpen: boolean;
+  onOpenChange: (open: boolean) => void;
+  /** Called when a link inside the menu is followed, even to the current page. */
+  onNavigate: () => void;
 }) => {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   return (
     <div
-      onMouseEnter={() => !isMobile && setIsDropdownOpen(true)}
-      onMouseLeave={() => !isMobile && setIsDropdownOpen(false)}
+      onMouseEnter={() => !isMobile && onOpenChange(true)}
+      onMouseLeave={() => !isMobile && onOpenChange(false)}
     >
       <button
         className="text-md flex w-full items-center justify-between gap-x-2 py-3 text-center lg:w-auto lg:flex-none lg:justify-start lg:gap-x-1 lg:px-2 lg:py-6 lg:text-sm lg:whitespace-nowrap xl:gap-x-2 xl:px-4 xl:text-base"
         aria-expanded={isDropdownOpen}
-        onClick={() => setIsDropdownOpen((prev) => !prev)}
+        onClick={() => onOpenChange(!isDropdownOpen)}
       >
         <span
           className={cn(
@@ -249,7 +292,13 @@ const SubMenu = ({
         exit="close"
         animate={isDropdownOpen ? "open" : "close"}
         transition={{ duration: 0.3 }}
-        className="top-full bottom-auto left-0 w-full max-w-full min-w-full overflow-hidden bg-scheme-background text-scheme-text lg:absolute lg:w-[100vw] lg:border-b lg:border-scheme-border lg:px-[5%] lg:[--height-close:auto]"
+        // Any link followed from the panel (a card or the "see all" button)
+        // closes it — covers a link to the page you're already on, where the
+        // route never changes.
+        onClick={(event) => {
+          if ((event.target as HTMLElement).closest("a")) onNavigate();
+        }}
+        className="top-full bottom-auto left-0 w-full max-w-full min-w-full overflow-hidden bg-scheme-background text-scheme-text lg:absolute lg:w-[100vw] lg:px-[5%] lg:[--height-close:auto]"
       >
         <div className="flex w-full flex-col items-start justify-start gap-6 pt-6 sm:gap-12 lg:flex-row lg:items-center lg:py-8">
           <div className="lg:max-w-[14rem] lg:shrink-0">
@@ -274,7 +323,7 @@ const SubMenu = ({
               {megaMenu.items.map((item, index) => (
                 <div key={index} className="flex flex-col items-stretch">
                   <Link to={item.url} className="group relative">
-                    <div className="mb-3 md:mb-4">
+                    <div className="mb-3 hidden md:mb-4 lg:block">
                       <div className="h-full w-full overflow-hidden rounded-2xl md:h-auto">
                         <img
                           src={item.image.src}

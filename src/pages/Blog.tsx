@@ -26,7 +26,7 @@ export const Blog = () => {
       <section className="px-[5%] py-16 md:py-24 lg:py-28">
         <div className="container">
           <div className="mb-12 max-w-lg md:mb-18 lg:mb-20">
-            <h2 className="mb-4 text-h3 font-medium">Coming with the new season</h2>
+            <h2 className="mb-5 text-h3 font-medium md:mb-6">Coming with the new season</h2>
             <p className="text-medium">
               The first articles going live alongside the 2026–27 season. Each is written and
               published by the club — we'll link them here as they land.
@@ -56,7 +56,7 @@ export const Blog = () => {
                       {post.title}
                     </Link>
                   </h3>
-                  <p className="mb-3 text-scheme-text/80">{post.brief}</p>
+                  <p className="mb-3 text-scheme-text/70">{post.brief}</p>
                   {post.byline && (
                     <p className="text-small font-semibold text-scheme-text/60">{post.byline}</p>
                   )}
@@ -64,7 +64,7 @@ export const Blog = () => {
                     to={`/blog/${post.slug}`}
                     className="mt-auto flex min-h-6 items-center gap-2 pt-5 text-small font-semibold text-brand-terracotta"
                   >
-                    {post.body?.length ? "Read article" : "See what's coming"}
+                    {post.body?.length ? "Read article" : "Learn more"}
                     <ChevronRight className="size-4 text-brand-terracotta" />
                   </Link>
                 </div>

@@ -34,9 +34,9 @@ export const SafeguardingNote = ({ variant = "rule" }: { variant?: "rule" | "car
       <section className="px-[5%] pb-16 md:pb-24 lg:pb-28">
         <div className="container">
           <div className="flex flex-col gap-6 rounded-card bg-white p-6 md:flex-row md:items-center md:justify-between md:gap-10 md:p-10">
-            <div className="max-w-[40rem]">
-              <h2 className="mb-3 text-h4 font-medium">Every child's safety comes first</h2>
-              <p className="text-medium text-scheme-text/85">{body}</p>
+            <div className="max-w-[42rem]">
+              <h2 className="mb-5 text-h3 font-medium md:mb-6">Every child's safety comes first</h2>
+              <p className="text-medium text-scheme-text/70">{body}</p>
             </div>
             <div className="flex shrink-0 flex-wrap items-center gap-x-6 gap-y-3">
               <Button {...cta.safeguarding} variant="secondary">
@@ -54,7 +54,7 @@ export const SafeguardingNote = ({ variant = "rule" }: { variant?: "rule" | "car
     <section className="px-[5%]">
       <div className="container">
         <div className="flex flex-col gap-5 border-y border-scheme-border/30 py-8 md:flex-row md:items-center md:justify-between md:gap-10">
-          <p className="max-w-[40rem] text-medium">
+          <p className="max-w-[42rem] text-medium">
             <strong className="font-semibold">Every child's safety comes first.</strong> {body}
           </p>
           <div className="flex shrink-0 flex-wrap items-center gap-x-6 gap-y-3">

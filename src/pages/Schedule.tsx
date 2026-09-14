@@ -28,7 +28,7 @@ export const Schedule = () => {
           above the table was the same information twice. */}
       <ScheduleGrid buttons={[{ ...cta.bookASpot }]} />
 
-      <SeasonSchedule className="border-t border-scheme-border/20" />
+      <SeasonSchedule />
 
       <Header62
         heading="Not sure which session suits your child?"

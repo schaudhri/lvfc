@@ -94,7 +94,7 @@ export const ContactForm = (props: ContactFormProps) => {
       <div className="container">
         <div className="grid grid-cols-1 gap-x-12 gap-y-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1fr)] lg:gap-x-20">
           <div>
-            <h2 className="mb-4 text-h2 font-medium md:mb-5">{heading}</h2>
+            <h2 className="mb-5 text-h3 font-medium md:mb-6">{heading}</h2>
             <p className="text-medium">{description}</p>
             <p className="mt-5 text-small text-scheme-text/70">
               Sending opens your email app with the details filled in, so nothing is stored on this

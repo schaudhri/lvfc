@@ -27,7 +27,7 @@ export const Layout442 = (props: Layout442Props) => {
       <div className="relative z-10 container">
         <div className="grid grid-cols-1 gap-x-12 gap-y-5 md:grid-cols-2 lg:gap-x-20">
           <div>
-            <h2 className="text-h2 font-medium text-white">{heading}</h2>
+            <h2 className="text-h3 font-medium text-white">{heading}</h2>
           </div>
           <div className="md:mt-48">
             <p className="text-medium text-white">{description}</p>

@@ -34,7 +34,7 @@ export const Landing = () => {
         description="Lahore's football club — built on community, ambition, and pride of place."
         // One action in the hero (client request, 14 Sept 2026) — "New to
         // LVFC" leads the intro section directly below instead.
-        buttons={[{ ...cta.programmes, title: "See our programmes", variant: "alternate" }]}
+        buttons={[{ ...cta.programmes, variant: "champagne" }]}
         image={{ src: clubPhotos[13].src, alt: "LVFC players training in Lahore" }}
         // Rotates through the club's own photos once uploaded in the Studio;
         // with none uploaded yet, `Header54` falls back to `image` above.
@@ -77,7 +77,7 @@ export const Landing = () => {
         buttons={[
           { ...cta.bookASpot, variant: "secondary" },
           {
-            title: "Talk to us",
+            title: "Contact us",
             url: "/contact",
             variant: "link",
             size: "link",
@@ -133,7 +133,7 @@ export const Landing = () => {
           { value: "5", label: "Age groups in the pathway" },
           { value: "3", label: "Training sessions a week" },
         ]}
-        buttons={[{ title: "View our programmes", url: "/programmes", variant: "alternate" }]}
+        buttons={[{ ...cta.programmes, variant: "alternate" }]}
       />
 
       {/*

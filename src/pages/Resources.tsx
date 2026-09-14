@@ -8,7 +8,7 @@ import { useDocumentMeta } from "@/hooks/use-document-meta";
 import { clubPhotos } from "@/data/clubPhotos";
 
 const navLinkClass =
-  "inline-flex min-h-6 items-center text-small text-scheme-text/70 transition-colors hover:text-scheme-text";
+  "inline-flex min-h-11 items-center text-small text-scheme-text/70 lg:min-h-6 transition-colors hover:text-scheme-text";
 
 /**
  * Contents rail, mirroring the Safeguarding page, so visitors can jump between
@@ -20,9 +20,11 @@ const navLinkClass =
  */
 const ContentsNav = () => (
   <nav aria-label="Resources contents" className="lg:sticky lg:top-24 lg:self-start">
-    <h2 className="mb-4 text-tiny font-semibold uppercase tracking-wider text-scheme-text/60">
+    {/* A label, not a heading: the nav's aria-label already names it, and an
+        h2 here put a 12px "section" in the page outline. */}
+    <p className="mb-4 text-tiny font-semibold uppercase tracking-wider text-scheme-text/60">
       Contents
-    </h2>
+    </p>
     <ul className="flex flex-col gap-5">
       <li>
         <a href="#library" className={`${navLinkClass} font-semibold text-scheme-text`}>

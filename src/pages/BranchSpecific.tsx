@@ -1,17 +1,16 @@
-import { Link, Navigate, useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import { Header54 } from "@/components/sections/Header54";
 import { Header62 } from "@/components/sections/Header62";
 import { BranchWeek } from "@/components/sections/BranchWeek";
-import { ProgrammeListRow } from "@/components/sections/ProgrammeList";
+import { ProgrammeCard } from "@/components/sections/ProgrammeList";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { getBranch } from "@/data/locations";
+import { PhotoSlider } from "@/components/sections/PhotoSlider";
+import { branchGallery, branchPhoto, getBranch } from "@/data/locations";
 import { otherProgrammes, pathwayProgrammes, programmesAtBranch } from "@/data/programmes";
 import { daySummary, scheduleNotes } from "@/data/schedule";
 import { cta } from "@/data/cta";
 import { whatsappLink } from "@/data/site";
 import { useDocumentMeta } from "@/hooks/use-document-meta";
-import { phase5Photos, phase8Photos } from "@/data/clubPhotos";
 
 const MAP = "/lvfc-map-lahore.png";
 
@@ -41,45 +40,24 @@ export const BranchSpecific = () => {
   const alsoHere = otherProgrammes.filter((programme) => programmes.includes(programme));
   const week = daySummary(branch.slug);
 
-  // Real training shots for the two branches we have them for; the shared
-  // placeholder map everywhere else until the club uploads a branch gallery.
-  const photos =
-    branch.slug === "dha-phase-v"
-      ? phase5Photos
-      : branch.slug === "dha-phase-viii"
-        ? phase8Photos
-        : [];
-  const mainPhoto = branch.image ?? photos[0] ?? { src: MAP, alt: `Map showing the ${branch.name} branch` };
-  const gallery = branch.gallery && branch.gallery.length > 0 ? branch.gallery : photos.slice(1);
-
-  /**
-   * The seasons running here, in the order the programmes are listed. Season is
-   * a property of a programme rather than of a ground, so it is read off the
-   * programmes this branch actually runs instead of being restated per branch.
-   */
-  const seasons = [...new Set(programmes.map((programme) => programme.season).filter(Boolean))];
+  // The branch's own photos; the shared map only if a branch has none at all.
+  const gallery = branchGallery(branch);
+  const mainPhoto = branchPhoto(branch) ?? { src: MAP, alt: `Map showing the ${branch.name} branch` };
 
   return (
     <>
       <Header54
         heading={branch.name}
         description={branch.about}
-        buttons={[
-          { ...cta.bookASpot, variant: "alternate" },
-          { ...cta.contact, variant: "secondary-alt" },
-        ]}
+        // No hero CTA on branch pages (client request, 15 Sept 2026) — each
+        // programme card below carries its own Book A Spot.
         image={mainPhoto}
       />
 
-      {/* Back to the index, and the facts a parent checks first. */}
-      <section className="border-b border-scheme-border/20 px-[5%] py-8">
+      {/* The facts a parent checks first. No "← All branches" link: no other
+          page has a back pattern (client request, 15 Sept 2026). */}
+      <section className="px-[5%] py-8 md:py-10">
         <div className="container">
-          <Link
-            to="/locations"
-            className="mb-6 inline-flex min-h-6 items-center gap-2 text-small font-semibold"
-          >
-            ← All branches
-          </Link>
           <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
             <p className="text-medium font-semibold">{branch.address}</p>
             {branch.status && <Badge>{branch.status.label}</Badge>}
@@ -88,121 +66,47 @@ export const BranchSpecific = () => {
             )}
           </div>
           {branch.status && (
-            <p className="mt-3 max-w-xl text-small text-scheme-text/70">
+            <p className="mt-3 max-w-lg text-small text-scheme-text/70">
               {branch.status.detail}
             </p>
           )}
         </div>
       </section>
 
+      {/*
+        Cards, as on the programmes index (client request, 14 Sept 2026): each
+        programme with its photo, ages, season and the booking button —
+        pathway stages first, then everything else that runs here. Above the
+        training week (client request, 15 Sept 2026): what runs here is the
+        first question, when is the second.
+      */}
       <section className="px-[5%] py-16 md:py-24 lg:py-28">
         <div className="container">
-          <div className="grid grid-cols-1 gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
-            <div>
-              <h2 className="mb-4 text-h3 font-medium">Training week</h2>
-              <p className="mb-8 max-w-xl text-medium">
-                The sessions this branch runs. Your child's exact slot within the band is
-                confirmed at the branch.
-              </p>
-              <BranchWeek slug={branch.slug} />
-
-              <h3 className="mb-4 mt-10 text-h6 font-medium">What runs here</h3>
-              <ul className="flex flex-wrap gap-2">
-                {branch.programmes.map((entry) => (
-                  <li
-                    key={entry}
-                    className="rounded-badge bg-neutral-lightest px-3 py-1.5 text-small"
-                  >
-                    {entry}
-                  </li>
-                ))}
-              </ul>
-
-              {seasons.length > 0 && (
-                <>
-                  <h3 className="mb-4 mt-10 text-h6 font-medium">Season</h3>
-                  <ul className="flex flex-wrap gap-2">
-                    {seasons.map((season) => (
-                      <li
-                        key={season}
-                        className="rounded-badge bg-neutral-lightest px-3 py-1.5 text-small"
-                      >
-                        {season}
-                      </li>
-                    ))}
-                  </ul>
-                </>
-              )}
-            </div>
-
-            <div>
-              <img
-                src={mainPhoto.src}
-                alt={mainPhoto.alt || `Map showing the ${branch.name} branch`}
-                className="aspect-[4/3] w-full rounded-image object-cover"
-              />
-              <div className="mt-4 flex flex-wrap gap-4">
-                <Button {...cta.schedule} variant="secondary" size="sm">
-                  {cta.schedule.title}
-                </Button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Only where the club has uploaded more than the one main photograph. */}
-      {gallery.length > 0 && (
-        <section className="border-t border-scheme-border/20 px-[5%] py-16 md:py-24 lg:py-28">
-          <div className="container">
-            <h2 className="mb-12 text-h3 font-medium md:mb-18">The ground</h2>
-            <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {gallery.map((photo) => (
-                <li key={photo.src}>
-                  <img
-                    src={photo.src}
-                    alt={photo.alt ?? ""}
-                    className="aspect-[4/3] w-full rounded-image object-cover"
-                  />
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
-      )}
-
-      {/*
-        A list, not a card grid. The pills above already say what runs here;
-        this is the place to book one, so each programme is a row with its
-        ages, season and the booking button — pathway stages first.
-      */}
-      <section className="border-t border-scheme-border/20 px-[5%] py-16 md:py-24 lg:py-28">
-        <div className="container">
-          <div className="mb-10 max-w-lg md:mb-12">
-            <h2 className="mb-4 text-h3 font-medium">Programmes at {branch.name}</h2>
+          <div className="mb-12 max-w-lg md:mb-18 lg:mb-20">
+            <h2 className="mb-5 text-h3 font-medium md:mb-6">Programmes at {branch.name}</h2>
             <p className="text-medium">
               Everything that runs at this ground. Start with the stage that matches your child's
               age.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16">
+          <div className="flex flex-col gap-12 md:gap-16">
             {onPathway.length > 0 && (
               <div>
-                <h3 className="mb-2 text-h5 font-medium">On the pathway</h3>
-                <ol className="border-b border-scheme-border/30">
+                <h3 className="mb-6 text-h5 font-medium">On the pathway</h3>
+                <ol className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                   {onPathway.map(({ programme }) => (
-                    <ProgrammeListRow key={programme.slug} programme={programme} />
+                    <ProgrammeCard key={programme.slug} programme={programme} />
                   ))}
                 </ol>
               </div>
             )}
             {alsoHere.length > 0 && (
               <div>
-                <h3 className="mb-2 text-h5 font-medium">Also here</h3>
-                <ul className="border-b border-scheme-border/30">
+                <h3 className="mb-6 text-h5 font-medium">Also here</h3>
+                <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                   {alsoHere.map((programme) => (
-                    <ProgrammeListRow
+                    <ProgrammeCard
                       key={programme.slug}
                       programme={programme}
                       // A programme with no stated branches passes the branch
@@ -220,11 +124,43 @@ export const BranchSpecific = () => {
         </div>
       </section>
 
+      {/* Just the week and the ground — the programmes above already say what
+          runs here and in which season, and the schedule is in the main nav. */}
+      <section className="px-[5%] py-16 md:py-24 lg:py-28">
+        <div className="container">
+          <div className="grid grid-cols-1 gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
+            <div>
+              <h2 className="mb-5 text-h3 font-medium md:mb-6">Training week</h2>
+              <p className="mb-8 max-w-lg text-medium">
+                The sessions this branch runs. Your child's exact slot within the band is
+                confirmed at the branch.
+              </p>
+              <BranchWeek slug={branch.slug} />
+            </div>
+            <img
+              src={mainPhoto.src}
+              alt={mainPhoto.alt || `Map showing the ${branch.name} branch`}
+              className="aspect-[4/3] w-full rounded-image object-cover"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* A slider through the ground's photos — only once there's more than
+          the one main photograph to scroll through. */}
+      {gallery.length > 1 && (
+        <PhotoSlider
+          heading="The ground"
+          description={`Sessions at ${branch.name}. Swipe through to see what training looks like here.`}
+          photos={gallery}
+        />
+      )}
+
       {/* Only where the club has supplied coach bios for this branch. */}
       {branch.coaches && branch.coaches.length > 0 && (
-        <section className="border-t border-scheme-border/20 px-[5%] py-16 md:py-24 lg:py-28">
+        <section className="px-[5%] py-16 md:py-24 lg:py-28">
           <div className="container">
-            <h2 className="mb-12 text-h3 font-medium md:mb-18">Coaches at this branch</h2>
+            <h2 className="mb-12 text-h3 font-medium md:mb-18 lg:mb-20">Coaches at this branch</h2>
             <ul className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
               {branch.coaches.map((coach) => (
                 <li key={coach.name}>
@@ -245,7 +181,7 @@ export const BranchSpecific = () => {
         </section>
       )}
 
-      <section className="border-t border-scheme-border/20 px-[5%] py-10">
+      <section className="px-[5%] py-8 md:py-10">
         <div className="container flex flex-col gap-2 text-small text-scheme-text/70">
           <p>{scheduleNotes.variation}</p>
           <p>{scheduleNotes.weekend}</p>

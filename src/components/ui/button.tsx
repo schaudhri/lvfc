@@ -12,10 +12,13 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        // Primary is terracotta everywhere (Sept 2026) except the nav, whose
-        // Book A Spot is gold (`champagne`) on the solid bar and sandstone
-        // (`alternate`) over hero photos. Button text is Futura, like all
-        // non-title text — only titles are set in Tiller.
+        // Roles (Sept 2026): gold (`champagne`) is the one primary action of
+        // a screen — the nav's Book A Spot, each hero's main button, and the
+        // closing CTA band. Terracotta (`default`) is an action inside
+        // content, such as a card's Book A Spot. `alternate` (sandstone) is
+        // the same action on a dark band; `secondary` is the outline
+        // alternative. Button text is Futura, like all non-title text — only
+        // titles are set in Tiller.
         default: "border border-brand-terracotta bg-brand-terracotta text-white",
         champagne: "border border-brand-champagne bg-brand-champagne text-brand-midnight",
         alternate: "border border-brand-sandstone bg-brand-sandstone text-neutral-darkest",
@@ -28,8 +31,8 @@ const buttonVariants = cva(
       },
       size: {
         default: "px-6 py-3",
-        sm: "px-5 py-2",
-        link: "p-0",
+        sm: "min-h-11 px-5 py-2 lg:min-h-0",
+        link: "min-h-11 p-0 lg:min-h-0",
         icon: "size-10",
         none: "",
       },

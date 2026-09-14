@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 import { schools } from "@/data/schools";
 import { cta } from "@/data/cta";
 
-const ALL = "All";
+const ALL = "All branches";
 
 const FilterPills = ({
   label,
@@ -37,7 +37,7 @@ const FilterPills = ({
             aria-pressed={isActive}
             onClick={() => onChange(option)}
             className={cn(
-              "rounded-full border px-4 py-2 text-small font-semibold transition-colors",
+              "min-h-11 rounded-full border px-4 py-2 text-small font-semibold transition-colors lg:min-h-0",
               isActive
                 ? "border-brand-maroon bg-brand-maroon text-white"
                 : "border-brand-maroon text-scheme-text hover:bg-neutral-lightest",
@@ -83,13 +83,16 @@ export const ScheduleGrid = (props: ScheduleGridProps) => {
 
   const visibleRows =
     branchFilter === ALL ? scheduleRows : scheduleRows.filter((row) => row.branch === branchFilter);
+  // Under this section's own h2 the schools note is an h3. Without one (the
+  // schedule page, straight under its h1) it would skip a level, so it steps up.
+  const SchoolHeading = heading ? "h3" : "h2";
 
   return (
     <section className={cn("px-[5%] py-16 md:py-24 lg:py-28", className)}>
       <div className="container">
         {heading && (
           <div className="mb-12 max-w-lg md:mb-18 lg:mb-20">
-            <h2 className="mb-4 text-h2 font-medium md:mb-5">{heading}</h2>
+            <h2 className="mb-5 text-h3 font-medium md:mb-6">{heading}</h2>
             {description && <p className="text-medium">{description}</p>}
           </div>
         )}
@@ -191,8 +194,10 @@ export const ScheduleGrid = (props: ScheduleGridProps) => {
                   )}
                 </div>
                 <div className="flex-1">
-                  <h3 className="mb-1 text-h6 font-medium">Also training at {school.name} schools</h3>
-                  <p className="text-scheme-text/80">{school.description}</p>
+                  <SchoolHeading className="mb-1 text-h6 font-medium">
+                    Also training at {school.name} schools
+                  </SchoolHeading>
+                  <p className="text-scheme-text/70">{school.description}</p>
                 </div>
                 <Button {...cta.contact} variant="secondary" size="sm" className="shrink-0">
                   Ask about school sessions

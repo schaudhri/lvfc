@@ -2,7 +2,7 @@ import { type Navbar23Props } from "@/components/sections/Navbar23";
 import { type Footer2Props } from "@/components/sections/Footer2";
 import { FacebookLogo, InstagramLogo, LinkedinLogo, XLogo, YoutubeLogo } from "relume-icons";
 import { formatAges, programmeImage, programmes } from "@/data/programmes";
-import { branches } from "@/data/locations";
+import { branches, branchPhoto } from "@/data/locations";
 import { club } from "@/data/club";
 import { cta } from "@/data/cta";
 import { internationalPartners } from "@/data/partners";
@@ -127,7 +127,7 @@ export const navbarProps: Navbar23Props = {
         // route to the fuller page rather than a "there's more" affordance.
         items: branches.map((branch) => ({
           url: `/locations/${branch.slug}`,
-          image: { src: branch.image?.src ?? LAND, alt: branch.image?.alt || branch.name },
+          image: { src: branchPhoto(branch)?.src ?? LAND, alt: branchPhoto(branch)?.alt || branch.name },
           name: branch.name,
           meta: branch.address,
           detail: "See sessions and directions",
@@ -137,7 +137,7 @@ export const navbarProps: Navbar23Props = {
     },
     { title: "Schedule", url: "/schedule" },
     { title: "Resources", url: "/resources" },
-    { title: "Private Sessions", url: "/private-events" },
+    { title: "Private sessions", url: "/private-events" },
   ],
   // The nav keeps its gold Book A Spot — the one primary button that isn't
   // terracotta (Sept 2026). Over a hero photo Navbar23 swaps it for sandstone.
@@ -156,7 +156,7 @@ export const footerProps: Footer2Props = {
   // direct route to booking a private session, which the client asked for
   // here even though Private Sessions is also in the bar.
   links: [
-    { title: "Book A Private Session", url: "/private-events" },
+    { title: "Book a private session", url: "/private-events" },
     { title: "Safeguarding", url: "/safeguarding" },
     { title: "Contact", url: "/contact" },
     { title: "Blog", url: "/blog" },

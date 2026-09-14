@@ -56,7 +56,7 @@ export const Team16 = (props: Team16Props) => {
     <section id={props.id} className="scroll-mt-10 px-[5%] py-16 md:py-24 lg:py-28">
       <div className="container grid grid-cols-1 items-start md:grid-flow-row md:gap-x-12 lg:gap-x-20">
         <div className="mb-12 max-w-lg md:mb-18 lg:mb-20">
-          <h2 className="mb-5 text-h2 font-medium md:mb-6">{heading}</h2>
+          <h2 className="mb-5 text-h3 font-medium md:mb-6">{heading}</h2>
           <p className="text-medium">{description}</p>
         </div>
         {/* `featured` omitted: everyone two-up. `featured={2}`: two wide, then

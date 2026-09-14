@@ -17,7 +17,7 @@ export const PrivateEvents = () => {
         heading={privateEventsPage.heading}
         description={privateEventsPage.summary}
         buttons={[
-          { title: "Send an enquiry", url: `${privateEventsPage.url}#enquire`, variant: "alternate" },
+          { title: "Send an enquiry", url: `${privateEventsPage.url}#enquire`, variant: "champagne" },
         ]}
         image={privateEventsPage.image}
       />
@@ -25,7 +25,7 @@ export const PrivateEvents = () => {
       <section className="px-[5%] py-16 md:py-24 lg:py-28">
         <div className="container">
           <div className="mb-12 max-w-lg md:mb-18 lg:mb-20">
-            <h2 className="mb-4 text-h3 font-medium">Two ways to book the pitch</h2>
+            <h2 className="mb-5 text-h3 font-medium md:mb-6">Two ways to book the pitch</h2>
             <p className="text-medium">
               Both are led by LVFC coaches, who all complete safeguarding training and background
               verification before working with children.
@@ -65,13 +65,12 @@ export const PrivateEvents = () => {
 
       <ContactForm
         id="enquire"
-        className="border-t border-scheme-border/20"
         heading="Send an enquiry"
         description="Tell us what you'd like to book, roughly when, and for how many children. We'll reply with availability and prices, usually within 24–48 hours."
         enquiryTypes={privateEvents.map((event) => ({ value: event.type, label: event.title }))}
         dateLabel="Preferred date"
         subject="Private event enquiry"
-        submitLabel="Send enquiry"
+        submitLabel="Send an enquiry"
       />
     </>
   );

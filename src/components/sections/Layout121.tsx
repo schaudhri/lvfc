@@ -36,7 +36,7 @@ export const Layout121 = (props: Layout121Props) => {
       <section className="px-[5%] py-16 md:py-24 lg:py-28">
         <div className="container">
           <div className="mb-12 flex flex-col gap-6 md:mb-16 md:flex-row md:items-end md:justify-between md:gap-12">
-            <h2 className="text-h2 font-medium">{heading}</h2>
+            <h2 className="text-h3 font-medium">{heading}</h2>
             <div className="flex shrink-0 flex-wrap items-center gap-x-6 gap-y-4">
               {buttons.map((button, index) => (
                 <Button key={index} {...button}>
@@ -62,7 +62,7 @@ export const Layout121 = (props: Layout121Props) => {
                   {index + 1}
                 </span>
                 <h3 className="mb-3 text-h6 font-medium">{feature.heading}</h3>
-                <p className="text-scheme-text/80">{feature.description}</p>
+                <p className="text-scheme-text/70">{feature.description}</p>
               </li>
             ))}
           </ol>
@@ -76,7 +76,7 @@ export const Layout121 = (props: Layout121Props) => {
       <div className="container">
         <div className="grid grid-cols-1 items-start gap-y-8 md:grid-cols-2 md:gap-x-12 lg:gap-x-20">
           <div>
-            <h2 className="mb-5 text-h2 font-medium md:mb-6">{heading}</h2>
+            <h2 className="mb-5 text-h3 font-medium md:mb-6">{heading}</h2>
             <div className="mt-6 flex flex-wrap items-center gap-4 md:mt-8">
               {buttons.map((button, index) => (
                 <Button key={index} {...button}>

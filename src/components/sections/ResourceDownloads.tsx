@@ -47,7 +47,7 @@ const AwaitingSummary = ({ items }: { items: ResourceItem[] }) => (
     </p>
     <Link
       to="/contact"
-      className="mt-2 inline-flex min-h-6 items-center text-small font-semibold underline underline-offset-2"
+      className="mt-2 inline-flex min-h-11 items-center text-small lg:min-h-6 font-semibold underline underline-offset-2"
     >
       Ask us for a copy
     </Link>
@@ -79,8 +79,8 @@ export const ResourceDownloads = (props: ResourceDownloadsProps) => {
     <section
       className={
         embedded
-          ? "border-t border-scheme-border/20 pt-16 md:pt-20"
-          : "border-t border-scheme-border/20 px-[5%] py-16 md:py-24 lg:py-28"
+          ? "pt-16 md:pt-20"
+          : "px-[5%] py-16 md:py-24 lg:py-28"
       }
     >
       <div className={embedded ? "" : "container"}>

@@ -27,7 +27,7 @@ export const StatsPathway = (props: StatsPathwayProps) => {
   return (
     <section className="bg-neutral-darkest px-[5%] py-16 md:py-24 lg:py-28">
       <div className="container">
-        <h2 className="mb-12 text-center text-h2 font-medium text-white md:mb-18 lg:mb-20">{heading}</h2>
+        <h2 className="mb-12 text-center text-h3 font-medium text-white md:mb-18 lg:mb-20">{heading}</h2>
 
         {/* Stats panel — angled dividers between cells */}
         <div className="mx-auto max-w-[56rem] overflow-hidden bg-brand-sandstone">

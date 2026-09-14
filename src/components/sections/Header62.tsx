@@ -25,7 +25,7 @@ export const Header62 = (props: Header62Props) => {
       <div className="container">
         <div className="rounded-card bg-brand-terracotta px-6 py-12 md:px-12 md:py-16">
           <div className="mx-auto max-w-[48rem] text-center">
-            <h2 className="mb-5 text-h4 font-medium text-brand-champagne md:mb-6">{heading}</h2>
+            <h2 className="mb-5 text-h3 font-medium text-brand-champagne md:mb-6">{heading}</h2>
             <p className="text-medium text-white">{description}</p>
             <div className="mt-6 flex justify-center md:mt-8">
               <Button {...button} variant="champagne">

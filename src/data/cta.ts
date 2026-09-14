@@ -27,7 +27,6 @@ export const cta = {
 
   contact: { title: "Contact us", url: "/contact" },
   programmes: { title: "See all programmes", url: "/programmes" },
-  academy: { title: "Explore the academy", url: "/programmes/academy" },
   schedule: { title: "See the full schedule", url: "/schedule" },
   branches: { title: "See all branches", url: "/locations" },
   resources: { title: "Explore Resources", url: "/resources" },

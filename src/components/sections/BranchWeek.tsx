@@ -30,7 +30,7 @@ export const BranchWeek = ({ slug, className }: Props) => {
                 : "border-dashed border-scheme-border/20",
             )}
           >
-            <span className="block text-tiny font-semibold uppercase tracking-wider text-scheme-text/60">
+            <span className="block text-small font-semibold uppercase tracking-wider text-scheme-text/60">
               {day.slice(0, 3)}
             </span>
             <span

@@ -46,7 +46,7 @@ export const Faqs = (props: FaqsProps) => {
     <section className="px-[5%] py-16 md:py-24 lg:py-28">
       <div className="container grid grid-cols-1 gap-x-12 gap-y-12 md:grid-cols-[1fr_1.5fr] lg:gap-x-20">
         <div className="md:sticky md:top-24 md:self-start">
-          <h2 className="mb-5 text-h2 font-medium md:mb-6">{heading}</h2>
+          <h2 className="mb-5 text-h3 font-medium md:mb-6">{heading}</h2>
           <p className="mb-6 text-medium md:mb-8">{description}</p>
           {categories && (
             <nav aria-label="FAQ categories" className="mb-6 flex flex-wrap gap-2 md:mb-8">
@@ -54,7 +54,7 @@ export const Faqs = (props: FaqsProps) => {
                 <a
                   key={category.id}
                   href={`#${category.id}`}
-                  className="rounded-full border border-scheme-border/40 px-3 py-1.5 text-small font-semibold transition-colors hover:bg-neutral-lightest"
+                  className="inline-flex min-h-11 items-center rounded-full border border-scheme-border/40 px-4 py-1.5 text-small lg:min-h-0 font-semibold transition-colors hover:bg-neutral-lightest"
                 >
                   {category.title}
                 </a>

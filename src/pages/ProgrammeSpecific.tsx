@@ -12,7 +12,8 @@ import {
 } from "@/data/programmes";
 import { PathwayBadge } from "@/components/sections/PhaseTimeline";
 import { cn } from "@/lib/utils";
-import { branches } from "@/data/locations";
+import { branches, photosAcross } from "@/data/locations";
+import { PhotoSlider } from "@/components/sections/PhotoSlider";
 import { programmeCta } from "@/data/cta";
 import { useDocumentMeta } from "@/hooks/use-document-meta";
 import { clubPhotos } from "@/data/clubPhotos";
@@ -51,6 +52,7 @@ export const ProgrammeSpecific = () => {
   // The one pathway stage this programme is, if it is one (the five age
   // groups); alternatives like Weekend Mornings span several and have none.
   const stage = stageFor(programme);
+  const photos = photosAcross(runsAt.length > 0 ? runsAt : branches);
   const stageNumber = stage ? academyAgeGroups.indexOf(stage) + 1 : 0;
 
   return (
@@ -58,7 +60,7 @@ export const ProgrammeSpecific = () => {
       <Header54
         heading={programme.name}
         description={programme.description}
-        buttons={[{ ...bookASpot, variant: "alternate" }]}
+        buttons={[{ ...bookASpot, variant: "champagne" }]}
         image={programme.image ?? clubPhotos[programme.slug.length % clubPhotos.length]}
       />
 
@@ -74,7 +76,7 @@ export const ProgrammeSpecific = () => {
               "container",
               stage
                 ? "grid grid-cols-1 items-center gap-10 md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)] lg:gap-16"
-                : "max-w-[48rem]",
+                : "[&>*]:max-w-[48rem]",
             )}
           >
             <p className="text-large">{programme.description}</p>
@@ -107,7 +109,7 @@ export const ProgrammeSpecific = () => {
       {/* The full programme page, where the club has written one. */}
       {programme.body && programme.body.length > 0 && (
         <section className="px-[5%] pt-16 md:pt-24 lg:pt-28">
-          <div className="container max-w-[48rem]">
+          <div className="container [&>*]:max-w-[48rem]">
             <RichText value={programme.body} />
           </div>
         </section>
@@ -138,12 +140,26 @@ export const ProgrammeSpecific = () => {
       {/* No full pathway here any more (client request, 14 Sept 2026): the
           Pathway card beside the intro shows this programme's step. */}
 
+      {/* Photos from the grounds this programme runs at (every branch where
+          it isn't tied to any), so a parent can see what a session is like. */}
+      {photos.length > 1 && (
+        <PhotoSlider
+          heading="See it in action"
+          description={
+            runsAt.length > 0
+              ? `Training at ${runsAt.map((branch) => branch.name).join(", ").replace(/, ([^,]*)$/, " and $1")}.`
+              : "Training across our four branches."
+          }
+          photos={photos}
+        />
+      )}
+
       <ScheduleGrid
         heading="Training schedule"
         description="The full week across all four branches. Filter by branch to find the evenings that fit around yours."
       />
 
-      <section className="border-t border-scheme-border/20 px-[5%] py-16 md:py-24 lg:py-28">
+      <section className="px-[5%] py-16 md:py-24 lg:py-28">
         <div className="container">
           <div className="mb-12 max-w-lg md:mb-18 lg:mb-20">
             <h2 className="text-h3 font-medium">Where it runs</h2>
@@ -170,7 +186,7 @@ export const ProgrammeSpecific = () => {
                     to={`/locations/${branch.slug}`}
                     className="mt-auto flex min-h-6 items-center gap-2 text-small font-semibold"
                   >
-                    See this branch
+                    Learn more
                     <ChevronRight className="size-4 text-scheme-text" />
                   </Link>
                 </li>

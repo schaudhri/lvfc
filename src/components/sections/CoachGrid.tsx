@@ -28,10 +28,10 @@ export const CoachGrid = ({ id, heading, description, coaches, footer }: Props) 
   <section id={id} className="scroll-mt-10 px-[5%] py-16 md:py-24 lg:py-28">
     <div className="container">
       <div className="mb-12 max-w-lg md:mb-18 lg:mb-20">
-        <h2 className="mb-5 text-h2 font-medium md:mb-6">{heading}</h2>
+        <h2 className="mb-5 text-h3 font-medium md:mb-6">{heading}</h2>
         {description && <p className="text-medium">{description}</p>}
       </div>
-      <ul className="grid grid-cols-2 gap-4 md:gap-6 lg:grid-cols-3 lg:gap-8">
+      <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
         {coaches.map((coach, index) => (
           <li key={coach.image.src + index} className="flex flex-col gap-3">
             <img
@@ -47,7 +47,7 @@ export const CoachGrid = ({ id, heading, description, coaches, footer }: Props) 
                 <h3 className="text-large font-medium">{coach.name}</h3>
                 {coach.role && <p className="text-small text-scheme-text/70">{coach.role}</p>}
                 {coach.oneLiner && (
-                  <p className="mt-2 text-small text-scheme-text/85">{coach.oneLiner}</p>
+                  <p className="mt-2 text-small text-scheme-text/70">{coach.oneLiner}</p>
                 )}
               </div>
             )}

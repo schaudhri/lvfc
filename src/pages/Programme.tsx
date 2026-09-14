@@ -5,7 +5,9 @@ import { Link } from "react-router-dom";
 import { Header54 } from "@/components/sections/Header54";
 import { Header62 } from "@/components/sections/Header62";
 import { CompactProgrammeCard, PathwayProgrammeRow } from "@/components/sections/ProgrammeList";
+import { PathwayStages } from "@/components/sections/PhaseTimeline";
 import {
+  academyAgeGroups,
   ageFilters,
   matchesAge,
   matchesBranch,
@@ -55,7 +57,7 @@ const FilterPills = ({
             aria-pressed={isActive}
             onClick={() => onChange(option.id)}
             className={cn(
-              "rounded-full border px-4 py-2 text-small font-semibold transition-colors",
+              "min-h-11 rounded-full border px-4 py-2 text-small font-semibold transition-colors lg:min-h-0",
               isActive
                 ? "border-brand-maroon bg-brand-maroon text-white"
                 : "border-brand-maroon text-scheme-text hover:bg-neutral-lightest",
@@ -101,7 +103,9 @@ export const Programme = () => {
       />
 
       <section className="px-[5%] py-16 md:py-24 lg:py-28">
-        <div className="container max-w-[48rem]">
+        {/* Full-width container, narrowed children: the text keeps the same
+            left edge as every other section rather than centring inward. */}
+        <div className="container [&>*]:max-w-[48rem]">
           <h2 className="mb-5 text-h3 font-medium md:mb-6">Where does my child start?</h2>
           <p className="mb-4 text-medium">
             Most families start with the age group that matches their child — FUNdamentals at two,
@@ -123,6 +127,28 @@ export const Programme = () => {
             you.
           </p>
         </div>
+
+        {/* The whole pathway at a glance, in the same white card a programme
+            page uses for its single stage. Always all five — the branch
+            filter below narrows the list, not the pathway itself. */}
+        <aside
+          aria-label="Pathway"
+          className="container mt-12 rounded-card bg-white p-6 md:mt-16 md:p-8 lg:p-10"
+        >
+          <div className="mb-8 text-center md:mb-10 lg:text-left">
+            <h3 className="text-h5 font-medium">Pathway</h3>
+            <p className="mt-1 text-small text-scheme-text/70">
+              The stages of the football journey, from a first touch to Youth Development
+            </p>
+          </div>
+          <PathwayStages
+            phases={academyAgeGroups.map((group) => ({
+              age: group.ages,
+              title: group.name,
+              description: group.focus,
+            }))}
+          />
+        </aside>
       </section>
 
       <div className="border-y border-scheme-border/20 px-[5%] py-8">
@@ -174,7 +200,7 @@ export const Programme = () => {
 
       {visibleCount === 0 ? (
         <section className="px-[5%] py-16 md:py-24 lg:py-28">
-          <div className="container max-w-lg">
+          <div className="container [&>*]:max-w-lg">
             <h2 className="mb-3 text-h4 font-medium">Nothing runs at that branch yet</h2>
             <p className="text-medium">
               Try another branch — or get in touch and we'll find the right fit for your child.
@@ -182,11 +208,11 @@ export const Programme = () => {
           </div>
         </section>
       ) : (
-        <section className="px-[5%] py-12 md:py-16 lg:py-20">
+        <section className="px-[5%] py-16 md:py-24 lg:py-28">
           <div className="container flex flex-col gap-16 md:gap-24">
             {stages.length > 0 && (
               <div>
-                <h2 className="mb-8 text-h3 font-medium md:mb-12">Learning Pathway</h2>
+                <h2 className="mb-12 text-h3 font-medium md:mb-18 lg:mb-20">Learning Pathway</h2>
                 <ol className="flex flex-col gap-6 md:gap-8">
                   {stages.map(({ programme }) => (
                     <PathwayProgrammeRow key={programme.slug} programme={programme} />
@@ -197,7 +223,7 @@ export const Programme = () => {
                     the same figures the cards above and the FAQ quote. */}
                 <div id="fees" className="mt-8 scroll-mt-24 rounded-card bg-white p-6 md:mt-10 md:p-8">
                   <h3 className="text-h5 font-medium">Fees</h3>
-                  <p className="mt-2 text-scheme-text/80">
+                  <p className="mt-2 text-scheme-text/70">
                     The same for every age group on the pathway, {academyFees.sessionsPerWeek}{" "}
                     sessions a week.
                   </p>
@@ -223,14 +249,14 @@ export const Programme = () => {
                     <h4 className="text-regular font-semibold">Included in the monthly fee</h4>
                     <ul className="mt-3 grid grid-cols-1 gap-x-8 gap-y-2 sm:grid-cols-2">
                       {includedInFee.map((item) => (
-                        <li key={item} className="flex gap-2 text-scheme-text/85">
+                        <li key={item} className="flex gap-2 text-scheme-text/70">
                           <span aria-hidden className="mt-2.5 size-1.5 shrink-0 rounded-full bg-brand-terracotta" />
                           {item}
                         </li>
                       ))}
                     </ul>
                   </div>
-                  <p className="mt-6 text-small text-scheme-text/80">
+                  <p className="mt-6 text-small text-scheme-text/70">
                     Siblings: {academyFees.siblingDiscounts.two} off for two,{" "}
                     {academyFees.siblingDiscounts.threeOrMore} off for three or more. A one-time
                     registration fee, which includes kit, applies when your child first joins.{" "}
@@ -244,7 +270,7 @@ export const Programme = () => {
 
             {others.length > 0 && (
               <div>
-                <h2 className="mb-8 text-h3 font-medium md:mb-12">Also at the club</h2>
+                <h2 className="mb-12 text-h3 font-medium md:mb-18 lg:mb-20">Also at the club</h2>
                 <ul className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
                   {others.map((programme) => (
                     <CompactProgrammeCard key={programme.slug} programme={programme} />

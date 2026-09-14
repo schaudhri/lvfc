@@ -28,9 +28,8 @@ export const NotFound = () => {
             {/* `title` is stripped by Button (it would render a native
                 tooltip), so the label has to be passed as children. */}
             <Button {...cta.programmes}>{cta.programmes.title}</Button>
-            <Button {...cta.contact} variant="secondary">
-              {cta.contact.title}
-            </Button>
+            {/* No "Contact us" here — the closing band below carries it, and
+                two of the same button on one short page is one too many. */}
           </div>
         </div>
       </section>
