@@ -54,7 +54,7 @@ export const LEGACY_POST_BODIES: Record<string, { type: "paragraph" | "heading";
     { type: "heading", text: "What runs there" },
     {
       type: "paragraph",
-      text: "Pine Avenue opens with four of our five pathway stages: FUNdamentals for two-year-olds, Mini-Kickers at three to four, Pre Academy at five to eight and Foundation at nine to twelve. Youth Development is not running at Pine Avenue yet — players aged thirteen and over train at Gulberg, DHA Phase V or DHA Phase VIII.",
+      text: "Pine Avenue opens with four of our five pathway stages: FUNdamentals for two-year-olds, Mini-Kickers at three to four, Pre-Academy at five to eight and Foundation at nine to twelve. Youth Development is not running at Pine Avenue yet — players aged thirteen and over train at Gulberg, DHA Phase V or DHA Phase VIII.",
     },
     { type: "heading", text: "When it trains" },
     {

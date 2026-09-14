@@ -37,7 +37,7 @@ export const ClubIntro = (props: ClubIntroProps) => {
                 {eyebrow}
               </p>
             )}
-            <h2 className="text-h2 font-bold">{heading}</h2>
+            <h2 className="text-h2 font-medium">{heading}</h2>
           </div>
 
           <div className="flex flex-col gap-5">
@@ -53,7 +53,7 @@ export const ClubIntro = (props: ClubIntroProps) => {
                   <div key={stat.label} className="border-t border-scheme-border pt-3">
                     <dt className="sr-only">{stat.label}</dt>
                     <dd>
-                      <span className="block text-h4 font-bold">{stat.value}</span>
+                      <span className="block text-h4 font-medium">{stat.value}</span>
                       <span className="mt-1 block text-small text-scheme-text/70">
                         {stat.label}
                       </span>

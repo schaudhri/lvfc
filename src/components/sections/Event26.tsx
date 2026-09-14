@@ -72,7 +72,7 @@ export const Event26 = (props: Event26Props) => {
       <div className="container">
         <div className="mb-12 grid auto-cols-fr grid-cols-1 items-end gap-12 md:mb-18 md:grid-cols-[1fr_max-content] lg:mb-20 lg:gap-20">
           <div className="max-w-lg">
-            <h2 className="mb-3 text-h2 font-bold md:mb-4">{heading}</h2>
+            <h2 className="mb-3 text-h2 font-medium md:mb-4">{heading}</h2>
             <p className="text-medium">{description}</p>
           </div>
           <Button {...button} className="hidden md:flex">
@@ -153,7 +153,7 @@ const FeaturedEvent: React.FC<FeaturedEvent> = ({
           </div>
         </div>
         <a href={url} className="mb-2">
-          <h2 className="text-h5 font-bold">{title}</h2>
+          <h2 className="text-h5 font-medium">{title}</h2>
         </a>
         <p>{description}</p>
         <Button {...button} className="mt-5 md:mt-6">

@@ -44,6 +44,8 @@ type Props = {
   layout?: "grid" | "slider";
   /** Drop the section chrome when the page already supplies its own heading. */
   bare?: boolean;
+  /** Rendered under the cards, inside the section. */
+  footer?: React.ReactNode;
   className?: string;
 };
 
@@ -338,6 +340,7 @@ export const ProgrammeCards = (props: ProgrammeCardsProps) => {
     programmes,
     layout = "grid",
     bare = false,
+    footer,
     className,
   } = { ...ProgrammeCardsDefaults, ...props };
 
@@ -368,32 +371,30 @@ export const ProgrammeCards = (props: ProgrammeCardsProps) => {
           </Link>
 
           <div className="flex flex-1 flex-col p-6 md:p-7">
-            <h3 className="text-h5 font-bold">
+            {/* Age above the title — the order a parent scans in (Figma card
+                structure, Sept 2026). "3–4 Years", unit spelled out. */}
+            <p className="text-small font-semibold capitalize text-brand-terracotta">
+              <span className="sr-only">Ages </span>
+              {formatAges(programme.ages)}
+            </p>
+            <h3 className="mt-2 text-h5 font-medium text-brand-terracotta">
               <Link to={programme.url} className="hover:underline">
                 {programme.title}
               </Link>
             </h3>
-            {/* The age is what a parent scans for first, so it reads as a pill
-                with the unit spelled out — "3–4 years", not "Ages: 3–4". */}
-            <p className="mt-3 w-fit rounded-full bg-white/15 px-3 py-1 text-small font-semibold text-white">
-              <span className="sr-only">Ages </span>
-              {formatAges(programme.ages)}
-            </p>
 
-            <p className="mt-4 mb-8 flex-1 text-white/85">{programme.description}</p>
+            <p className="mt-3 mb-8 flex-1">{programme.description}</p>
 
-            <div className="mt-auto flex flex-wrap items-center gap-x-6 gap-y-3">
-              {/* White pill on the dark body — the default champagne CTA is
-                  tuned for light sections and goes muddy against near-black. */}
-              <Button {...programme.primaryButton} size="sm" variant="alternate">
+            <div className="mt-auto flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
+              <Button {...programme.primaryButton} size="sm">
                 {programme.primaryButton.title}
               </Button>
               <Link
                 to={programme.url}
-                className="inline-flex items-center gap-1.5 font-semibold underline-offset-4 hover:underline"
+                className="inline-flex items-center gap-1.5 font-semibold text-brand-terracotta underline-offset-4 hover:underline"
               >
                 {programme.learnMoreLabel ?? "Learn more"}
-                <ChevronRight className="size-5 text-white transition-transform duration-200 group-hover:translate-x-0.5" />
+                <ChevronRight className="size-5 text-brand-terracotta transition-transform duration-200 group-hover:translate-x-0.5" />
               </Link>
             </div>
           </div>
@@ -421,11 +422,12 @@ export const ProgrammeCards = (props: ProgrammeCardsProps) => {
       <div className="container">
         {(heading || description) && (
           <div className="mb-12 max-w-lg md:mb-18 lg:mb-20">
-            {heading && <h2 className="mb-5 text-h2 font-bold md:mb-6">{heading}</h2>}
+            {heading && <h2 className="mb-5 text-h2 font-medium md:mb-6">{heading}</h2>}
             {description && <p className="text-medium">{description}</p>}
           </div>
         )}
         {grid}
+        {footer}
       </div>
     </section>
   );

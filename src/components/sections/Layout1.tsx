@@ -26,7 +26,7 @@ export const Layout1 = (props: Layout1Props) => {
       <div className="container">
         <div className="grid grid-cols-1 gap-y-12 md:grid-cols-2 md:items-center md:gap-x-12 lg:gap-x-20">
           <div>
-            <h2 className="mb-5 text-h2 font-bold md:mb-6">{heading}</h2>
+            <h2 className="mb-5 text-h2 font-medium md:mb-6">{heading}</h2>
             <p className="text-medium">{description}</p>
             <div className="mt-6 flex flex-wrap items-center gap-4 md:mt-8">
               {buttons.map((button, index) => (

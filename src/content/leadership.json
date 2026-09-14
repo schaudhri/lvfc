@@ -4,31 +4,36 @@
     "description": "British-Pakistani entrepreneur who wants to combine best-in-class practices from Britain and Europe and adapt them to Pakistan — across child pedagogy, curriculum, and child safeguarding, which is massively missing here. Believes every child should be seen as a whole, well-rounded individual, not just a footballer. You'll find him at the grounds working with coaches and parents to make sure the vision is real on the pitch.",
     "email": "hamza@virgilsports.com",
     "name": "Hamza Syed",
-    "role": "Chief Executive Officer"
+    "role": "Chief Executive Officer",
+    "summary": "Believes every child should be seen as a whole, well-rounded individual, not just a footballer."
   },
   {
     "description": "UEFA B License. 29 years' experience coaching in North America and Europe. Directs our curriculum for recreational and competitive programming across all age groups. You'll find him hopping between different age-groups and sessions, working alongside our coaches to ensure every kid gets the maximum from their time on the pitch.",
     "email": "steve@virgilsports.com",
     "name": "Steve Hamilton",
-    "role": "Director of Football"
+    "role": "Director of Football",
+    "summary": "29 years' experience coaching in North America and Europe."
   },
   {
     "description": "Seasoned operations executive running day-to-day club operations across the four branches. You'll see him hopping around our branches making sure they're running smoothly — say hi when you spot him.",
     "email": "sarmad@virgilsports.com",
     "name": "Sarmad Hussain",
-    "role": "Director of Operations"
+    "role": "Director of Operations",
+    "summary": "Seasoned operations executive running day-to-day club operations across the four branches."
   },
   {
     "alsoRole": "President of Leagues",
     "description": "Knows the Lahore football scene back of his hand. Directs the club's competition structure — the ELJPL and LJPL youth leagues — manages school and club partnerships across the city, and handles league registration enquiries.",
     "email": "zain@virgilsports.com",
     "name": "Zain Shoukat",
-    "role": "Club Liaison Officer"
+    "role": "Club Liaison Officer",
+    "summary": "Knows the Lahore football scene back of his hand."
   },
   {
     "description": "Leads international and domestic tour operations, managing itineraries, logistics, and partnerships with clubs and facilities across Pakistan and abroad.",
     "email": "tahir@virgilsports.com",
     "name": "Tahir Mehmood",
-    "role": "Head of Trips & Tours"
+    "role": "Head of Trips & Tours",
+    "summary": "Leads international and domestic tour operations, managing itineraries, logistics, and partnerships with clubs and facilities across Pakistan and abroad."
   }
 ]

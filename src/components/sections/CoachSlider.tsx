@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { CustomEase } from "gsap/CustomEase";
@@ -40,6 +40,11 @@ export const CoachSlider = (props: CoachSliderProps) => {
     ...props,
   };
   const containerRef = useRef<HTMLDivElement>(null);
+  /** Set by the effect: lets the pause button stop and restart the loop. */
+  const setLoopPausedRef = useRef<((paused: boolean) => void) | null>(null);
+  const [paused, setPaused] = useState(false);
+  /** Only offer a pause button when the loop actually runs. */
+  const [isAnimated, setIsAnimated] = useState(false);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -54,6 +59,7 @@ export const CoachSlider = (props: CoachSliderProps) => {
     const tiles = container.querySelectorAll<HTMLElement>("[data-depth-tiles-item]");
     const tileCount = tiles.length;
     if (!list || tileCount < 2) return;
+    setIsAnimated(true);
 
     const xMultiplier = 0.65;
     const backScale = 0.5;
@@ -69,6 +75,8 @@ export const CoachSlider = (props: CoachSliderProps) => {
     const state = { progress: 0 };
 
     let isActive = false;
+    /** The visitor pressed Pause: stay stopped even when scrolled back into view. */
+    let userPaused = false;
     let isHovering = false;
     let hasStarted = false;
     let stepTimeline: gsap.core.Timeline | undefined;
@@ -168,6 +176,7 @@ export const CoachSlider = (props: CoachSliderProps) => {
     }
 
     function playDepth() {
+      if (userPaused) return;
       isActive = true;
       if (isHovering) return;
 
@@ -224,8 +233,15 @@ export const CoachSlider = (props: CoachSliderProps) => {
       onToggle: (self) => (self.isActive ? playDepth() : pauseDepth()),
     });
 
+    setLoopPausedRef.current = (shouldPause: boolean) => {
+      userPaused = shouldPause;
+      if (shouldPause) pauseDepth();
+      else if (trigger.isActive) playDepth();
+    };
+
     // Teardown so the loop doesn't keep running after client-side navigation.
     return () => {
+      setLoopPausedRef.current = null;
       list.removeEventListener("pointerover", onPointerOver);
       list.removeEventListener("pointerleave", onPointerLeave);
       trigger.kill();
@@ -239,8 +255,8 @@ export const CoachSlider = (props: CoachSliderProps) => {
   return (
     <section className="px-[5%] pt-16 md:pt-24 lg:pt-28">
       <div className="container">
-        <div className="mx-auto max-w-lg text-center">
-          <h2 className="mb-5 text-h2 font-bold md:mb-6">{heading}</h2>
+        <div className="max-w-lg">
+          <h2 className="mb-5 text-h2 font-medium md:mb-6">{heading}</h2>
           {description && <p className="text-medium">{description}</p>}
         </div>
       </div>
@@ -260,7 +276,9 @@ export const CoachSlider = (props: CoachSliderProps) => {
                   <div className="coach-card__info">
                     <p className="coach-card__name">{coach.name}</p>
                     <p className="coach-card__position">{coach.position}</p>
-                    <span className="coach-card__cert">{coach.certification}</span>
+                    {coach.certification && (
+                      <span className="coach-card__cert">{coach.certification}</span>
+                    )}
                     <p className="coach-card__line">{coach.oneLiner}</p>
                   </div>
                 </div>
@@ -269,6 +287,24 @@ export const CoachSlider = (props: CoachSliderProps) => {
           </div>
         </div>
       </div>
+
+      {/* The loop moves on its own, so anyone can stop it (WCAG 2.2.2). */}
+      {isAnimated && (
+        <div className="container -mt-6 flex justify-center pb-2">
+          <button
+            type="button"
+            aria-pressed={paused}
+            onClick={() => {
+              const next = !paused;
+              setPaused(next);
+              setLoopPausedRef.current?.(next);
+            }}
+            className="rounded-full border border-scheme-border px-5 py-2 text-small font-semibold transition-colors hover:bg-neutral-lightest"
+          >
+            {paused ? "Play" : "Pause"}
+          </button>
+        </div>
+      )}
     </section>
   );
 };

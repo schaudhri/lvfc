@@ -5,7 +5,6 @@ import { Button, type ButtonProps } from "@/components/ui/button";
 import { branches } from "@/data/locations";
 import { scheduleDays, scheduleRows, scheduleNotes } from "@/data/schedule";
 import { cn } from "@/lib/utils";
-import { cardPadded } from "@/lib/surface";
 import { schools } from "@/data/schools";
 import { cta } from "@/data/cta";
 
@@ -90,7 +89,7 @@ export const ScheduleGrid = (props: ScheduleGridProps) => {
       <div className="container">
         {heading && (
           <div className="mb-12 max-w-lg md:mb-18 lg:mb-20">
-            <h2 className="mb-4 text-h2 font-bold md:mb-5">{heading}</h2>
+            <h2 className="mb-4 text-h2 font-medium md:mb-5">{heading}</h2>
             {description && <p className="text-medium">{description}</p>}
           </div>
         )}
@@ -111,15 +110,22 @@ export const ScheduleGrid = (props: ScheduleGridProps) => {
           />
         </div>
 
-        <div className="w-full overflow-x-auto rounded-card border border-scheme-border/30">
+        {/*
+          `contain: layout paint` keeps the 743px-wide table from counting
+          toward the page's width. Without it, mobile browsers zoomed the whole
+          page out to fit the table (a 687px layout viewport on a 375px phone),
+          pushing the fixed nav's menu button and Book A Spot off-screen —
+          even though the table itself scrolls inside this box.
+        */}
+        <div className="w-full overflow-x-auto rounded-card border border-scheme-border/30 bg-white [contain:layout_paint]">
           <table className="w-full border-collapse text-left">
             <thead>
-              <tr className="bg-neutral-lightest">
-                <th scope="col" className="px-6 py-4 text-small font-bold">
+              <tr className="bg-brand-terracotta">
+                <th scope="col" className="px-6 py-4 text-small font-bold text-white">
                   Branch
                 </th>
                 {scheduleDays.map((day) => (
-                  <th key={day} scope="col" className="px-6 py-4 text-small font-bold">
+                  <th key={day} scope="col" className="px-6 py-4 text-small font-bold text-white">
                     {day}
                   </th>
                 ))}
@@ -173,9 +179,11 @@ export const ScheduleGrid = (props: ScheduleGridProps) => {
             {schools.map((school) => (
               <li
                 key={school.name}
-                className={cn("flex flex-col gap-5 sm:flex-row sm:items-center sm:gap-8", cardPadded)}
+                // A plain ruled row, not a card: it sits directly under the
+                // timetable, which is already a bordered panel.
+                className="flex flex-col gap-5 border-t border-scheme-border/30 pt-8 sm:flex-row sm:items-center sm:gap-8"
               >
-                <div className="flex h-16 w-40 shrink-0 items-center justify-center rounded-badge bg-white px-4">
+                <div className="flex h-16 w-40 shrink-0 items-center justify-center rounded-badge bg-brand-sandstone px-4">
                   {school.logo ? (
                     <img src={school.logo.src} alt={school.logo.alt} className="max-h-10 w-auto" />
                   ) : (
@@ -183,7 +191,7 @@ export const ScheduleGrid = (props: ScheduleGridProps) => {
                   )}
                 </div>
                 <div className="flex-1">
-                  <h3 className="mb-1 text-h6 font-bold">Also training at {school.name} schools</h3>
+                  <h3 className="mb-1 text-h6 font-medium">Also training at {school.name} schools</h3>
                   <p className="text-scheme-text/80">{school.description}</p>
                 </div>
                 <Button {...cta.contact} variant="secondary" size="sm" className="shrink-0">

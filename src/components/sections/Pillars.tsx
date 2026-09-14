@@ -28,7 +28,7 @@ export const Pillars = (props: PillarsProps) => {
     <section className="px-[5%] py-16 md:py-24 lg:py-28">
       <div className="container">
         <div className="mb-12 max-w-lg md:mb-18 lg:mb-20">
-          <h2 className="mb-5 text-h2 font-bold md:mb-6">{heading}</h2>
+          <h2 className="mb-5 text-h2 font-medium md:mb-6">{heading}</h2>
           <p className="text-medium">{description}</p>
         </div>
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
@@ -37,10 +37,10 @@ export const Pillars = (props: PillarsProps) => {
               key={index}
               className="flex flex-col rounded-card bg-neutral-lightest p-6 md:p-8"
             >
-              <p className="mb-4 text-h6 font-bold text-scheme-text/60">
+              <p className="mb-4 text-h6 font-medium text-scheme-text/60">
                 {String(index + 1).padStart(2, "0")}
               </p>
-              <h3 className="mb-3 text-h5 font-bold md:mb-4">{pillar.title}</h3>
+              <h3 className="mb-3 text-h5 font-medium md:mb-4">{pillar.title}</h3>
               <p>{pillar.description}</p>
             </div>
           ))}

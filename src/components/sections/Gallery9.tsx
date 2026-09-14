@@ -22,8 +22,8 @@ export const Gallery9 = (props: Gallery9Props) => {
   return (
     <section className="px-[5%] py-16 md:py-24 lg:py-28">
       <div className="container">
-        <div className="mb-12 text-center md:mb-18 lg:mb-20">
-          <h2 className="mb-5 text-h2 font-bold md:mb-6">{heading}</h2>
+        <div className="mb-12 max-w-lg md:mb-18 lg:mb-20">
+          <h2 className="mb-5 text-h2 font-medium md:mb-6">{heading}</h2>
           <p className="text-medium">{description}</p>
         </div>
         <div className="grid auto-cols-fr grid-cols-2 grid-rows-2 gap-6 md:auto-cols-auto md:grid-cols-[2fr_1fr_1fr] md:gap-8">

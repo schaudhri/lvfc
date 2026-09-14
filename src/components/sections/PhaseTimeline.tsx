@@ -36,7 +36,7 @@ export const PhaseTimeline = (props: PhaseTimelineProps) => {
     <section className="px-[5%] py-16 md:py-24 lg:py-28">
       <div className="container">
         <div className="mb-12 md:mb-18 lg:mb-20">
-          <h2 className="text-h2 font-bold">{heading}</h2>
+          <h2 className="text-h2 font-medium">{heading}</h2>
           {description && <p className="mt-5 max-w-lg text-medium">{description}</p>}
           {button && (
             <Button {...button} size="sm" className="mt-6">
@@ -70,7 +70,7 @@ export const PhaseTimeline = (props: PhaseTimelineProps) => {
                 <span className="mb-3 rounded-full border border-scheme-border/40 px-2 py-0.5 text-tiny">
                   {phase.age}
                 </span>
-                <h3 className="mb-2 text-h6 font-bold">{phase.title}</h3>
+                <h3 className="mb-2 text-h6 font-medium">{phase.title}</h3>
                 <p className="text-small text-scheme-text/70">{phase.description}</p>
               </div>
             </div>
@@ -97,7 +97,7 @@ export const PhaseTimelineDefaults: Props = {
   phases: [
     { age: "2 years", title: "FUNdamentals", description: "Play-based introduction" },
     { age: "3–4 years", title: "Mini-Kickers", description: "Coordination, confidence" },
-    { age: "5–8 years", title: "Pre Academy", description: "Ball mastery, 1v1" },
+    { age: "5–8 years", title: "Pre-Academy", description: "Ball mastery, 1v1" },
     { age: "9–12 years", title: "Foundation", description: "Technique, small-sided games" },
     { age: "13+ years", title: "Youth Development", description: "Tactical concepts, team shape" },
   ],

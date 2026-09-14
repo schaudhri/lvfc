@@ -43,7 +43,7 @@ export const Faqs = (props: FaqsProps) => {
     <section className="px-[5%] py-16 md:py-24 lg:py-28">
       <div className="container grid grid-cols-1 gap-x-12 gap-y-12 md:grid-cols-[1fr_1.5fr] lg:gap-x-20">
         <div className="md:sticky md:top-24 md:self-start">
-          <h2 className="mb-5 text-h2 font-bold md:mb-6">{heading}</h2>
+          <h2 className="mb-5 text-h2 font-medium md:mb-6">{heading}</h2>
           <p className="mb-6 text-medium md:mb-8">{description}</p>
           {categories && (
             <nav aria-label="FAQ categories" className="mb-6 flex flex-wrap gap-2 md:mb-8">
@@ -59,7 +59,7 @@ export const Faqs = (props: FaqsProps) => {
             </nav>
           )}
           <div className="rounded-card bg-neutral-lightest p-6">
-            <h3 className="mb-2 text-h6 font-bold">{footer.heading}</h3>
+            <h3 className="mb-2 text-h6 font-medium">{footer.heading}</h3>
             <p className="mb-5">{footer.description}</p>
             <Button {...footer.button}>{footer.button.title}</Button>
           </div>
@@ -68,7 +68,7 @@ export const Faqs = (props: FaqsProps) => {
           {categories
             ? categories.map((category) => (
                 <div key={category.id} id={category.id} className="scroll-mt-24">
-                  <h3 className="mb-2 font-sans text-h5 font-bold">{category.title}</h3>
+                  <h3 className="mb-2 font-sans text-h5 font-medium">{category.title}</h3>
                   <div className="flex flex-col">
                     {category.questions.map((item, index) => (
                       <QuestionItem key={index} item={item} />

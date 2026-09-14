@@ -39,7 +39,7 @@ export const CampusSchedule = (props: CampusScheduleProps) => {
     <section className={cn("px-[5%] py-16 md:py-24 lg:py-28", className)}>
       <div className="container">
         <div className="mb-12 max-w-lg md:mb-18 lg:mb-20">
-          <h2 className="mb-4 text-h2 font-bold md:mb-5">{heading}</h2>
+          <h2 className="mb-4 text-h2 font-medium md:mb-5">{heading}</h2>
           {description && <p className="text-medium">{description}</p>}
         </div>
 
@@ -72,7 +72,7 @@ export const CampusSchedule = (props: CampusScheduleProps) => {
 
         <div className="rounded-card border border-scheme-border/30 p-5 md:p-6">
           <div className="mb-5 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
-            <h3 className="text-h5 font-bold">{active.name}</h3>
+            <h3 className="text-h5 font-medium">{active.name}</h3>
             {showBranchDetail && (
               <p className="text-small text-scheme-text/70">{active.address}</p>
             )}

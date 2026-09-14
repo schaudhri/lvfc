@@ -20,14 +20,14 @@ export const CeoLetter = () => {
           <img
             src={author.image.src}
             alt={author.image.alt}
-            className="aspect-[4/5] w-full max-w-64 rounded-image object-cover md:max-w-none"
+            className="aspect-[4/5] w-full max-w-[16rem] rounded-image object-cover md:max-w-[none]"
           />
-          <p className="mt-5 text-h6 font-bold">{author.name}</p>
+          <p className="mt-5 text-h6 font-medium">{author.name}</p>
           <p className="text-small text-scheme-text/70">{author.role}</p>
         </aside>
 
-        <article className="max-w-2xl">
-          <h2 className="mb-8 text-h2 font-bold md:mb-10">A letter from our CEO</h2>
+        <article className="max-w-[42rem]">
+          <h2 className="mb-8 text-h2 font-medium md:mb-10">A letter from our CEO</h2>
           <div className="flex flex-col gap-5 text-medium">
             {paragraphs.map((paragraph, index) => (
               <p key={index}>{paragraph}</p>

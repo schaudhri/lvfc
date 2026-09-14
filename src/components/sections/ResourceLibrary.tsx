@@ -30,13 +30,13 @@ export const ResourceLibrary = (props: ResourceLibraryProps) => {
     <section className="px-[5%] py-16 md:py-24 lg:py-28">
       <div className="container">
         <div className="mb-12 max-w-lg md:mb-18 lg:mb-20">
-          <h2 className="mb-5 text-h3 font-bold md:mb-6">{heading}</h2>
+          <h2 className="mb-5 text-h3 font-medium md:mb-6">{heading}</h2>
           {description && <p className="text-medium">{description}</p>}
         </div>
         <div className="grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 md:gap-y-16 lg:grid-cols-3">
           {categories.map((category, index) => (
             <div key={index}>
-              <h3 className="mb-4 text-h6 font-bold">{category.title}</h3>
+              <h3 className="mb-4 text-h6 font-medium">{category.title}</h3>
               <ul className="flex flex-col gap-2">
                 {category.items.map((item, itemIndex) => (
                   <li key={itemIndex} className="text-small">

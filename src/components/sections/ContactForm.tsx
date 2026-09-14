@@ -28,7 +28,7 @@ type Props = {
 
 export type ContactFormProps = React.ComponentPropsWithoutRef<"section"> & Partial<Props>;
 
-const field = "w-full rounded-form border border-scheme-border bg-transparent px-3 py-2 text-regular transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-darkest focus-visible:ring-offset-2";
+const field = "w-full rounded-form border border-scheme-border bg-white px-3 py-2 text-regular transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-darkest focus-visible:ring-offset-2";
 const labelStyle = "mb-2 block text-small font-semibold";
 
 /**
@@ -94,7 +94,7 @@ export const ContactForm = (props: ContactFormProps) => {
       <div className="container">
         <div className="grid grid-cols-1 gap-x-12 gap-y-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1fr)] lg:gap-x-20">
           <div>
-            <h2 className="mb-4 text-h2 font-bold md:mb-5">{heading}</h2>
+            <h2 className="mb-4 text-h2 font-medium md:mb-5">{heading}</h2>
             <p className="text-medium">{description}</p>
             <p className="mt-5 text-small text-scheme-text/70">
               Sending opens your email app with the details filled in, so nothing is stored on this

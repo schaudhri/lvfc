@@ -4,7 +4,6 @@ import { useRef } from "react";
 import { useScroll, useTransform, motion, type MotionStyle } from "motion/react";
 import { Button, type ButtonProps } from "@/components/ui/button";
 import { ChevronRight } from "relume-icons";
-import { ClubBadge } from "@/components/ClubBadge";
 
 type FeaturesProps = {
   heading: string;
@@ -31,7 +30,7 @@ export const Layout121 = (props: Layout121Props) => {
       <div className="container">
         <div className="grid grid-cols-1 items-start gap-y-8 md:grid-cols-2 md:gap-x-12 lg:gap-x-20">
           <div>
-            <h2 className="mb-5 text-h2 font-bold md:mb-6">{heading}</h2>
+            <h2 className="mb-5 text-h2 font-medium md:mb-6">{heading}</h2>
             <div className="mt-6 flex flex-wrap items-center gap-4 md:mt-8">
               {buttons.map((button, index) => (
                 <Button key={index} {...button}>
@@ -46,11 +45,18 @@ export const Layout121 = (props: Layout121Props) => {
               <div key={index} className="grid grid-cols-[max-content_1fr] gap-x-6 lg:gap-x-10">
                 <div className="relative flex flex-col items-center justify-start py-10">
                   <div className="relative z-10 -mt-4 bg-scheme-background px-2 py-4 md:px-4">
-                    <ClubBadge className="size-12 text-scheme-text" />
+                    {/* A step number, not the club badge: these are real
+                        steps in order, so the marker says which one. */}
+                    <span
+                      aria-hidden="true"
+                      className="flex size-12 items-center justify-center rounded-full bg-brand-maroon text-large font-semibold text-white"
+                    >
+                      {index + 1}
+                    </span>
                   </div>
                 </div>
                 <div className="py-10">
-                  <h3 className="mb-3 text-h6 font-bold md:mb-4">{feature.heading}</h3>
+                  <h3 className="mb-3 text-h6 font-medium md:mb-4">{feature.heading}</h3>
                   <p>{feature.description}</p>
                 </div>
               </div>

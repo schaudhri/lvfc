@@ -1,16 +1,14 @@
 import { Link, Navigate, useParams } from "react-router-dom";
-import { ChevronRight } from "relume-icons";
 import { Header54 } from "@/components/sections/Header54";
 import { Header62 } from "@/components/sections/Header62";
 import { BranchWeek } from "@/components/sections/BranchWeek";
+import { ProgrammeListRow } from "@/components/sections/ProgrammeList";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { getBranch } from "@/data/locations";
-import { programmesAtBranch } from "@/data/programmes";
+import { otherProgrammes, pathwayProgrammes, programmesAtBranch } from "@/data/programmes";
 import { daySummary, scheduleNotes } from "@/data/schedule";
-import { cta, programmeCta } from "@/data/cta";
-import { cardMedia } from "@/lib/surface";
-import { cn } from "@/lib/utils";
+import { cta } from "@/data/cta";
 import { useDocumentMeta } from "@/hooks/use-document-meta";
 import { phase5Photos, phase8Photos } from "@/data/clubPhotos";
 
@@ -38,6 +36,8 @@ export const BranchSpecific = () => {
   if (!branch) return <Navigate to="/locations" replace />;
 
   const programmes = programmesAtBranch(branch.slug);
+  const onPathway = pathwayProgrammes.filter(({ programme }) => programmes.includes(programme));
+  const alsoHere = otherProgrammes.filter((programme) => programmes.includes(programme));
   const week = daySummary(branch.slug);
 
   // Real training shots for the two branches we have them for; the shared
@@ -98,14 +98,14 @@ export const BranchSpecific = () => {
         <div className="container">
           <div className="grid grid-cols-1 gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
             <div>
-              <h2 className="mb-4 text-h3 font-bold">Training week</h2>
+              <h2 className="mb-4 text-h3 font-medium">Training week</h2>
               <p className="mb-8 max-w-xl text-medium">
                 The sessions this branch runs. Your child's exact slot within the band is
                 confirmed at the branch.
               </p>
               <BranchWeek slug={branch.slug} />
 
-              <h3 className="mb-4 mt-10 text-h6 font-bold">What runs here</h3>
+              <h3 className="mb-4 mt-10 text-h6 font-medium">What runs here</h3>
               <ul className="flex flex-wrap gap-2">
                 {branch.programmes.map((entry) => (
                   <li
@@ -119,7 +119,7 @@ export const BranchSpecific = () => {
 
               {seasons.length > 0 && (
                 <>
-                  <h3 className="mb-4 mt-10 text-h6 font-bold">Season</h3>
+                  <h3 className="mb-4 mt-10 text-h6 font-medium">Season</h3>
                   <ul className="flex flex-wrap gap-2">
                     {seasons.map((season) => (
                       <li
@@ -154,7 +154,7 @@ export const BranchSpecific = () => {
       {gallery.length > 0 && (
         <section className="border-t border-scheme-border/20 px-[5%] py-16 md:py-24 lg:py-28">
           <div className="container">
-            <h2 className="mb-12 text-h3 font-bold md:mb-18">The ground</h2>
+            <h2 className="mb-12 text-h3 font-medium md:mb-18">The ground</h2>
             <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {gallery.map((photo) => (
                 <li key={photo.src}>
@@ -170,53 +170,52 @@ export const BranchSpecific = () => {
         </section>
       )}
 
+      {/*
+        A list, not a card grid. The pills above already say what runs here;
+        this is the place to book one, so each programme is a row with its
+        ages, season and the booking button — pathway stages first.
+      */}
       <section className="border-t border-scheme-border/20 px-[5%] py-16 md:py-24 lg:py-28">
         <div className="container">
-          <div className="mb-12 max-w-lg md:mb-18 lg:mb-20">
-            <h2 className="mb-4 text-h3 font-bold">Programmes at {branch.name}</h2>
+          <div className="mb-10 max-w-lg md:mb-12">
+            <h2 className="mb-4 text-h3 font-medium">Programmes at {branch.name}</h2>
             <p className="text-medium">
-              Every route into the club that runs at this ground — pick the one that fits your
-              child's age.
+              Everything that runs at this ground. Start with the stage that matches your child's
+              age.
             </p>
           </div>
 
-          <ul className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {programmes.map((programme) => (
-              <li
-                key={programme.slug}
-                className={cn("group flex flex-col p-6", cardMedia)}
-              >
-                <h3 className="mb-1 text-h6 font-bold">{programme.name}</h3>
-                <p className="mb-3 text-small text-white/70">
-                  Ages {programme.agesLabel}
-                  {programme.season && <> · {programme.season}</>}
-                </p>
-                <p className="mb-5 text-small text-white/85">{programme.summary}</p>
-                {/*
-                  A programme with no stated branches passes the branch filter
-                  everywhere, so say so here rather than implying this ground
-                  has been confirmed for it.
-                */}
-                {!programme.branchSlugs && (
-                  <p className="mb-5 text-small text-white/60">
-                    Confirm availability at this branch.
-                  </p>
-                )}
-                <div className="mt-auto flex flex-wrap items-center gap-x-6 gap-y-3">
-                  <Button {...programmeCta(programme.bookingKey)} size="sm" variant="alternate">
-                    {programmeCta(programme.bookingKey).title}
-                  </Button>
-                  <Link
-                    to={`/programmes/${programme.slug}`}
-                    className="inline-flex items-center gap-1.5 font-semibold underline-offset-4 hover:underline"
-                  >
-                    Learn more
-                    <ChevronRight className="size-5 text-white transition-transform duration-200 group-hover:translate-x-0.5" />
-                  </Link>
-                </div>
-              </li>
-            ))}
-          </ul>
+          <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16">
+            {onPathway.length > 0 && (
+              <div>
+                <h3 className="mb-2 text-h5 font-medium">On the pathway</h3>
+                <ol className="border-b border-scheme-border/30">
+                  {onPathway.map(({ programme }) => (
+                    <ProgrammeListRow key={programme.slug} programme={programme} />
+                  ))}
+                </ol>
+              </div>
+            )}
+            {alsoHere.length > 0 && (
+              <div>
+                <h3 className="mb-2 text-h5 font-medium">Also here</h3>
+                <ul className="border-b border-scheme-border/30">
+                  {alsoHere.map((programme) => (
+                    <ProgrammeListRow
+                      key={programme.slug}
+                      programme={programme}
+                      // A programme with no stated branches passes the branch
+                      // filter everywhere, so say so rather than implying this
+                      // ground has been confirmed for it.
+                      note={
+                        programme.branchSlugs ? undefined : "Confirm availability at this branch."
+                      }
+                    />
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
         </div>
       </section>
 
@@ -224,7 +223,7 @@ export const BranchSpecific = () => {
       {branch.coaches && branch.coaches.length > 0 && (
         <section className="border-t border-scheme-border/20 px-[5%] py-16 md:py-24 lg:py-28">
           <div className="container">
-            <h2 className="mb-12 text-h3 font-bold md:mb-18">Coaches at this branch</h2>
+            <h2 className="mb-12 text-h3 font-medium md:mb-18">Coaches at this branch</h2>
             <ul className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
               {branch.coaches.map((coach) => (
                 <li key={coach.name}>
@@ -235,7 +234,7 @@ export const BranchSpecific = () => {
                       className="mb-4 aspect-square w-full rounded-image object-cover"
                     />
                   )}
-                  <h3 className="text-h6 font-bold">{coach.name}</h3>
+                  <h3 className="text-h6 font-medium">{coach.name}</h3>
                   <p className="mb-2 text-small text-scheme-text/70">{coach.role}</p>
                   <p className="text-small">{coach.description}</p>
                 </li>
@@ -253,8 +252,12 @@ export const BranchSpecific = () => {
       </section>
 
       <Header62
-        heading="Come and see for yourself"
-        description="Get in touch or come and watch a session — the best way to understand LVFC is to stand on the touchline."
+        heading={`Come and watch a session at ${branch.name}`}
+        description={
+          week
+            ? `Sessions run ${week}. Book a spot, or get in touch and we'll arrange for you to watch one first.`
+            : "Book a spot, or get in touch and we'll arrange for you to watch a session first."
+        }
         buttons={[{ ...cta.bookASpot }, { ...cta.contact, variant: "secondary" }]}
       />
     </>

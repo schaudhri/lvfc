@@ -42,7 +42,7 @@ export const Comparison10 = (props: Comparison10Props) => {
     <section className="px-[5%] py-16 md:py-24 lg:py-28">
       <div className="container">
         <div className="mx-auto mb-12 max-w-lg text-center md:mb-18 lg:mb-20">
-          <h2 className="mb-5 text-h2 font-bold md:mb-6">{heading}</h2>
+          <h2 className="mb-5 text-h2 font-medium md:mb-6">{heading}</h2>
           <p className="text-medium">{description}</p>
         </div>
         <div className="mx-auto max-w-xl">
@@ -50,7 +50,7 @@ export const Comparison10 = (props: Comparison10Props) => {
             {comparisonProducts.map((comparison, index) => (
               <React.Fragment key={index}>
                 <div className="hidden h-full flex-col items-start justify-end py-4 pr-4 sm:py-6 sm:pr-6 md:flex lg:py-6 lg:pr-6">
-                  <h2 className="text-h6 font-bold">{comparison.title}</h2>
+                  <h2 className="text-h6 font-medium">{comparison.title}</h2>
                 </div>
                 {comparison.products.map((plan, index) => (
                   <ProductPlan key={index} index={index} {...plan} />

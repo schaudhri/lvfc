@@ -29,7 +29,7 @@ export const Layout192 = (props: Layout192Props) => {
             <img src={image.src} className="w-full rounded-image object-cover" alt={image.alt} />
           </div>
           <div className="order-1 lg:order-2">
-            <h2 className="mb-5 text-h2 font-bold md:mb-6">{heading}</h2>
+            <h2 className="mb-5 text-h2 font-medium md:mb-6">{heading}</h2>
             <p className="text-medium">{description}</p>
             <div className="mt-6 flex flex-wrap gap-4 md:mt-8">
               {buttons.map((button, index) => (

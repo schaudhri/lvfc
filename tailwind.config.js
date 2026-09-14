@@ -20,10 +20,13 @@ module.exports = {
         heading: ["Tiller", "Futura PT", "ui-sans-serif", "system-ui", "sans-serif"],
       },
       fontSize: {
-        h1: ["3.5rem", { lineHeight: "1.2", letterSpacing: "-0.01em" }],
-        h2: ["3rem", { lineHeight: "1.2", letterSpacing: "-0.01em" }],
-        h3: ["2.5rem", { lineHeight: "1.2", letterSpacing: "-0.01em" }],
-        h4: ["2rem", { lineHeight: "1.3", letterSpacing: "-0.01em" }],
+        // Fluid from phone to desktop. At a fixed 3.5rem the landing headline
+        // wrapped to four lines on a 375px phone and pushed its buttons below
+        // the fold; the desktop sizes are unchanged.
+        h1: ["clamp(2.5rem, 1.6rem + 3.2vw, 3.5rem)", { lineHeight: "1.2", letterSpacing: "-0.01em" }],
+        h2: ["clamp(2rem, 1.3rem + 2.6vw, 3rem)", { lineHeight: "1.2", letterSpacing: "-0.01em" }],
+        h3: ["clamp(1.75rem, 1.2rem + 2vw, 2.5rem)", { lineHeight: "1.2", letterSpacing: "-0.01em" }],
+        h4: ["clamp(1.5rem, 1.1rem + 1.3vw, 2rem)", { lineHeight: "1.3", letterSpacing: "-0.01em" }],
         h5: ["1.5rem", { lineHeight: "1.4", letterSpacing: "-0.01em" }],
         h6: ["1.25rem", { lineHeight: "1.4", letterSpacing: "-0.01em" }],
         large: ["1.25rem", { lineHeight: "1.5" }],
@@ -81,7 +84,7 @@ module.exports = {
           champagne: "#B19855",
         },
         scheme: {
-          background: "#EEEEEE",
+          background: "#FFF1D7",
           foreground: "#ffffff",
           text: "#000000",
           border: "#000000",

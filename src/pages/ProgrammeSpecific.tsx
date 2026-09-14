@@ -56,7 +56,7 @@ export const ProgrammeSpecific = () => {
           description in the header stands on its own, as it always has. */}
       {programme.body && programme.body.length > 0 && (
         <section className="px-[5%] pt-16 md:pt-24 lg:pt-28">
-          <div className="container max-w-3xl">
+          <div className="container max-w-[48rem]">
             <RichText value={programme.body} />
           </div>
         </section>
@@ -67,7 +67,7 @@ export const ProgrammeSpecific = () => {
       {programme.details && programme.details.length > 0 && (
         <section className="px-[5%] py-16 md:py-24 lg:py-28">
           <div className="container">
-            <h2 className="mb-12 max-w-lg text-h3 font-bold md:mb-18 lg:mb-20">
+            <h2 className="mb-12 max-w-lg text-h3 font-medium md:mb-18 lg:mb-20">
               {programme.detailsHeading}
             </h2>
             <ul className="grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 md:gap-y-16 lg:grid-cols-3">
@@ -101,13 +101,13 @@ export const ProgrammeSpecific = () => {
 
       <ScheduleGrid
         heading="Training schedule"
-        description="The full week across all four branches. Filter by branch or day to find the sessions that fit around yours."
+        description="The full week across all four branches. Filter by branch to find the evenings that fit around yours."
       />
 
       <section className="border-t border-scheme-border/20 px-[5%] py-16 md:py-24 lg:py-28">
         <div className="container">
           <div className="mb-12 max-w-lg md:mb-18 lg:mb-20">
-            <h2 className="mb-4 text-h3 font-bold">Where it runs</h2>
+            <h2 className="mb-4 text-h3 font-medium">Where it runs</h2>
             <p className="text-medium">
               {runsAt.length > 0
                 ? "Age groups shown per branch — not every branch runs the full pathway."
@@ -122,7 +122,7 @@ export const ProgrammeSpecific = () => {
                   key={branch.slug}
                   className="flex flex-col rounded-card bg-neutral-lightest p-6"
                 >
-                  <h3 className="mb-2 text-h6 font-bold">{branch.name}</h3>
+                  <h3 className="mb-2 text-h6 font-medium">{branch.name}</h3>
                   <p className="mb-4 text-small text-scheme-text/70">{branch.address}</p>
                   <ul className="mb-5 flex flex-col gap-1.5 text-small">
                     {branch.programmes.map((entry) => (
@@ -153,7 +153,7 @@ export const ProgrammeSpecific = () => {
       </section>
 
       <Header62
-        heading="Ready to get started?"
+        heading={`Book a place in ${programme.name}`}
         description="Register through our booking portal and we'll confirm your child's first session within 24–48 hours."
         buttons={[{ ...bookASpot }]}
       />

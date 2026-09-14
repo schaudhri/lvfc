@@ -23,7 +23,7 @@ export const ResourcesCallout = (props: ResourcesCalloutProps) => {
   return (
     <section className="border-t border-scheme-border px-[5%] py-12 md:py-16">
       <div className="container flex flex-col items-center gap-6 text-center">
-        <h2 className="text-h4 font-bold md:text-h3">{heading}</h2>
+        <h2 className="text-h4 font-medium md:text-h3">{heading}</h2>
         <p className="max-w-lg text-medium">{description}</p>
         <div className="flex flex-wrap items-center justify-center gap-2">
           {audiences.map((audience) => (

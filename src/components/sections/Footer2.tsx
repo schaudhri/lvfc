@@ -84,12 +84,12 @@ export const Footer2 = (props: Footer2Props) => {
   const linkSlots = 1 + columnLinks.reduce((total, column) => total + (column.wide ? 2 : 1), 0);
 
   return (
-    // Dark scheme per the "Footer / 2" wireframe (Figma node 78:1779):
-    // neutral-darkest ground, white type, white-outlined controls. `text-white`
+    // Maroon ground (Figma template, Sept 2026 — was neutral-darkest), white
+    // type, and a white email box beside a white-outlined button. `text-white`
     // here is what the column headings, links and credits row inherit, so the
     // only per-element overrides below are the ones the cascade can't reach —
     // the logo (a raster-ish SVG with baked-in #180B0C) and the divider.
-    <footer className="bg-neutral-darkest px-[5%] py-12 text-white md:py-18 lg:py-20">
+    <footer className="bg-brand-maroon px-[5%] py-12 text-white md:py-18 lg:py-20">
       <div className="container">
         <div className="grid grid-cols-1 items-start gap-x-[8vw] gap-y-12 pb-12 md:gap-y-16 md:pb-18 lg:grid-cols-[1fr_0.5fr] lg:gap-y-4 lg:pb-20">
           <div
@@ -123,7 +123,7 @@ export const Footer2 = (props: Footer2Props) => {
                   column.wide && "sm:col-span-2 lg:col-span-2",
                 )}
               >
-                <h2 className="mb-3 font-semibold text-white md:mb-4">{column.title}</h2>
+                <h2 className="mb-3 font-medium text-white md:mb-4">{column.title}</h2>
                 {/*
                   Multi-column rather than a grid: it flows down the first
                   column and into the second, which is the order a footer list
@@ -156,7 +156,7 @@ export const Footer2 = (props: Footer2Props) => {
             and drop the mail-client hop. The markup below won't need to change.
           */}
           <div className="flex flex-col">
-            <h2 className="mb-3 font-semibold text-white md:mb-4">{newsletterHeading}</h2>
+            <h2 className="mb-3 font-medium text-white md:mb-4">{newsletterHeading}</h2>
             <p className="mb-4 text-small md:mb-5">{newsletterDescription}</p>
             <form onSubmit={handleSubscribe} className="flex flex-col gap-3 sm:flex-row">
               <Input
@@ -166,7 +166,7 @@ export const Footer2 = (props: Footer2Props) => {
                 variant="secondary"
                 placeholder={inputPlaceholder}
                 aria-label="Your email address"
-                className="bg-transparent text-white"
+                className="bg-white/90 text-brand-maroon placeholder:text-brand-maroon/70"
               />
               <Button type="submit" variant="secondary-alt" className="shrink-0">
                 Subscribe

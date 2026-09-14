@@ -33,7 +33,8 @@ function Input({
         data-slot="input"
         className={cn(
           "flex size-full rounded-form align-middle transition-all duration-200 file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-darkest focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
-          "border border-scheme-border",
+          // White box on the sandstone page (Figma template, Sept 2026).
+          "border border-scheme-border bg-white",
           variant === "secondary" && "border-white placeholder:text-white/60",
           "min-h-11 px-3 py-2",
           icon && (iconPosition === "left" ? "pr-3 pl-11" : "pr-11 pl-3"),

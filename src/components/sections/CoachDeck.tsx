@@ -49,11 +49,11 @@ export const CoachDeck = (props: CoachDeckProps) => {
     <section className="px-[5%] py-16 md:py-24 lg:py-28">
       <div className="container">
         <div className="mx-auto mb-12 max-w-lg text-center md:mb-18 lg:mb-20">
-          <h2 className="mb-5 text-h2 font-bold md:mb-6">{heading}</h2>
+          <h2 className="mb-5 text-h2 font-medium md:mb-6">{heading}</h2>
           {description && <p className="text-medium">{description}</p>}
         </div>
 
-        <div className="relative mx-auto flex h-[30rem] max-w-3xl items-center justify-center">
+        <div className="relative mx-auto flex h-[30rem] max-w-[48rem] items-center justify-center">
           {coaches.map((coach, index) => {
             // position relative to the active card, wrapped into -2..2
             let offset = index - active;
@@ -88,7 +88,7 @@ export const CoachDeck = (props: CoachDeckProps) => {
                   className="size-full object-cover"
                 />
                 <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-neutral-darkest/90 to-transparent p-6 text-left">
-                  <span className="mb-2 block text-h5 font-bold text-white">{coach.name}</span>
+                  <span className="mb-2 block text-h5 font-medium text-white">{coach.name}</span>
                   <span className="inline-block rounded-full border border-white/70 px-3 py-1 text-small text-white">
                     {coach.credential}
                   </span>

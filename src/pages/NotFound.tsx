@@ -20,7 +20,7 @@ export const NotFound = () => {
           <p className="mb-4 text-tiny font-semibold uppercase tracking-wider text-scheme-text/60">
             404
           </p>
-          <h1 className="mb-5 text-h1 font-bold md:mb-6">We can't find that page</h1>
+          <h1 className="mb-5 text-h1 font-medium md:mb-6">We can't find that page</h1>
           <p className="mb-6 text-medium md:mb-8">
             It may have moved, or the link may be out of date. Here's the way back.
           </p>

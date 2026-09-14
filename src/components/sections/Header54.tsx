@@ -69,12 +69,14 @@ export const Header54 = (props: Header54Props) => {
         "relative px-[5%]",
         isFull
           ? "flex min-h-[90vh] items-center justify-center py-20"
-          : "py-16 md:py-24 lg:py-28",
+          : // Interior heroes hold at 420px on desktop, content centred
+            // (Figma template, Sept 2026) — was content-height, ~340px.
+            "flex items-center py-16 md:py-24 lg:min-h-[420px] lg:py-28",
       )}
     >
       <div className="relative z-10 container">
-        <div className={cn("mx-auto w-full text-center", isFull ? "max-w-3xl" : "max-w-lg")}>
-          <h1 className="mb-5 text-h1 font-bold text-white md:mb-6">{heading}</h1>
+        <div className={cn("mx-auto w-full text-center", isFull ? "max-w-[48rem]" : "max-w-lg")}>
+          <h1 className="mb-5 text-h1 font-medium text-white md:mb-6">{heading}</h1>
           <p className={cn("mx-auto text-medium text-white", isFull && "max-w-xl")}>
             {description}
           </p>
@@ -115,6 +117,9 @@ export const Header54 = (props: Header54Props) => {
           ))
         )}
         <div className={cn("absolute inset-0", video ? "bg-black/40" : "bg-neutral-darkest/50")} />
+        {/* A darker band behind the transparent nav, so its white logo, links
+            and menu button stay legible over a pale sky or haze. */}
+        <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-neutral-darkest/70 to-transparent" />
       </div>
       {!video && slides.length > 1 && (
         <div className="absolute inset-x-0 bottom-6 z-10 flex justify-center gap-2">
@@ -127,7 +132,7 @@ export const Header54 = (props: Header54Props) => {
               aria-current={index === current}
               className={cn(
                 "size-2.5 rounded-full transition-colors",
-                index === current ? "bg-white" : "bg-white/40 hover:bg-white/60",
+                index === current ? "bg-brand-sandstone" : "bg-white/40 hover:bg-white/60",
               )}
             />
           ))}

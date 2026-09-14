@@ -26,6 +26,11 @@ export type Person = {
   /** Secondary role held by the same person, where the documents name one. */
   alsoRole?: string;
   description: string;
+  /**
+   * One sentence for tight spaces (the home page coach deck), taken verbatim
+   * from `description` rather than written fresh — the bios are the club's.
+   */
+  summary?: string;
   /** Direct contact, shown as a mail link under the bio. */
   email?: string;
   /** Absent until the club supplies a headshot. */

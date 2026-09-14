@@ -14,12 +14,12 @@ import { clubPhotos } from "@/data/clubPhotos";
 const Block = ({ block }: { block: PolicyBlock }) => {
   switch (block.type) {
     case "para":
-      return <p className="max-w-2xl">{block.text}</p>;
+      return <p className="max-w-[42rem]">{block.text}</p>;
     case "subhead":
-      return <h3 className="mt-4 text-h6 font-bold">{block.text}</h3>;
+      return <h3 className="mt-4 text-h6 font-medium">{block.text}</h3>;
     case "list":
       return (
-        <ul className="flex max-w-2xl list-disc flex-col gap-2 pl-5">
+        <ul className="flex max-w-[42rem] list-disc flex-col gap-2 pl-5">
           {block.items.map((item, index) => (
             <li key={index}>{item}</li>
           ))}
@@ -27,12 +27,16 @@ const Block = ({ block }: { block: PolicyBlock }) => {
       );
     case "table":
       return (
-        <div className="w-full overflow-x-auto rounded-card border border-scheme-border/30">
+        <div className="w-full overflow-x-auto rounded-card border border-scheme-border/30 bg-white">
           <table className="w-full min-w-[36rem] border-collapse text-left">
             <thead>
-              <tr className="bg-neutral-lightest">
+              <tr className="bg-brand-terracotta">
                 {block.columns.map((column) => (
-                  <th key={column} scope="col" className="px-5 py-3 text-small font-bold">
+                  <th
+                    key={column}
+                    scope="col"
+                    className="px-5 py-3 text-small font-bold text-white"
+                  >
                     {column}
                   </th>
                 ))}
@@ -78,8 +82,8 @@ export const Safeguarding = () => {
         className="scroll-mt-24 border-y border-scheme-border/20 bg-neutral-lightest px-[5%] py-10"
       >
         <div className="container">
-          <h2 className="mb-3 text-h5 font-bold">Raising a concern</h2>
-          <p className="mb-5 max-w-2xl">
+          <h2 className="mb-3 text-h5 font-medium">Raising a concern</h2>
+          <p className="mb-5 max-w-[42rem]">
             If a child is in immediate danger or needs urgent medical attention, call emergency
             services first, then tell the Club Welfare Officer. For any other safeguarding concern,
             contact the Club Welfare Officer without delay — it is not your responsibility to decide
@@ -152,7 +156,7 @@ export const Safeguarding = () => {
                 id={`section-${section.number}`}
                 className="scroll-mt-24"
               >
-                <h2 className="mb-5 border-b border-scheme-border/20 pb-3 text-h4 font-bold">
+                <h2 className="mb-5 border-b border-scheme-border/20 pb-3 text-h4 font-medium">
                   <span className="mr-3 text-scheme-text/60">{section.number}</span>
                   {section.title}
                 </h2>
@@ -165,10 +169,10 @@ export const Safeguarding = () => {
             ))}
 
             <section className="scroll-mt-24">
-              <h2 className="mb-5 border-b border-scheme-border/20 pb-3 text-h4 font-bold">
+              <h2 className="mb-5 border-b border-scheme-border/20 pb-3 text-h4 font-medium">
                 Related documents
               </h2>
-              <ul className="flex max-w-2xl list-disc flex-col gap-2 pl-5">
+              <ul className="flex max-w-[42rem] list-disc flex-col gap-2 pl-5">
                 {relatedDocuments.map((document) => (
                   <li key={document}>{document}</li>
                 ))}

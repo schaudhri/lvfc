@@ -6,24 +6,24 @@ import { ClubIntro } from "@/components/sections/ClubIntro";
 import { PhaseTimeline } from "@/components/sections/PhaseTimeline";
 import { StatsPathway } from "@/components/sections/StatsPathway";
 import { ScheduleGrid } from "@/components/sections/ScheduleGrid";
-import { LocationsList } from "@/components/sections/LocationsList";
 import { CoachSlider } from "@/components/sections/CoachSlider";
 import { Layout442 } from "@/components/sections/Layout442";
-import { Gallery9 } from "@/components/sections/Gallery9";
+import { LifeAtLvfc } from "@/components/sections/LifeAtLvfc";
 import { PrivateEventsCallout } from "@/components/sections/PrivateEventsCallout";
+import { AlsoAtClub } from "@/components/sections/AlsoAtClub";
 import { Faqs } from "@/components/sections/Faqs";
-import { Blog42 } from "@/components/sections/Blog42";
-import { programmes, academyAgeGroups } from "@/data/programmes";
-import { branches } from "@/data/locations";
+import {
+  academyAgeGroups,
+  otherProgrammes,
+  pathwayProgrammes,
+  programmeImage,
+} from "@/data/programmes";
 import { landingFaqs } from "@/data/faqs";
-import { launchPosts } from "@/data/blog";
 import { leadership } from "@/data/people";
 import { heroImages } from "@/data/club";
 import { cta, programmeCta } from "@/data/cta";
 import { useDocumentMeta } from "@/hooks/use-document-meta";
-import { clubPhotos, coachPhotos, phase5Photos, phase8Photos } from "@/data/clubPhotos";
-
-const MAP = "/lvfc-map-lahore.png";
+import { clubPhotos, coachPhotos, phase8Photos } from "@/data/clubPhotos";
 
 export const Landing = () => {
   useDocumentMeta(
@@ -47,21 +47,29 @@ export const Landing = () => {
         video={{ src: "/videos/hero.mp4", poster: "/videos/hero-poster.jpg" }}
       />
 
-      <ClubIntro buttons={[{ ...cta.about, variant: "secondary" }]} />
+      {/* No eyebrow, no stats — "A club families stay with" further down the
+          page already carries these same four numbers. */}
+      <ClubIntro eyebrow={undefined} stats={[]} buttons={[{ ...cta.about, variant: "secondary" }]} />
 
+      {/*
+        The five pathway stages only — one card per age group, which is what a
+        parent is choosing between. The alternatives are a line of links
+        underneath rather than six more cards in the slider.
+      */}
       <ProgrammeCards
         heading="Programmes"
-        description="Every route into the club — pick the one that fits."
+        description={undefined}
         layout="slider"
-        programmes={programmes.map((programme, index) => ({
+        programmes={pathwayProgrammes.map(({ programme }) => ({
           url: `/programmes/${programme.slug}`,
-          image: programme.image ?? clubPhotos[index % clubPhotos.length],
+          image: programmeImage(programme),
           title: programme.name,
           ages: programme.agesLabel,
           description: programme.summary,
           tag: programme.flagship ? "Flagship" : undefined,
           primaryButton: programmeCta(programme.bookingKey),
         }))}
+        footer={<AlsoAtClub programmes={otherProgrammes} />}
       />
 
       <Layout442
@@ -100,39 +108,14 @@ export const Landing = () => {
         buttons={[{ title: "View our programmes", url: "/programmes", variant: "alternate" }]}
       />
 
+      {/*
+        Locations (the map/address cards) is off the home page for now — see
+        the Locations page for that. This is schedule only.
+      */}
       <ScheduleGrid
         heading="Training schedule"
-        description="The full week across all four Lahore branches. Filter by branch or day to find the sessions that fit around yours."
-        buttons={[
-          { ...cta.schedule, variant: "secondary" },
-          { ...cta.bookASpot },
-        ]}
-      />
-
-      <LocationsList
-        id="locations"
-        heading="Where we train"
-        description="Four branches across Lahore, each serving a different part of the city. Pick one to see the pitch and how to find it."
-        locations={branches.map((branch) => {
-          // The branch's own photo once uploaded in the Studio; failing that,
-          // the real training shots we have for Phase V and Phase VIII, then
-          // the shared placeholder map for branches with neither yet.
-          const fallback =
-            branch.slug === "dha-phase-v"
-              ? phase5Photos[0]
-              : branch.slug === "dha-phase-viii"
-                ? phase8Photos[0]
-                : undefined;
-          return {
-            name: branch.name,
-            address: branch.address,
-            url: `/locations/${branch.slug}`,
-            map: {
-              src: branch.image?.src ?? fallback?.src ?? MAP,
-              alt: branch.image?.alt || fallback?.alt || `Map of the ${branch.name} branch`,
-            },
-          };
-        })}
+        description="The full week across all four Lahore branches. Filter by branch to find the evenings that fit around yours."
+        buttons={[{ ...cta.branches, variant: "secondary" }, { ...cta.bookASpot }]}
       />
 
       {/*
@@ -148,14 +131,14 @@ export const Landing = () => {
           name: person.name,
           position: person.role,
           certification: person.alsoRole ?? "",
-          oneLiner: person.description,
+          oneLiner: person.summary ?? person.description,
         }))}
       />
 
       <section className="px-[5%] pb-16 md:pb-24 lg:pb-28">
         <div className="container">
           <div className="mx-auto max-w-lg text-center">
-            <h3 className="mb-4 text-h4 font-bold">Coach with LVFC</h3>
+            <h3 className="mb-4 text-h4 font-medium">Coach with LVFC</h3>
             <p className="mb-6 text-medium md:mb-8">
               University students and enthusiasts welcome — every coach completes safeguarding
               training and background verification before working with children.
@@ -169,10 +152,10 @@ export const Landing = () => {
 
       <PrivateEventsCallout />
 
-      <Gallery9
+      <LifeAtLvfc
         heading="Life at LVFC"
         description="Weekends, fixtures, showcases and the everyday grind that builds players."
-        images={clubPhotos.slice(0, 5).map((photo) => ({ src: photo.src, alt: photo.alt }))}
+        images={clubPhotos.slice(0, 8).map((photo) => ({ src: photo.src, alt: photo.alt }))}
       />
 
       <Faqs
@@ -185,27 +168,6 @@ export const Landing = () => {
             "Fees, kit, refunds, safeguarding — the full list is on our FAQ page, or just get in touch.",
           button: { ...cta.faqs, variant: "secondary" },
         }}
-      />
-
-      <Blog42
-        heading="Coming with the new season"
-        description="The first articles going live alongside 2026–27 — club news, match reports and coaching insight."
-        button={{ ...cta.blog, variant: "secondary" }}
-        blogPosts={launchPosts.slice(0, 3).map((post, index) => ({
-          url: "/blog",
-          image: post.image ?? clubPhotos[index % clubPhotos.length],
-          category: post.category,
-          readTime: "Coming soon",
-          title: post.title,
-          description: post.brief,
-          // "link-alt" and a white chevron: these sit on the dark card body.
-          button: {
-            ...cta.blog,
-            variant: "link-alt",
-            size: "link",
-            iconRight: <ChevronRight className="text-white" />,
-          },
-        }))}
       />
     </>
   );

@@ -22,7 +22,7 @@ export const ScheduleTable = (props: ScheduleTableProps) => {
     <section className="px-[5%] py-16 md:py-24 lg:py-28">
       <div className="container">
         <div className="mb-12 max-w-lg md:mb-18 lg:mb-20">
-          <h2 className="text-h3 font-bold">{heading}</h2>
+          <h2 className="text-h3 font-medium">{heading}</h2>
         </div>
         <div className="w-full overflow-x-auto rounded-card border border-scheme-border">
           <table className="w-full min-w-[48rem] border-collapse text-left">

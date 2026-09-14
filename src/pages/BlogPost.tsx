@@ -37,7 +37,7 @@ export const BlogPost = () => {
     <>
       <article>
         <header className="px-[5%] pt-16 md:pt-24 lg:pt-28">
-          <div className="container max-w-3xl">
+          <div className="container max-w-[48rem]">
             <Link
               to="/blog"
               className="mb-6 inline-flex min-h-6 items-center text-small font-semibold underline underline-offset-2"
@@ -50,7 +50,7 @@ export const BlogPost = () => {
                 <span className="text-small text-scheme-text/60">Coming soon</span>
               )}
             </div>
-            <h1 className="mb-5 text-h1 font-bold md:mb-6">{post.title}</h1>
+            <h1 className="mb-5 text-h1 font-medium md:mb-6">{post.title}</h1>
             <p className="text-medium text-scheme-text/80">{post.brief}</p>
             {post.byline && (
               <p className="mt-6 text-small font-semibold">By {post.byline}</p>
@@ -59,7 +59,7 @@ export const BlogPost = () => {
         </header>
 
         <div className="px-[5%] py-12 md:py-16">
-          <div className="container max-w-3xl">
+          <div className="container max-w-[48rem]">
             <img
               src={post.image?.src ?? clubPhotos[post.slug.length % clubPhotos.length].src}
               alt={post.image?.alt ?? ""}
@@ -71,12 +71,12 @@ export const BlogPost = () => {
         </div>
 
         <div className="px-[5%] pb-16 md:pb-24 lg:pb-28">
-          <div className="container max-w-3xl">
+          <div className="container max-w-[48rem]">
             {isPublished ? (
               <RichText value={post.body!} />
             ) : (
               <div className={cn("flex flex-col items-start p-6 md:p-8", "rounded-card bg-neutral-lightest")}>
-                <h2 className="mb-3 text-h5 font-bold">This one's still being written</h2>
+                <h2 className="mb-3 text-h5 font-medium">This one's still being written</h2>
                 <p className="mb-6 text-medium">
                   It's part of the line-up going live alongside the 2026–27 season. We'll publish it
                   here as soon as it's ready — in the meantime, the summary above is what it will
@@ -95,7 +95,7 @@ export const BlogPost = () => {
         <section className="border-t border-scheme-border/20 px-[5%] py-16 md:py-24 lg:py-28">
           <div className="container">
             <div className="mb-12 max-w-lg md:mb-18 lg:mb-20">
-              <h2 className="mb-4 text-h3 font-bold">More from the club</h2>
+              <h2 className="mb-4 text-h3 font-medium">More from the club</h2>
               <p className="text-medium">The rest of the launch line-up.</p>
             </div>
             <ul className="grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-2 md:gap-y-16 lg:grid-cols-3">
@@ -113,18 +113,18 @@ export const BlogPost = () => {
                     <div className="mb-3 flex flex-wrap items-center gap-3">
                       <Badge>{item.category}</Badge>
                     </div>
-                    <h3 className="mb-2 text-h6 font-bold">
+                    <h3 className="mb-2 text-h6 font-medium">
                       <Link to={`/blog/${item.slug}`} className="hover:underline">
                         {item.title}
                       </Link>
                     </h3>
-                    <p className="mb-3 text-small text-white/80">{item.brief}</p>
+                    <p className="mb-3 text-small text-scheme-text/80">{item.brief}</p>
                     <Link
                       to={`/blog/${item.slug}`}
-                      className="mt-auto flex min-h-6 items-center gap-2 pt-2 text-small font-semibold"
+                      className="mt-auto flex min-h-6 items-center gap-2 pt-2 text-small font-semibold text-brand-terracotta"
                     >
                       {item.body?.length ? "Read article" : "See what's coming"}
-                      <ChevronRight className="size-4 text-white" />
+                      <ChevronRight className="size-4 text-brand-terracotta" />
                     </Link>
                   </div>
                 </li>

@@ -1,5 +1,4 @@
 import { ChevronRight } from "relume-icons";
-import { ClubBadge } from "@/components/ClubBadge";
 import { cardPadded } from "@/lib/surface";
 import { cn } from "@/lib/utils";
 
@@ -25,7 +24,7 @@ export const Layout242 = (props: Layout242Props) => {
       <div className="container">
         <div className="flex flex-col items-start">
           <div className="mb-12 w-full max-w-lg md:mb-18 lg:mb-20">
-            <h3 className="text-h3 font-bold">{heading}</h3>
+            <h3 className="text-h3 font-medium">{heading}</h3>
           </div>
           {/*
             `items-start` is deliberately absent: as cards these stretch to a
@@ -36,10 +35,7 @@ export const Layout242 = (props: Layout242Props) => {
           <div className="grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-3 md:gap-y-16">
             {sections.map((section, index) => (
               <div key={index} className={cn("flex flex-col", cardPadded)}>
-                <div className="mb-5 md:mb-6">
-                  <ClubBadge className="size-12 text-scheme-text" />
-                </div>
-                <h3 className="mb-5 text-h5 font-bold md:mb-6">{section.heading}</h3>
+                <h3 className="mb-5 text-h5 font-medium md:mb-6">{section.heading}</h3>
                 <p className="mb-5 md:mb-6">{section.description}</p>
                 <div className="mt-auto flex flex-wrap items-center gap-4 pt-2">
                   <Button {...section.button}>{section.button.title}</Button>

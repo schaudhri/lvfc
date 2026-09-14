@@ -24,7 +24,7 @@ export const Header30 = (props: Header30Props) => {
       <div className="relative z-10 container">
         <div className="flex max-h-[60rem] min-h-svh items-center justify-center py-16 text-center md:py-24 lg:py-28">
           <div className="w-full max-w-lg">
-            <h1 className="mb-5 text-h1 font-bold text-white md:mb-6">{heading}</h1>
+            <h1 className="mb-5 text-h1 font-medium text-white md:mb-6">{heading}</h1>
             <p className="text-medium text-white">{description}</p>
             <div className="mt-6 flex items-center justify-center gap-4 md:mt-8">
               {buttons.map((button, index) => (

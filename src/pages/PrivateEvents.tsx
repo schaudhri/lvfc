@@ -25,7 +25,7 @@ export const PrivateEvents = () => {
       <section className="px-[5%] py-16 md:py-24 lg:py-28">
         <div className="container">
           <div className="mb-12 max-w-lg md:mb-18 lg:mb-20">
-            <h2 className="mb-4 text-h3 font-bold">Two ways to book the pitch</h2>
+            <h2 className="mb-4 text-h3 font-medium">Two ways to book the pitch</h2>
             <p className="text-medium">
               Both are led by LVFC coaches, who all complete safeguarding training and background
               verification before working with children.
@@ -41,8 +41,8 @@ export const PrivateEvents = () => {
                   className="aspect-[4/3] w-full object-cover"
                 />
                 <div className={cn("flex flex-1 flex-col md:p-8", cardBody)}>
-                  <h3 className="mb-3 text-h5 font-bold">{event.title}</h3>
-                  <p className="mb-5 text-white/85">{event.summary}</p>
+                  <h3 className="mb-3 text-h5 font-medium">{event.title}</h3>
+                  <p className="mb-5">{event.summary}</p>
                   <ul className="mb-8 flex flex-col gap-2 text-small">
                     {event.points.map((point) => (
                       <li key={point} className="flex gap-2">
@@ -52,7 +52,7 @@ export const PrivateEvents = () => {
                     ))}
                   </ul>
                   <div className="mt-auto">
-                    <Button title={event.cta} url={enquiryUrl(event.type)} variant="alternate" size="sm">
+                    <Button title={event.cta} url={enquiryUrl(event.type)} size="sm">
                       {event.cta}
                     </Button>
                   </div>

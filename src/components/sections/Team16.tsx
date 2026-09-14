@@ -32,6 +32,11 @@ type Props = {
   description: string;
   teamMembers: TeamMember[];
   footerContent: Footer;
+  /**
+   * Lead with this many people in a wide two-up row, then the rest three
+   * across. Five people two-up otherwise leaves the fifth alone on a row.
+   */
+  featured?: number;
 };
 
 export type Team16Props = React.ComponentPropsWithoutRef<"section"> & Partial<Props>;
@@ -45,16 +50,23 @@ export const Team16 = (props: Team16Props) => {
     <section id={props.id} className="scroll-mt-10 px-[5%] py-16 md:py-24 lg:py-28">
       <div className="container grid grid-cols-1 items-start md:grid-flow-row md:gap-x-12 lg:gap-x-20">
         <div className="mb-12 max-w-lg md:mb-18 lg:mb-20">
-          <h2 className="mb-5 text-h2 font-bold md:mb-6">{heading}</h2>
+          <h2 className="mb-5 text-h2 font-medium md:mb-6">{heading}</h2>
           <p className="text-medium">{description}</p>
         </div>
         <div className="grid grid-cols-1 gap-y-12 md:grid-cols-2 md:gap-x-8 lg:gap-16">
-          {teamMembers.map((member, index) => (
+          {teamMembers.slice(0, props.featured || teamMembers.length).map((member, index) => (
             <TeamMember key={index} member={member} />
           ))}
         </div>
+        {props.featured && teamMembers.length > props.featured ? (
+          <div className="mt-12 grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-8 md:mt-16 lg:grid-cols-3">
+            {teamMembers.slice(props.featured).map((member, index) => (
+              <TeamMember key={index} member={member} stacked />
+            ))}
+          </div>
+        ) : null}
         <div className="mt-14 w-full max-w-md md:mt-20 lg:mt-24">
-          <h3 className="mb-3 text-h4 font-bold md:mb-4">{footerContent.heading}</h3>
+          <h3 className="mb-3 text-h4 font-medium md:mb-4">{footerContent.heading}</h3>
           <p className="text-medium">{footerContent.description}</p>
           <div className="mt-6 flex flex-wrap gap-4 md:mt-8">
             <Button {...footerContent.button}>{footerContent.button.title}</Button>
@@ -65,9 +77,15 @@ export const Team16 = (props: Team16Props) => {
   );
 };
 
-const TeamMember = ({ member }: { member: TeamMember }) => {
+const TeamMember = ({ member, stacked = false }: { member: TeamMember; stacked?: boolean }) => {
   return (
-    <div className="grid grid-cols-1 items-start gap-5 sm:gap-y-6 md:grid-cols-2 md:gap-x-8">
+    <div
+      className={
+        stacked
+          ? "grid grid-cols-1 items-start gap-5 sm:gap-y-6"
+          : "grid grid-cols-1 items-start gap-5 sm:gap-y-6 md:grid-cols-2 md:gap-x-8"
+      }
+    >
       <div className="w-full overflow-hidden">
         <img
           src={member.image.src}
@@ -77,7 +95,7 @@ const TeamMember = ({ member }: { member: TeamMember }) => {
       </div>
       <div className="flex flex-col justify-center">
         <div className="mb-3 md:mb-4">
-          <h3 className="text-large font-semibold">{member.name}</h3>
+          <h3 className="text-large font-medium">{member.name}</h3>
           <p className="text-medium">{member.jobTitle}</p>
         </div>
         <p>{member.description}</p>

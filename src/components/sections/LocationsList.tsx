@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ArrowRight } from "relume-icons";
 import { cn } from "@/lib/utils";
+import { Button, type ButtonProps } from "@/components/ui/button";
 
 type ImageProps = {
   src: string;
@@ -16,9 +17,11 @@ type Location = {
 
 type Props = {
   tagline?: string;
-  heading: string;
+  /** Omit when a section directly above already introduces the branches. */
+  heading?: string;
   description?: string;
   locations: Location[];
+  buttons?: ButtonProps[];
 };
 
 export type LocationsListProps = React.ComponentPropsWithoutRef<"section"> & Partial<Props>;
@@ -28,7 +31,7 @@ export type LocationsListProps = React.ComponentPropsWithoutRef<"section"> & Par
  * left, map preview on the right. Selecting a branch swaps the map.
  */
 export const LocationsList = (props: LocationsListProps) => {
-  const { tagline: _tagline, heading, description, locations, className, ...rest } = {
+  const { tagline: _tagline, heading, description, locations, buttons, className, ...rest } = {
     ...LocationsListDefaults,
     ...props,
   };
@@ -41,10 +44,12 @@ export const LocationsList = (props: LocationsListProps) => {
       className={cn("scroll-mt-24 px-[5%] py-16 md:py-24 lg:py-28", className)}
     >
       <div className="container">
-        <div className="mx-auto mb-12 max-w-lg text-center md:mb-18 lg:mb-20">
-          <h2 className="mb-5 text-h2 font-bold md:mb-6">{heading}</h2>
-          {description && <p className="text-medium">{description}</p>}
-        </div>
+        {heading && (
+          <div className="mb-12 max-w-lg md:mb-18 lg:mb-20">
+            <h2 className="mb-5 text-h2 font-medium md:mb-6">{heading}</h2>
+            {description && <p className="text-medium">{description}</p>}
+          </div>
+        )}
 
         <div className="grid grid-cols-1 items-start gap-8 md:grid-cols-2 lg:gap-12">
           <div className="flex flex-col gap-4">
@@ -95,8 +100,17 @@ export const LocationsList = (props: LocationsListProps) => {
               className="aspect-[4/3] size-full object-cover"
             />
           </a>
-
         </div>
+
+        {buttons && buttons.length > 0 && (
+          <div className="mt-10 flex flex-wrap items-center gap-4">
+            {buttons.map((button, index) => (
+              <Button key={index} {...button}>
+                {button.title}
+              </Button>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );
@@ -106,7 +120,6 @@ const MAP = "https://d22po4pjz3o32e.cloudfront.net/placeholder-map-image.jpeg";
 
 export const LocationsListDefaults: Props = {
   tagline: "Locations",
-  heading: "Where we train",
   locations: [
     { name: "Gulberg", address: "City School, Gurumangat Road", map: { src: MAP } },
     { name: "DHA Phase 5", address: "K-Block Swimming Pool Ground", map: { src: MAP } },

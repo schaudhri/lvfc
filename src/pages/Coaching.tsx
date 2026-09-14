@@ -3,13 +3,13 @@ import { Header54 } from "@/components/sections/Header54";
 import { Team16 } from "@/components/sections/Team16";
 import { PhaseTimeline } from "@/components/sections/PhaseTimeline";
 import { Pillars } from "@/components/sections/Pillars";
-import { Layout442 } from "@/components/sections/Layout442";
+import { SafeguardingNote } from "@/components/sections/SafeguardingNote";
 import { Layout242 } from "@/components/sections/Layout242";
 import { academyAgeGroups } from "@/data/programmes";
 import { leadership } from "@/data/people";
 import { cta } from "@/data/cta";
 import { useDocumentMeta } from "@/hooks/use-document-meta";
-import { aboutHeroCover, clubPhotos, coachPhotos } from "@/data/clubPhotos";
+import { aboutHeroCover, coachPhotos } from "@/data/clubPhotos";
 
 // Empty until the club supplies real profile URLs. Rendering three "#" links
 // per person put 15 links to nowhere on this page.
@@ -36,6 +36,7 @@ export const Coaching = () => {
       */}
       <Team16
         id="team"
+        featured={2}
         heading="Who leads the club"
         description="All LVFC head coaches have extensive training and qualifications, with support coaches trained to national standards. Our Director of Football sets the curriculum and coaching standards across every branch."
         teamMembers={leadership.map((person, index) => ({
@@ -76,20 +77,7 @@ export const Coaching = () => {
         ]}
       />
 
-      <Layout442
-        heading="Every child's safety comes first"
-        description="Our Safeguarding Policy is reviewed annually and published in full. Safeguarding awareness training is mandatory annually for all staff, volunteers and officials, and everyone in a position of trust undergoes police or equivalent national background verification before appointment — led by our Designated Safeguarding Lead and Club Welfare Officer."
-        buttons={[
-          { ...cta.safeguarding, variant: "secondary-alt" },
-          {
-            ...cta.reportConcern,
-            variant: "link-alt",
-            size: "link",
-            iconRight: <ChevronRight className="text-white" />,
-          },
-        ]}
-        image={{ src: clubPhotos[4].src, alt: "Safeguarding at LVFC" }}
-      />
+      <SafeguardingNote />
 
       <Layout242
         heading="Growing our coaches"

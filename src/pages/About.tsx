@@ -3,7 +3,7 @@ import { Header30 } from "@/components/sections/Header30";
 import { Layout1 } from "@/components/sections/Layout1";
 import { Layout242 } from "@/components/sections/Layout242";
 import { Layout121 } from "@/components/sections/Layout121";
-import { Layout442 } from "@/components/sections/Layout442";
+import { SafeguardingNote } from "@/components/sections/SafeguardingNote";
 import { Header62 } from "@/components/sections/Header62";
 import { programmes } from "@/data/programmes";
 import { cta } from "@/data/cta";
@@ -111,25 +111,12 @@ export const About = () => {
         ]}
       />
 
-      <Layout442
-        heading="Every child's safety comes first"
-        description="Our Safeguarding Policy is reviewed annually and published in full, adopting the principles of the Pakistan Football Federation, the English FA, US Youth Soccer and the FIFA Guardians Toolkit. All staff working with children complete safeguarding training annually and undergo background verification before they start."
-        buttons={[
-          { ...cta.safeguarding, variant: "secondary-alt" },
-          {
-            ...cta.reportConcern,
-            variant: "link-alt",
-            size: "link",
-            iconRight: <ChevronRight className="text-white" />,
-          },
-        ]}
-        image={{ src: clubPhotos[2].src, alt: "Safeguarding at LVFC" }}
-      />
+      <SafeguardingNote />
 
       <section id="partners" className="scroll-mt-10 px-[5%] py-16 md:py-24 lg:py-28">
         <div className="container">
           <div className="mb-12 max-w-lg md:mb-18 lg:mb-20">
-            <h2 className="mb-4 text-h3 font-bold">International partners</h2>
+            <h2 className="mb-4 text-h3 font-medium">International partners</h2>
             <p className="text-medium">
               Clinics, exchange trips and training pathways that take our players and coaches
               beyond Lahore.
@@ -141,12 +128,12 @@ export const About = () => {
                 <div
                   className={cn(
                     "mb-5 inline-flex w-fit items-center rounded-badge px-4 py-3",
-                    partner.logo.chip === "dark" ? "bg-brand-maroon" : "bg-white",
+                    partner.logo.chip === "dark" ? "bg-brand-maroon" : "bg-brand-sandstone",
                   )}
                 >
                   <img src={partner.logo.src} alt={partner.logo.alt} className="h-9 w-auto" />
                 </div>
-                <h3 className="text-h5 font-bold">{partner.name}</h3>
+                <h3 className="text-h5 font-medium">{partner.name}</h3>
                 <p className="mb-3 text-small font-semibold text-scheme-text/70">
                   {partner.location}
                 </p>

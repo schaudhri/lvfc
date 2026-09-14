@@ -3,11 +3,18 @@
 import { useState } from "react";
 import { Header54 } from "@/components/sections/Header54";
 import { Header62 } from "@/components/sections/Header62";
-import { ProgrammeCards } from "@/components/sections/ProgrammeCards";
-import { programmes, academyAgeGroups, ageFilters, matchesAge, matchesBranch } from "@/data/programmes";
-import { PhaseTimeline } from "@/components/sections/PhaseTimeline";
+import { CompactProgrammeCard, PathwayProgrammeRow } from "@/components/sections/ProgrammeList";
+import {
+  ageFilters,
+  matchesAge,
+  matchesBranch,
+  otherProgrammes,
+  pathwayProgrammes,
+  programmes,
+  type Programme as ProgrammeData,
+} from "@/data/programmes";
 import { branches } from "@/data/locations";
-import { cta, programmeCta } from "@/data/cta";
+import { cta } from "@/data/cta";
 import { cn } from "@/lib/utils";
 import { useDocumentMeta } from "@/hooks/use-document-meta";
 import { clubPhotos } from "@/data/clubPhotos";
@@ -62,17 +69,28 @@ const FilterPills = ({
   </div>
 );
 
+/**
+ * The programmes index, grouped by weight.
+ *
+ * The five pathway programmes come first, as wide rows in stage order — that
+ * is where almost every family starts. Everything else (weekend mornings,
+ * squads, seniors, trials, the summer league, the community programme) sits
+ * underneath as lighter compact cards. It used to be eleven identical cards in
+ * one grid, which gave a parent no idea where to begin.
+ */
 export const Programme = () => {
   useDocumentMeta(
     "Programmes",
-    "Every route into the club, from FUNdamentals at two through to Seniors at 16+. Filter by age or branch to see what runs near you.",
+    "Every route into the club, from FUNdamentals at two through to Seniors at 16+. Filter by branch to see what runs near you.",
   );
   const [age, setAge] = useState(ALL);
   const [branch, setBranch] = useState(ALL);
 
-  const visible = programmes.filter(
-    (programme) => matchesAge(programme, age) && matchesBranch(programme, branch),
-  );
+  const matches = (programme: ProgrammeData) =>
+    matchesAge(programme, age) && matchesBranch(programme, branch);
+  const stages = pathwayProgrammes.filter(({ programme }) => matches(programme));
+  const others = otherProgrammes.filter(matches);
+  const visibleCount = stages.length + others.length;
   const isFiltered = age !== ALL || branch !== ALL;
 
   return (
@@ -84,19 +102,19 @@ export const Programme = () => {
       />
 
       <section className="px-[5%] py-16 md:py-24 lg:py-28">
-        <div className="container max-w-3xl">
-          <h2 className="mb-5 text-h3 font-bold md:mb-6">Where does my child start?</h2>
+        <div className="container max-w-[48rem]">
+          <h2 className="mb-5 text-h3 font-medium md:mb-6">Where does my child start?</h2>
           <p className="mb-4 text-medium">
             Most families start with the age group that matches their child — FUNdamentals at two,
             Mini-Kickers at three to four, then Pre-Academy, Foundation and Youth Development as they
-            grow. Each one runs
-            three evenings a week and follows the same curriculum, pitched at that age.
+            grow. Each one runs three evenings a week and follows the same curriculum, pitched at
+            that age.
           </p>
           <p className="text-medium">
             Around that sit the alternatives: weekend mornings if evenings don't work, selected
             squads for competitive players, a summer league through the holidays, and a one-to-three
-            day trial if you'd rather see it first. Filter below by age or branch, or read the
-            pathway underneath to see how the stages join up.
+            day trial if you'd rather see it first. Filter below by branch to see what runs near
+            you.
           </p>
         </div>
       </section>
@@ -129,7 +147,7 @@ export const Programme = () => {
           {isFiltered && (
             <div className="mt-6 flex flex-wrap items-center gap-4">
               <p className="text-small text-scheme-text/70" aria-live="polite">
-                Showing {visible.length} of {programmes.length} programmes
+                Showing {visibleCount} of {programmes.length} programmes
               </p>
               <button
                 type="button"
@@ -146,46 +164,54 @@ export const Programme = () => {
         </div>
       </div>
 
-      {visible.length === 0 ? (
+      {visibleCount === 0 ? (
         <section className="px-[5%] py-16 md:py-24 lg:py-28">
           <div className="container max-w-lg">
-            <h2 className="mb-3 text-h4 font-bold">Nothing runs at that branch yet</h2>
+            <h2 className="mb-3 text-h4 font-medium">Nothing runs at that branch yet</h2>
             <p className="text-medium">
               Try another branch — or get in touch and we'll find the right fit for your child.
             </p>
           </div>
         </section>
       ) : (
-        <ProgrammeCards
-          // The hero and filter bar already introduce this section; a second
-          // "Programmes" heading here would just repeat them.
-          heading={undefined}
-          description={undefined}
-          className="py-12 md:py-16"
-          programmes={visible.map((programme, index) => ({
-            url: `/programmes/${programme.slug}`,
-            image: programme.image ?? clubPhotos[index % clubPhotos.length],
-            title: programme.name,
-            ages: programme.agesLabel,
-            description: programme.summary,
-            tag: programme.flagship ? "Flagship" : undefined,
-            primaryButton: programmeCta(programme.bookingKey),
-          }))}
-        />
-      )}
+        <section className="px-[5%] py-12 md:py-16 lg:py-20">
+          <div className="container flex flex-col gap-16 md:gap-24">
+            {stages.length > 0 && (
+              <div>
+                <div className="mb-8 max-w-lg md:mb-12">
+                  <h2 className="mb-3 text-h3 font-medium">The pathway</h2>
+                  <p className="text-medium">
+                    One programme for each age, from a first touch at two to pre-elite preparation
+                    at thirteen and over. Start with the one that matches your child.
+                  </p>
+                </div>
+                <ol className="flex flex-col gap-6 md:gap-8">
+                  {stages.map(({ programme }) => (
+                    <PathwayProgrammeRow key={programme.slug} programme={programme} />
+                  ))}
+                </ol>
+              </div>
+            )}
 
-      {/* The pathway in full, under the cards — the cards say what you can
-          book, this says how the stages join up over the years. */}
-      <PhaseTimeline
-        heading="The player pathway"
-        description="Five stages from a first touch through to pre-elite preparation. The programmes above sit on this pathway — your child moves along it as they grow."
-        button={{ ...cta.coaching, variant: "secondary" }}
-        phases={academyAgeGroups.map((group) => ({
-          age: group.ages,
-          title: group.name,
-          description: group.focus,
-        }))}
-      />
+            {others.length > 0 && (
+              <div>
+                <div className="mb-8 max-w-lg md:mb-12">
+                  <h2 className="mb-3 text-h3 font-medium">Also at the club</h2>
+                  <p className="text-medium">
+                    Weekend mornings, competitive squads, seniors, the summer league and trials —
+                    alternatives to the evening pathway, and ways to try the club first.
+                  </p>
+                </div>
+                <ul className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+                  {others.map((programme) => (
+                    <CompactProgrammeCard key={programme.slug} programme={programme} />
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        </section>
+      )}
 
       <Header62
         heading="Not sure which programme fits?"

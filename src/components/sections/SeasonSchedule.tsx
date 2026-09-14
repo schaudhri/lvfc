@@ -36,9 +36,23 @@ export const SeasonSchedule = (props: SeasonScheduleProps) => {
     <section className={cn("px-[5%] py-16 md:py-24 lg:py-28", className)}>
       <div className="container">
         <div className="mb-12 max-w-lg md:mb-18 lg:mb-20">
-          <h2 className="mb-4 text-h2 font-bold md:mb-5">{heading}</h2>
+          <h2 className="mb-4 text-h2 font-medium md:mb-5">{heading}</h2>
           <p className="text-medium">{description}</p>
         </div>
+
+        {/* Each branch's week, once. The times are per branch, not per
+            programme, so repeating them under all eleven programmes was the
+            same four lines eleven times. */}
+        <dl className="mb-10 grid grid-cols-1 gap-4 border-y border-scheme-border/30 py-6 sm:grid-cols-2 lg:grid-cols-4">
+          {branches.map((branch) => (
+            <div key={branch.slug}>
+              <dt className="text-small font-semibold">{branch.name}</dt>
+              <dd className="text-small tabular-nums text-scheme-text/70">
+                {daySummary(branch.slug) ?? "Times on request"}
+              </dd>
+            </div>
+          ))}
+        </dl>
 
         <ul className="flex flex-col gap-4">
           {programmes.map((programme) => {
@@ -52,7 +66,7 @@ export const SeasonSchedule = (props: SeasonScheduleProps) => {
               >
                 <div className="grid grid-cols-1 gap-x-8 gap-y-5 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1.4fr)_max-content] lg:items-start">
                   <div>
-                    <h3 className="mb-1 text-h5 font-bold">{programme.name}</h3>
+                    <h3 className="mb-1 text-h5 font-medium">{programme.name}</h3>
                     <p className="text-small text-scheme-text/70">
                       Ages {programme.agesLabel}
                       {programme.season && <> · {programme.season}</>}
@@ -61,20 +75,15 @@ export const SeasonSchedule = (props: SeasonScheduleProps) => {
 
                   <div>
                     {runsAt.length > 0 ? (
-                      <ul className="flex flex-col gap-1.5">
-                        {runsAt.map((branch) => {
-                          const summary = daySummary(branch.slug);
-                          return (
-                            <li key={branch.slug} className="text-small tabular-nums">
-                              <span className="font-semibold">{branch.name}</span>
-                              {summary ? (
-                                <span className="text-scheme-text/70"> — {summary}</span>
-                              ) : (
-                                <span className="text-scheme-text/60"> — times on request</span>
-                              )}
-                            </li>
-                          );
-                        })}
+                      <ul className="flex flex-wrap gap-2" aria-label="Runs at">
+                        {runsAt.map((branch) => (
+                          <li
+                            key={branch.slug}
+                            className="rounded-badge bg-brand-sandstone px-3 py-1.5 text-small font-semibold"
+                          >
+                            {branch.name}
+                          </li>
+                        ))}
                       </ul>
                     ) : (
                       <p className="text-small text-scheme-text/70">
@@ -100,7 +109,7 @@ export const SeasonSchedule = (props: SeasonScheduleProps) => {
           })}
         </ul>
 
-        <p className="mt-6 max-w-3xl text-small text-scheme-text/70">
+        <p className="mt-6 max-w-[48rem] text-small text-scheme-text/70">
           Times shown are the branch's session band. The club has not yet issued separate times per
           programme or age group, so your child's exact slot within that band is confirmed at the
           branch.

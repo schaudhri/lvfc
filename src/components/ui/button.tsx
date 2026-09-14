@@ -12,8 +12,13 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "border border-brand-champagne bg-brand-champagne text-brand-midnight",
-        alternate: "border border-white bg-white text-neutral-darkest",
+        // Primary is terracotta everywhere (Sept 2026) except the nav, whose
+        // Book A Spot is gold (`champagne`) on the solid bar and sandstone
+        // (`alternate`) over hero photos. Button text is Futura, like all
+        // non-title text — only titles are set in Tiller.
+        default: "border border-brand-terracotta bg-brand-terracotta text-white",
+        champagne: "border border-brand-champagne bg-brand-champagne text-brand-midnight",
+        alternate: "border border-brand-sandstone bg-brand-sandstone text-neutral-darkest",
         secondary: "border border-scheme-border text-scheme-text",
         "secondary-alt": "border border-white text-white",
         link: "gap-2 text-scheme-text",

@@ -22,7 +22,7 @@ export const Cta27 = (props: Cta27Props) => {
   return (
     <section className="relative px-[5%] py-16 md:py-24 lg:py-28">
       <div className="relative z-10 container max-w-lg text-center">
-        <h2 className="mb-5 text-h2 font-bold text-white md:mb-6">{heading}</h2>
+        <h2 className="mb-5 text-h2 font-medium text-white md:mb-6">{heading}</h2>
         <p className="text-medium text-white">{description}</p>
         <div className="mt-6 flex flex-wrap items-center justify-center gap-4 md:mt-8">
           {buttons.map((button, index) => (

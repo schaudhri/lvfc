@@ -18,7 +18,7 @@ export const Logo6 = (props: Logo6Props) => {
   return (
     <section className="px-[5%] py-12 md:py-16 lg:py-20">
       <div className="container">
-        <h2 className="mx-auto mb-8 w-full max-w-lg text-center text-h6 font-bold md:mb-10">
+        <h2 className="mx-auto mb-8 w-full max-w-lg text-center text-h6 font-medium md:mb-10">
           {heading}
         </h2>
         <div className="grid grid-cols-2 gap-2 md:grid-cols-3">

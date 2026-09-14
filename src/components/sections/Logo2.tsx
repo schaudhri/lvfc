@@ -18,7 +18,7 @@ export const Logo2 = (props: Logo2Props) => {
   return (
     <section className="px-[5%] py-12 md:py-16 lg:py-20">
       <div className="container grid grid-cols-1 items-start justify-start gap-x-12 gap-y-8 md:grid-cols-[max-content_1fr] md:items-center md:justify-between md:gap-y-4 lg:gap-x-16">
-        <h2 className="text-h6 font-bold md:max-w-[16rem] lg:max-w-xxs">{heading}</h2>
+        <h2 className="text-h6 font-medium md:max-w-[16rem] lg:max-w-[20rem]">{heading}</h2>
         <div className="grid grid-cols-2 items-center justify-end gap-x-4 gap-y-4 pt-4 sm:grid-cols-3 md:gap-x-8 md:pt-0 lg:grid-cols-5">
           {logos.map((logo, index) => (
             <div

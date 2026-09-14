@@ -40,7 +40,7 @@ export const Blog42 = (props: Blog42Props) => {
         <div className="mb-12 grid grid-cols-1 items-start justify-start gap-y-8 md:mb-18 md:grid-cols-[1fr_max-content] md:items-end md:justify-between md:gap-x-12 md:gap-y-4 lg:mb-20 lg:gap-x-20">
           <div className="md:mr-12 lg:mr-0">
             <div className="w-full max-w-lg">
-              <h2 className="mb-3 text-h2 font-bold md:mb-4">{heading}</h2>
+              <h2 className="mb-3 text-h2 font-medium md:mb-4">{heading}</h2>
               <p className="text-medium">{description}</p>
             </div>
           </div>
@@ -64,7 +64,7 @@ export const Blog42 = (props: Blog42Props) => {
                   <p className="inline text-small font-semibold">{post.readTime}</p>
                 </div>
                 <a className="mb-2 block" href={post.url}>
-                  <h2 className="text-h5 font-bold">{post.title}</h2>
+                  <h2 className="text-h5 font-medium">{post.title}</h2>
                 </a>
                 <p>{post.description}</p>
                 <Button

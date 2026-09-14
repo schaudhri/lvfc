@@ -49,7 +49,7 @@ const channels: Channel[] = [
 
 const ChannelCard = ({ channel }: { channel: Channel }) => (
   <div className="flex flex-col rounded-card bg-neutral-lightest p-6">
-    <h3 className="mb-2 text-h6 font-bold">{channel.title}</h3>
+    <h3 className="mb-2 text-h6 font-medium">{channel.title}</h3>
     <p className="mb-5 text-scheme-text/80">{channel.description}</p>
     {channel.href ? (
       <a
@@ -80,7 +80,7 @@ export const Contact = () => {
 
       <section className="px-[5%] py-16 md:py-24 lg:py-28">
         <div className="container">
-          <h2 className="mb-8 text-h3 font-bold">How to reach us</h2>
+          <h2 className="mb-8 text-h3 font-medium">How to reach us</h2>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
             {channels.map((channel) => (
               <ChannelCard key={channel.title} channel={channel} />
@@ -94,7 +94,7 @@ export const Contact = () => {
       <section className="border-t border-scheme-border/20 px-[5%] py-16 md:py-24 lg:py-28">
         <div className="container">
           <div className="mb-12 max-w-lg md:mb-18 lg:mb-20">
-            <h2 className="mb-4 text-h3 font-bold">Visit a branch</h2>
+            <h2 className="mb-4 text-h3 font-medium">Visit a branch</h2>
             <p className="text-medium">
               You're welcome to visit any of our four branches during training hours. Sessions run in
               the evening on weekdays, with weekend morning sessions at select branches.
@@ -105,7 +105,7 @@ export const Contact = () => {
             {branches.map((branch) => (
               <div key={branch.slug} className="rounded-card bg-neutral-lightest p-6">
                 <div className="mb-3 flex flex-wrap items-center gap-3">
-                  <h3 className="text-h6 font-bold">{branch.name}</h3>
+                  <h3 className="text-h6 font-medium">{branch.name}</h3>
                   {branch.status && <Badge>{branch.status.label}</Badge>}
                 </div>
                 <p className="mb-5 text-scheme-text/80">{branch.address}</p>
@@ -124,7 +124,7 @@ export const Contact = () => {
         <div className="container">
           <div className="grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-16">
             <div>
-              <h2 className="mb-4 text-h4 font-bold">Safeguarding & welfare</h2>
+              <h2 className="mb-4 text-h4 font-medium">Safeguarding & welfare</h2>
               <p className="mb-5 text-scheme-text/80">
                 If you need to raise a concern about a child's welfare, use our safeguarding
                 contact below and we will route it to the right person without delay. Our
@@ -167,7 +167,7 @@ export const Contact = () => {
             </div>
 
             <div>
-              <h2 className="mb-4 text-h4 font-bold">Leagues & clubs</h2>
+              <h2 className="mb-4 text-h4 font-medium">Leagues & clubs</h2>
               <p className="mb-5 text-scheme-text/80">
                 For ELJPL, LJPL or Virgil Sports National League registration enquiries, contact{" "}
                 {leaguesContact.name}, {leaguesContact.role}.

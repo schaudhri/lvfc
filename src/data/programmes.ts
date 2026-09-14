@@ -26,6 +26,7 @@ import pathwayRaw from "@/content/pathway.json";
 import programmesRaw from "@/content/programmes.json";
 import type { Image } from "@/data/people";
 import type { BookingKey } from "@/data/booking";
+import { clubPhotos } from "@/data/clubPhotos";
 
 export type AgeGroup = {
   name: string;
@@ -105,6 +106,33 @@ export const ageFilters = [
 export const academyAgeGroups = pathwayRaw as AgeGroup[];
 
 export const programmes = programmesRaw as Programme[];
+
+/**
+ * The pathway stage a programme sits on: the one stage its whole age range
+ * fits inside. Programmes that span several stages (Weekend Mornings, 2–12) or
+ * sit outside the pathway (Seniors, Trials) have none, and are presented as
+ * "Also at the club" rather than being forced onto a stage.
+ */
+export const stageFor = (programme: Programme) =>
+  academyAgeGroups.find(
+    (group) => programme.ageRange.min >= group.min && programme.ageRange.max <= group.max,
+  );
+
+/** One programme per pathway stage, in stage order. */
+export const pathwayProgrammes = academyAgeGroups
+  .map((group) => ({ group, programme: programmes.find((p) => stageFor(p) === group) }))
+  .filter((entry): entry is { group: AgeGroup; programme: Programme } => Boolean(entry.programme));
+
+/** Everything that isn't a pathway stage: alternatives, squads, trials. */
+export const otherProgrammes = programmes.filter((programme) => !stageFor(programme));
+
+/**
+ * A programme's card image: its own once uploaded, otherwise a club photo tied
+ * to the programme itself rather than to its position in a (possibly filtered)
+ * list, so the same programme shows the same picture everywhere.
+ */
+export const programmeImage = (programme: Programme) =>
+  programme.image ?? clubPhotos[Math.max(0, programmes.indexOf(programme)) % clubPhotos.length];
 
 /** True when the programme's age span overlaps the selected band. */
 export const matchesAge = (programme: Programme, filterId: string) => {

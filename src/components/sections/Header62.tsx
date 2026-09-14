@@ -21,7 +21,7 @@ export const Header62 = (props: Header62Props) => {
             deliberate panel rather than text adrift at the foot of the page. */}
         <div className="rounded-card bg-neutral-lightest px-6 py-12 md:px-12 md:py-16">
           <div className="mx-auto max-w-lg text-center">
-            <h2 className="mb-5 text-h1 font-bold md:mb-6">{heading}</h2>
+            <h2 className="mb-5 text-h1 font-medium md:mb-6">{heading}</h2>
             <p className="text-medium">{description}</p>
             <div className="mt-6 flex flex-wrap items-center justify-center gap-4 md:mt-8">
               {buttons.map((button, index) => (

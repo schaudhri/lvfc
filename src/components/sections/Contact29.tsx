@@ -49,7 +49,7 @@ export const Contact29 = (props: Contact29Props) => {
     <section className="px-[5%] py-16 md:py-24 lg:py-28">
       <div className="container">
         <div className="mb-12 flex max-w-lg flex-col justify-start md:mb-18 lg:mb-20">
-          <h2 className="mb-5 text-h2 font-bold md:mb-6">{heading}</h2>
+          <h2 className="mb-5 text-h2 font-medium md:mb-6">{heading}</h2>
           <p className="text-medium">{description}</p>
         </div>
         <Tabs
@@ -64,7 +64,7 @@ export const Contact29 = (props: Contact29Props) => {
                 className="items-start justify-start border-0 border-l py-5 pr-0 pl-8 data-[state=active]:bg-transparent"
               >
                 <div className="text-left">
-                  <h3 className="mb-3 text-h5 font-bold md:mb-4">{tab.content.title}</h3>
+                  <h3 className="mb-3 text-h5 font-medium md:mb-4">{tab.content.title}</h3>
                   <p className="inline-block whitespace-normal">
                     <span className="block">{tab.content.address.line1}</span>
                     <span className="block">{tab.content.address.line2}</span>

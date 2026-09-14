@@ -43,7 +43,7 @@ export const TwoTrackSplit = (props: TwoTrackSplitProps) => {
                 <p className="mb-3 inline-block rounded-badge bg-neutral-lightest px-2 py-[0.175rem] text-small font-semibold">
                   {track.tag}
                 </p>
-                <h3 className="mb-2 text-h5 font-bold">{track.title}</h3>
+                <h3 className="mb-2 text-h5 font-medium">{track.title}</h3>
                 <p className="mb-5 md:mb-6">{track.description}</p>
                 <div className="mt-auto flex flex-wrap gap-4">
                   {track.buttons.map((button, i) => (

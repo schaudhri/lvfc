@@ -12,8 +12,8 @@ import type { PortableTextBlock } from "@portabletext/types";
 const components: PortableTextComponents = {
   block: {
     normal: ({ children }) => <p className="text-medium">{children}</p>,
-    h2: ({ children }) => <h2 className="mt-4 text-h4 font-bold">{children}</h2>,
-    h3: ({ children }) => <h3 className="mt-2 text-h5 font-bold">{children}</h3>,
+    h2: ({ children }) => <h2 className="mt-4 text-h4 font-medium">{children}</h2>,
+    h3: ({ children }) => <h3 className="mt-2 text-h5 font-medium">{children}</h3>,
     blockquote: ({ children }) => (
       <blockquote className="border-l-2 border-border-primary pl-6 text-medium italic">
         {children}

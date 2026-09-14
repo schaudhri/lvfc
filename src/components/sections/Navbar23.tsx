@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { motion } from "motion/react";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { Button, type ButtonProps } from "@/components/ui/button";
@@ -63,6 +63,10 @@ export const Navbar23 = (props: Navbar23Props) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const isMobile = useMediaQuery("(max-width: 991px)");
+  const { pathname } = useLocation();
+  /** The nav item for the section you're in, so you can see where you are. */
+  const isCurrent = (url: string) =>
+    url === "/" ? pathname === "/" : pathname === url || pathname.startsWith(`${url}/`);
 
   // The open mobile menu needs a solid background of its own regardless of
   // scroll position — its links render inside this same header.
@@ -115,6 +119,18 @@ export const Navbar23 = (props: Navbar23Props) => {
                 alt={logo.alt}
               />
             </Link>
+            {/* Book A Spot stays in the bar on phones too — otherwise the one
+                action the site exists for is hidden behind the menu button. */}
+            <div className="flex items-center gap-2 lg:hidden">
+              {buttons[0] && (
+                <Button
+                  {...buttons[0]}
+                  size="sm"
+                  variant={isTransparent ? "alternate" : buttons[0].variant}
+                >
+                  {buttons[0].title}
+                </Button>
+              )}
             <button
               className="-mr-2 flex size-12 flex-col items-center justify-center lg:hidden"
               aria-label="Toggle menu"
@@ -123,21 +139,22 @@ export const Navbar23 = (props: Navbar23Props) => {
               onClick={() => setIsMobileMenuOpen((prev) => !prev)}
             >
               <motion.span
-                className="my-[3px] h-0.5 w-6 bg-white"
+                className="my-[3px] h-0.5 w-6 bg-brand-sandstone"
                 animate={isMobileMenuOpen ? ["open", "rotatePhase"] : "closed"}
                 variants={topLineVariants}
               />
               <motion.span
-                className="my-[3px] h-0.5 w-6 bg-white"
+                className="my-[3px] h-0.5 w-6 bg-brand-sandstone"
                 animate={isMobileMenuOpen ? "open" : "closed"}
                 variants={middleLineVariants}
               />
               <motion.span
-                className="my-[3px] h-0.5 w-6 bg-white"
+                className="my-[3px] h-0.5 w-6 bg-brand-sandstone"
                 animate={isMobileMenuOpen ? ["open", "rotatePhase"] : "closed"}
                 variants={bottomLineVariants}
               />
             </button>
+            </div>
           </div>
           <motion.div
             variants={{
@@ -158,15 +175,17 @@ export const Navbar23 = (props: Navbar23Props) => {
                   megaMenu={link.megaMenu}
                   title={link.title}
                   isMobile={isMobile}
+                  isCurrent={isCurrent(link.url)}
                 />
               ) : (
                 <Link
                   key={index}
                   to={link.url}
+                  aria-current={isCurrent(link.url) ? "page" : undefined}
                   onClick={() => setIsMobileMenuOpen(false)}
                   // Tighter and smaller between lg and xl: seven links plus
                   // the CTA otherwise wrap onto two lines at ~1024px.
-                  className="text-md block py-3 first:pt-7 lg:px-2 lg:py-6 lg:text-sm lg:whitespace-nowrap first:lg:pt-6 xl:px-4 xl:text-base"
+                  className="text-md block py-3 first:pt-7 lg:px-2 lg:py-6 lg:text-sm lg:whitespace-nowrap first:lg:pt-6 xl:px-4 xl:text-base aria-[current=page]:underline aria-[current=page]:decoration-brand-champagne aria-[current=page]:decoration-2 aria-[current=page]:underline-offset-8"
                 >
                   {link.title}
                 </Link>
@@ -196,10 +215,12 @@ const SubMenu = ({
   title,
   isMobile,
   megaMenu,
+  isCurrent,
 }: {
   title: string;
   isMobile: boolean;
   megaMenu: MegaMenuProps;
+  isCurrent: boolean;
 }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   return (
@@ -212,7 +233,13 @@ const SubMenu = ({
         aria-expanded={isDropdownOpen}
         onClick={() => setIsDropdownOpen((prev) => !prev)}
       >
-        <span>{title}</span>
+        <span
+          className={cn(
+            isCurrent && "underline decoration-brand-champagne decoration-2 underline-offset-8",
+          )}
+        >
+          {title}
+        </span>
         <motion.span
           variants={{ rotated: { rotate: 180 }, initial: { rotate: 0 } }}
           animate={isDropdownOpen ? "rotated" : "initial"}
@@ -234,7 +261,7 @@ const SubMenu = ({
       >
         <div className="flex w-full flex-col items-start justify-start gap-6 pt-6 sm:gap-12 lg:flex-row lg:items-center lg:py-8">
           <div className="lg:max-w-[14rem] lg:shrink-0">
-            <h4 className="mb-3 text-lg font-bold md:mb-4 md:text-xl md:leading-[1.3]">
+            <h4 className="mb-3 text-lg font-medium md:mb-4 md:text-xl md:leading-[1.3]">
               {megaMenu.title}
             </h4>
             <p className="text-sm">{megaMenu.description}</p>

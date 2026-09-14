@@ -1,7 +1,7 @@
 import { type Navbar23Props } from "@/components/sections/Navbar23";
 import { type Footer2Props } from "@/components/sections/Footer2";
 import { FacebookLogo, InstagramLogo, LinkedinLogo, XLogo, YoutubeLogo } from "relume-icons";
-import { formatAges, programmes } from "@/data/programmes";
+import { formatAges, programmeImage, programmes } from "@/data/programmes";
 import { branches } from "@/data/locations";
 import { club } from "@/data/club";
 import { cta } from "@/data/cta";
@@ -98,7 +98,7 @@ export const navbarProps: Navbar23Props = {
         // to wade through, not a menu.
         items: programmes.slice(0, 3).map((programme) => ({
           url: `/programmes/${programme.slug}`,
-          image: { src: LAND, alt: programme.name },
+          image: { src: programmeImage(programme).src, alt: programme.name },
           name: programme.name,
           meta: `${formatAges(programme.agesLabel)} · ${programme.tag}`,
           detail: programme.summary,
@@ -131,9 +131,9 @@ export const navbarProps: Navbar23Props = {
     { title: "Resources", url: "/resources" },
     { title: "Private Sessions", url: "/private-events" },
   ],
-  // No colour override: champagne is now the default solid CTA colour site-wide
-  // (stakeholder direction, Aug 2026), so the nav button inherits it.
-  buttons: [{ ...cta.bookASpot, size: "sm" }],
+  // The nav keeps its gold Book A Spot — the one primary button that isn't
+  // terracotta (Sept 2026). Over a hero photo Navbar23 swaps it for sandstone.
+  buttons: [{ ...cta.bookASpot, size: "sm", variant: "champagne" }],
 };
 
 export const footerProps: Footer2Props = {

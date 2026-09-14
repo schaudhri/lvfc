@@ -7,11 +7,16 @@ import { cta } from "@/data/cta";
 import { useDocumentMeta } from "@/hooks/use-document-meta";
 import { clubPhotos } from "@/data/clubPhotos";
 
+/**
+ * The coaching library leads: it is complete, while most club documents are
+ * still being finalised. Opening on a list of "coming soon" rows made the
+ * whole page look unfinished.
+ */
 const JUMP_LINKS = [
+  { label: "Coaching library", href: "#library" },
   { label: "For parents & players", href: "#parents" },
   { label: "For clubs & partners", href: "#clubs" },
   { label: "Forms", href: "#forms" },
-  { label: "Coaching library", href: "#library" },
 ];
 
 export const Resources = () => {
@@ -41,15 +46,15 @@ export const Resources = () => {
         </div>
       </div>
 
-      <ResourceDownloads />
-
-      <div id="library" className="scroll-mt-24 border-t border-scheme-border/20">
+      <div id="library" className="scroll-mt-24">
         <ResourceLibrary
           heading="Coaching library"
           description="Federations, coach education, safeguarding, analysis and advocacy — organised by topic. This is our first batch; many more are on the way, so bookmark the page and check back."
           categories={resourceLinks}
         />
       </div>
+
+      <ResourceDownloads />
 
       <Header62
         heading="Something missing?"

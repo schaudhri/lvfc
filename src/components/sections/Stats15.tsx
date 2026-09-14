@@ -32,7 +32,7 @@ export const Stats15 = (props: Stats15Props) => {
       <div className="relative z-10 container">
         <div className="grid grid-cols-1 items-center gap-y-12 lg:grid-cols-2 lg:gap-x-[4.75rem]">
           <div>
-            <h2 className="mb-5 text-h2 font-bold text-white md:mb-6">{heading}</h2>
+            <h2 className="mb-5 text-h2 font-medium text-white md:mb-6">{heading}</h2>
             <p className="text-medium text-white">{description}</p>
             <div className="mt-6 flex flex-wrap items-center gap-4 md:mt-8">
               {buttons.map((button, index) => (
@@ -48,7 +48,7 @@ export const Stats15 = (props: Stats15Props) => {
                 <p className="mb-2 text-[3.5rem] leading-[1.3] font-bold text-white md:text-[4rem] lg:text-[5rem]">
                   {stat.percentage}
                 </p>
-                <h3 className="text-h6 font-bold text-white">{stat.heading}</h3>
+                <h3 className="text-h6 font-medium text-white">{stat.heading}</h3>
               </div>
             ))}
           </div>
