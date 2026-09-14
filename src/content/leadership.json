@@ -1,11 +1,14 @@
 [
   {
-    "alsoRole": "Club Welfare Officer",
     "description": "British-Pakistani entrepreneur who wants to combine best-in-class practices from Britain and Europe and adapt them to Pakistan — across child pedagogy, curriculum, and child safeguarding, which is massively missing here. Believes every child should be seen as a whole, well-rounded individual, not just a footballer. You'll find him at the grounds working with coaches and parents to make sure the vision is real on the pitch.",
     "email": "hamza@virgilsports.com",
     "name": "Hamza Syed",
     "role": "Chief Executive Officer",
-    "summary": "Believes every child should be seen as a whole, well-rounded individual, not just a footballer."
+    "summary": "Believes every child should be seen as a whole, well-rounded individual, not just a footballer.",
+    "photo": {
+      "src": "/images/hamza-letter.webp",
+      "alt": "Hamza Syed, Chief Executive Officer"
+    }
   },
   {
     "description": "UEFA B License. 29 years' experience coaching in North America and Europe. Directs our curriculum for recreational and competitive programming across all age groups. You'll find him hopping between different age-groups and sessions, working alongside our coaches to ensure every kid gets the maximum from their time on the pitch.",

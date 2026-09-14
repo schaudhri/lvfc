@@ -15,13 +15,13 @@
         "question": "What age groups do you accept?"
       },
       {
-        "answer": "Yes. LVFC holds formal trial sessions for our competitive squads (U8–Senior) twice a year — at the start of the August season and during January. Watch our social media and website for trial announcements. Club programme players can join at any time without a trial.",
+        "answer": "Yes. LVFC holds formal trial sessions for our competitive squads (U8–U15) twice a year — at the start of the August season and during January. Watch our social media and website for trial announcements. Club programme players can join at any time without a trial.",
         "featuredOnLanding": true,
         "landingOrder": 5,
-        "question": "Are there trials for the academy?"
+        "question": "Are there trials for the club?"
       },
       {
-        "answer": "We offer two recreational programmes, each running three days per week on a minimum monthly basis. The monthly fee for both is 8,000 PKR, pro-rated by when you enrol: joining between the 1st and 5th is the full 8,000 PKR; between the 6th and 15th it is charged per session attended at 700 PKR a session; and after the 15th a half-month fee of 4,000 PKR applies. Fees are subject to change and the figures above are examples.",
+        "answer": "Every age group on the pathway, from FUNdamentals to Youth Development, trains three evenings a week and costs PKR 8,000 a month. The first month is pro-rated by when you join: between the 1st and 5th it is the full PKR 8,000; between the 6th and 15th you pay PKR 700 for each session attended; and after the 15th it is a half-month fee of PKR 4,000. Fees can change between seasons, and we will always confirm yours before you pay.",
         "featuredOnLanding": true,
         "landingOrder": 3,
         "question": "How is your booking fee structured?"
@@ -32,7 +32,7 @@
         "question": "What happens if we join halfway through the month?"
       },
       {
-        "answer": "Yes, a one-time registration fee applies at enrolment. Monthly training fees vary by programme and age group. Please contact your nearest branch or visit our booking portal for the latest fee structure.",
+        "answer": "Yes. A one-time registration fee applies when your child first joins, and it includes their kit. It is separate from the monthly training fee, which is PKR 8,000 for every age group on the pathway (see “How is your booking fee structured?”). If your child is away for more than six months, they register again.",
         "featuredOnLanding": false,
         "question": "Is there a registration fee?"
       },
@@ -53,7 +53,7 @@
     "id": "sessions",
     "questions": [
       {
-        "answer": "Children must wear their LVFC football uniform with trainers or football boots depending on the surface, plus shin pads if playing in boots. Watches, earrings, bracelets and necklaces should not be worn. Please make sure your child brings plenty of water, and during the summer months wears sunscreen and a hat. Any child not wearing LVFC kit may be excused from the session.",
+        "answer": "Children must wear their LVFC football uniform with trainers or football boots depending on the surface, plus shin pads if playing in boots. Watches, earrings, bracelets and necklaces should not be worn. Please make sure your child brings plenty of water, and during the summer months wears sunscreen and a hat. Any child not wearing LVFC kit may be excused from the session. LVFC-branded training kit is available to buy through our admin team.",
         "featuredOnLanding": true,
         "landingOrder": 4,
         "question": "What should my child wear and bring?"
@@ -126,7 +126,7 @@
         "question": "What curriculum do you follow?"
       },
       {
-        "answer": "Yes. Every academy player receives a monthly progress report from their head coach. Parents are encouraged to attend monthly review sessions to discuss their child's development goals.",
+        "answer": "Yes. Every club player receives a monthly progress report from their head coach. Parents are encouraged to attend monthly review sessions to discuss their child's development goals.",
         "featuredOnLanding": false,
         "question": "Will my child receive individual feedback?"
       }
@@ -137,7 +137,7 @@
     "id": "competitions",
     "questions": [
       {
-        "answer": "Virgil Sports runs two internal youth leagues — the Elite Lahore Junior Premier League (ELJPL) for competitive academy players, and the Lahore Junior Premier League (LJPL) for developmental players.",
+        "answer": "Virgil Sports runs two internal youth leagues — the Elite Lahore Junior Premier League (ELJPL) for competitive club players, and the Lahore Junior Premier League (LJPL) for developmental players.",
         "featuredOnLanding": false,
         "question": "What leagues does LVFC run?"
       },

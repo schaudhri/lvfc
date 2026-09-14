@@ -1,20 +1,15 @@
 import { ChevronRight } from "relume-icons";
 import { Header54 } from "@/components/sections/Header54";
-import { Team16 } from "@/components/sections/Team16";
+import { CoachGrid } from "@/components/sections/CoachGrid";
 import { PhaseTimeline } from "@/components/sections/PhaseTimeline";
 import { Pillars } from "@/components/sections/Pillars";
 import { SafeguardingNote } from "@/components/sections/SafeguardingNote";
 import { Layout242 } from "@/components/sections/Layout242";
 import { academyAgeGroups } from "@/data/programmes";
-import { leadership } from "@/data/people";
 import { cta } from "@/data/cta";
 import { useDocumentMeta } from "@/hooks/use-document-meta";
-import { aboutHeroCover, coachPhotos } from "@/data/clubPhotos";
-
-// Empty until the club supplies real profile URLs. Rendering three "#" links
-// per person put 15 links to nowhere on this page.
-// TODO: populate per person once profiles are confirmed.
-const social: { href: string; icon: React.ReactNode }[] = [];
+import { aboutHeroCover } from "@/data/clubPhotos";
+import { coaches } from "@/data/coaches";
 
 export const Coaching = () => {
   useDocumentMeta(
@@ -29,25 +24,14 @@ export const Coaching = () => {
         image={aboutHeroCover}
       />
 
-      {/*
-        Club leadership. Individual branch coach bios and headshots were listed as
-        drafted in the 5 July meeting but have not been supplied — add them as a
-        second Team16 below this one once received.
-      */}
-      <Team16
+      {/* The coaches, not the club's leadership — that now lives on About
+          (client request, 14 Sept 2026). */}
+      <CoachGrid
         id="team"
-        featured={2}
-        heading="Who leads the club"
+        heading="Our coaches"
         description="All LVFC head coaches have extensive training and qualifications, with support coaches trained to national standards. Our Director of Football sets the curriculum and coaching standards across every branch."
-        teamMembers={leadership.map((person, index) => ({
-          image: { src: coachPhotos[index % coachPhotos.length].src, alt: person.name },
-          name: person.name,
-          jobTitle: person.alsoRole ? `${person.role} · ${person.alsoRole}` : person.role,
-          description: person.description,
-          email: person.email,
-          socialLinks: social,
-        }))}
-        footerContent={{
+        coaches={coaches}
+        footer={{
           heading: "Coach with LVFC",
           description:
             "University students and enthusiasts welcome — every coach completes safeguarding training and background verification before working with children.",

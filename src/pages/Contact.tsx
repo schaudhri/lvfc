@@ -28,7 +28,7 @@ const channels: Channel[] = [
     title: "Register or book a spot",
     description: "Registration runs through our online booking portal.",
     value: club.bookingPortal.label,
-    href: club.bookingPortal.programmes,
+    href: club.bookingPortal.url,
     external: true,
   },
   {

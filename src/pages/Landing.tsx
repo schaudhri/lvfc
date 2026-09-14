@@ -2,8 +2,8 @@ import { ChevronRight } from "relume-icons";
 import { Button } from "@/components/ui/button";
 import { Header54 } from "@/components/sections/Header54";
 import { ProgrammeCards } from "@/components/sections/ProgrammeCards";
+import { Layout121 } from "@/components/sections/Layout121";
 import { ClubIntro } from "@/components/sections/ClubIntro";
-import { PhaseTimeline } from "@/components/sections/PhaseTimeline";
 import { StatsPathway } from "@/components/sections/StatsPathway";
 import { ScheduleGrid } from "@/components/sections/ScheduleGrid";
 import { CoachSlider } from "@/components/sections/CoachSlider";
@@ -12,12 +12,8 @@ import { LifeAtLvfc } from "@/components/sections/LifeAtLvfc";
 import { PrivateEventsCallout } from "@/components/sections/PrivateEventsCallout";
 import { AlsoAtClub } from "@/components/sections/AlsoAtClub";
 import { Faqs } from "@/components/sections/Faqs";
-import {
-  academyAgeGroups,
-  otherProgrammes,
-  pathwayProgrammes,
-  programmeImage,
-} from "@/data/programmes";
+import { otherProgrammes, pathwayProgrammes, programmeImage } from "@/data/programmes";
+import { programmeFee } from "@/data/fees";
 import { landingFaqs } from "@/data/faqs";
 import { leadership } from "@/data/people";
 import { heroImages } from "@/data/club";
@@ -36,10 +32,9 @@ export const Landing = () => {
         size="full"
         heading="Join Lahore's leading youth football club"
         description="Lahore's football club — built on community, ambition, and pride of place."
-        buttons={[
-          { ...cta.programmes, variant: "alternate" },
-          { ...cta.about, variant: "secondary-alt" },
-        ]}
+        // One action in the hero (client request, 14 Sept 2026) — "New to
+        // LVFC" leads the intro section directly below instead.
+        buttons={[{ ...cta.programmes, title: "See our programmes", variant: "alternate" }]}
         image={{ src: clubPhotos[13].src, alt: "LVFC players training in Lahore" }}
         // Rotates through the club's own photos once uploaded in the Studio;
         // with none uploaded yet, `Header54` falls back to `image` above.
@@ -49,12 +44,12 @@ export const Landing = () => {
 
       {/* No eyebrow, no stats — "A club families stay with" further down the
           page already carries these same four numbers. */}
-      <ClubIntro eyebrow={undefined} stats={[]} buttons={[{ ...cta.about, variant: "secondary" }]} />
+      <ClubIntro eyebrow={undefined} stats={[]} buttons={[{ ...cta.about }]} />
 
       {/*
         The five pathway stages only — one card per age group, which is what a
-        parent is choosing between. The alternatives are a line of links
-        underneath rather than six more cards in the slider.
+        parent is choosing between. The alternatives are a row of pills above
+        the slider (Figma home, Sept 2026) rather than six more cards in it.
       */}
       <ProgrammeCards
         heading="Programmes"
@@ -65,11 +60,51 @@ export const Landing = () => {
           image: programmeImage(programme),
           title: programme.name,
           ages: programme.agesLabel,
+          price: programmeFee(programme),
           description: programme.summary,
           tag: programme.flagship ? "Flagship" : undefined,
           primaryButton: programmeCta(programme.bookingKey),
         }))}
-        footer={<AlsoAtClub programmes={otherProgrammes} />}
+        header={<AlsoAtClub programmes={otherProgrammes} />}
+      />
+
+      {/* Moved from About and laid out in a row rather than a scroll-drawn
+          timeline (client request, 14 Sept 2026): right after the programmes
+          a parent has just browsed, it says what to do next. */}
+      <Layout121
+        orientation="horizontal"
+        heading="How to start your journey"
+        buttons={[
+          { ...cta.bookASpot, variant: "secondary" },
+          {
+            title: "Talk to us",
+            url: "/contact",
+            variant: "link",
+            size: "link",
+            iconRight: <ChevronRight className="text-scheme-text" />,
+          },
+        ]}
+        features={[
+          {
+            heading: "Choose a programme",
+            description:
+              "Start with your child's age — FUNdamentals at two through to Youth Development at fifteen — or pick weekend mornings or a competitive squad.",
+          },
+          {
+            heading: "Pick your branch",
+            description:
+              "Choose the Lahore branch and session times that work for your family — Gulberg, DHA Phase V, DHA Phase VIII or Pine Avenue.",
+          },
+          {
+            heading: "Register",
+            description:
+              "Complete registration through our booking portal. We'll confirm your spot within 24–48 hours.",
+          },
+          {
+            heading: "First session",
+            description: "Come and train. Meet the coaches, meet the group, get started.",
+          },
+        ]}
       />
 
       <Layout442
@@ -87,15 +122,8 @@ export const Landing = () => {
         image={{ src: phase8Photos[0].src, alt: "LVFC coaches supervising a training session" }}
       />
 
-      <PhaseTimeline
-        heading="The player pathway"
-        button={{ ...cta.programmes }}
-        phases={academyAgeGroups.map((group) => ({
-          age: group.ages,
-          title: group.name,
-          description: group.focus,
-        }))}
-      />
+      {/* The pathway now lives on the programme pages (client direction,
+          14 Sept 2026) — here it only repeated the five cards above. */}
 
       <StatsPathway
         heading="A club families stay with"
@@ -103,7 +131,7 @@ export const Landing = () => {
           { value: "4", label: "Branches across Lahore" },
           { value: "2–18", label: "Age range, first touch to U18" },
           { value: "5", label: "Age groups in the pathway" },
-          { value: "3", label: "Academy sessions a week" },
+          { value: "3", label: "Training sessions a week" },
         ]}
         buttons={[{ title: "View our programmes", url: "/programmes", variant: "alternate" }]}
       />
@@ -115,7 +143,7 @@ export const Landing = () => {
       <ScheduleGrid
         heading="Training schedule"
         description="The full week across all four Lahore branches. Filter by branch to find the evenings that fit around yours."
-        buttons={[{ ...cta.branches, variant: "secondary" }, { ...cta.bookASpot }]}
+        buttons={[{ ...cta.branches, variant: "secondary" }, { ...cta.bookASpot, variant: "champagne" }]}
       />
 
       {/*
@@ -127,7 +155,8 @@ export const Landing = () => {
         heading="Meet our coaches"
         description="The team setting the standard across all four branches."
         coaches={leadership.map((person, index) => ({
-          image: { src: coachPhotos[index % coachPhotos.length].src, alt: person.name },
+          // A real headshot where the club has supplied one; otherwise a stand-in.
+          image: { src: person.photo?.src ?? coachPhotos[index % coachPhotos.length].src, alt: person.name },
           name: person.name,
           position: person.role,
           certification: person.alsoRole ?? "",
@@ -158,16 +187,13 @@ export const Landing = () => {
         images={clubPhotos.slice(0, 8).map((photo) => ({ src: photo.src, alt: photo.alt }))}
       />
 
+      {/* Intro and button straight under the title, no card (Figma home,
+          node 19:4996). */}
       <Faqs
         heading="FAQs"
-        description="The questions parents ask most before their child's first session."
+        description="Fees, kit, refunds, safeguarding — the full list is on our FAQ page, or just get in touch."
         questions={landingFaqs}
-        footer={{
-          heading: "More questions?",
-          description:
-            "Fees, kit, refunds, safeguarding — the full list is on our FAQ page, or just get in touch.",
-          button: { ...cta.faqs, variant: "secondary" },
-        }}
+        button={{ ...cta.faqs, variant: "secondary" }}
       />
     </>
   );

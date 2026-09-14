@@ -31,7 +31,9 @@ export const Layout442 = (props: Layout442Props) => {
           </div>
           <div className="md:mt-48">
             <p className="text-medium text-white">{description}</p>
-            <div className="mt-6 flex flex-wrap gap-4 md:mt-8">
+            {/* Primary on the left, the text link pushed to the far edge
+                (Figma "lvfc-website" home, node 19:299). */}
+            <div className="mt-6 flex flex-wrap items-center justify-between gap-4 md:mt-10">
               {buttons.map((button, index) => (
                 <Button key={index} {...button}>
                   {button.title}
@@ -43,7 +45,8 @@ export const Layout442 = (props: Layout442Props) => {
       </div>
       <div className="absolute inset-0 z-0">
         <img src={image.src} className="size-full object-cover" alt={image.alt} />
-        <div className="absolute inset-0 bg-neutral-darkest/50" />
+        {/* Maroon wash rather than a neutral one (Figma node 19:308). */}
+        <div className="absolute inset-0 bg-brand-maroon/70" />
       </div>
     </section>
   );

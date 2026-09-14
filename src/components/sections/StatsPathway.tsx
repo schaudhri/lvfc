@@ -43,7 +43,7 @@ export const StatsPathway = (props: StatsPathwayProps) => {
                     className="absolute inset-y-0 left-0 w-px origin-center -skew-x-12 bg-neutral-darkest/15"
                   />
                 )}
-                <p className="mb-2 text-h4 font-medium text-neutral-darkest md:text-h3">
+                <p className="mb-2 text-h4 font-bold text-neutral-darkest md:text-h3">
                   {stat.value}
                 </p>
                 <p className="text-small text-neutral-darkest/60">{stat.label}</p>
@@ -100,7 +100,7 @@ export const StatsPathwayDefaults: Props = {
     { value: "4", label: "Branches across Lahore" },
     { value: "2–18", label: "Age range, first touch to U18" },
     { value: "5", label: "Age groups in the pathway" },
-    { value: "3", label: "Academy sessions a week" },
+    { value: "3", label: "Training sessions a week" },
   ],
   buttons: [
     { title: "Player Pathway", variant: "alternate" },

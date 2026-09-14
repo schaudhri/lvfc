@@ -90,6 +90,6 @@ export const ClubIntroDefaults: Props = {
     { value: "4", label: "Branches across Lahore" },
     { value: "2–18", label: "Ages we coach" },
     { value: "5", label: "Age groups in the pathway" },
-    { value: "3", label: "Academy sessions a week" },
+    { value: "3", label: "Training sessions a week" },
   ],
 };

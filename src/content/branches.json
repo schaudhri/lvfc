@@ -1,14 +1,14 @@
 [
   {
-    "about": "Our Gulberg branch sits at the heart of one of Lahore's most vibrant communities. Based at City School on Gurumangat Road, this is one of LVFC's longest-running locations and serves players from Gulberg, Garden Town, Faisal Town and surrounding areas. The ground provides an excellent environment for both academy and club sessions.",
+    "about": "Our Gulberg branch sits at the heart of one of Lahore's most vibrant communities. Based at City School on Gurumangat Road, this is one of LVFC's longest-running locations and serves players from Gulberg, Garden Town, Faisal Town and surrounding areas. The ground provides an excellent environment for every age group, from a first touch at two through to Seniors.",
     "address": "City School, Gurumangat Road, Gulberg, Lahore",
     "name": "Gulberg",
     "programmes": [
       "FUNdamentals · 2 years",
       "Mini-Kickers · 3–4 years",
-      "Pre-Academy · 5–8 years",
+      "Pre Club · 5–8 years",
       "Foundation · 9–12 years",
-      "Youth Development · 13+ years",
+      "Youth Development · 13–15 years",
       "Seniors · 16+ years"
     ],
     "sessions": [
@@ -47,9 +47,10 @@
     "programmes": [
       "FUNdamentals · 2 years",
       "Mini-Kickers · 3–4 years",
-      "Pre-Academy · 5–8 years",
+      "Pre Club · 5–8 years",
       "Foundation · 9–12 years",
-      "Youth Development · 13+ years",
+      "Youth Development · 13–15 years",
+      "Seniors · 16+ years",
       "Weekend Morning Programme"
     ],
     "sessions": [
@@ -88,9 +89,10 @@
     "programmes": [
       "FUNdamentals · 2 years",
       "Mini-Kickers · 3–4 years",
-      "Pre-Academy · 5–8 years",
+      "Pre Club · 5–8 years",
       "Foundation · 9–12 years",
-      "Youth Development · 13+ years",
+      "Youth Development · 13–15 years",
+      "Seniors · 16+ years",
       "Weekend Morning Programme"
     ],
     "sessions": [
@@ -123,13 +125,13 @@
     "slug": "dha-phase-viii"
   },
   {
-    "about": "Our newest branch — live from July 2026 — is based at The Box Football Academy on Pine Avenue. Conveniently located near Alhamd Garden, this branch extends LVFC's reach into a growing catchment area and brings our coaching methodology to a whole new community of young players.",
+    "about": "Our newest branch — live from July 2026 — is based at The Box Football Club on Pine Avenue. Conveniently located near Alhamd Garden, this branch extends LVFC's reach into a growing catchment area and brings our coaching methodology to a whole new community of young players.",
     "address": "The Box, Pine Avenue, near Alhamd Garden, Lahore",
     "name": "Pine Avenue",
     "programmes": [
       "FUNdamentals · 2 years",
       "Mini-Kickers · 3–4 years",
-      "Pre-Academy · 5–8 years",
+      "Pre Club · 5–8 years",
       "Foundation · 9–12 years"
     ],
     "sessions": [

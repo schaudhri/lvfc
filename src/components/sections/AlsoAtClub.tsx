@@ -16,17 +16,19 @@ import { cn } from "@/lib/utils";
  * see what "Trials" meant. A pill now only selects; the summary and booking
  * button for whichever one is selected appear directly underneath, and
  * "Learn more" is the one deliberate way off the page.
+ *
+ * The row sits between the Programmes title and the slider (Figma
+ * "lvfc-website" home, node 19:267), so it starts with nothing open — a
+ * summary panel there by default would push the cards down the page. Clicking
+ * the open pill again closes it.
  */
 export const AlsoAtClub = ({ programmes }: { programmes: Programme[] }) => {
-  const [active, setActive] = useState(0);
-  const selected = programmes[active];
-  if (!selected) return null;
+  const [active, setActive] = useState<number | null>(null);
+  const selected = active === null ? undefined : programmes[active];
+  if (programmes.length === 0) return null;
 
   return (
-    <div className="mt-10">
-      <p className="mb-4 text-tiny font-semibold uppercase tracking-wider text-scheme-text/60">
-        Also at the club
-      </p>
+    <div>
       <div className="flex flex-wrap gap-2" role="tablist" aria-label="Also at the club">
         {programmes.map((programme, index) => {
           const isActive = index === active;
@@ -36,9 +38,11 @@ export const AlsoAtClub = ({ programmes }: { programmes: Programme[] }) => {
               type="button"
               role="tab"
               aria-selected={isActive}
-              onClick={() => setActive(index)}
+              onClick={() => setActive(isActive ? null : index)}
               className={cn(
-                "rounded-full border px-4 py-2 text-small font-semibold transition-colors",
+                // 16px as drawn on desktop; a step down on phones, where six
+                // pills otherwise stack four rows deep above the cards.
+                "rounded-full border px-4 py-2 text-small font-semibold transition-colors md:text-regular",
                 isActive
                   ? "border-brand-maroon bg-brand-maroon text-white"
                   : "border-brand-maroon text-scheme-text hover:bg-neutral-lightest",
@@ -50,10 +54,11 @@ export const AlsoAtClub = ({ programmes }: { programmes: Programme[] }) => {
         })}
       </div>
 
+      {selected && (
       <div
         key={selected.slug}
         role="tabpanel"
-        className="mt-6 flex flex-col gap-4 rounded-card bg-neutral-lightest p-6 sm:flex-row sm:items-center sm:justify-between md:p-8"
+        className="mt-4 flex flex-col gap-4 rounded-card bg-neutral-lightest p-6 sm:flex-row sm:items-center sm:justify-between md:p-8"
       >
         <div>
           <div className="flex flex-wrap items-center gap-3">
@@ -77,6 +82,7 @@ export const AlsoAtClub = ({ programmes }: { programmes: Programme[] }) => {
           </Link>
         </div>
       </div>
+      )}
     </div>
   );
 };

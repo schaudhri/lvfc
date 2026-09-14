@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Header54 } from "@/components/sections/Header54";
 import { Header62 } from "@/components/sections/Header62";
 import { CompactProgrammeCard, PathwayProgrammeRow } from "@/components/sections/ProgrammeList";
@@ -15,6 +16,7 @@ import {
 } from "@/data/programmes";
 import { branches } from "@/data/locations";
 import { cta } from "@/data/cta";
+import { academyFees, formatPkr, includedInFee } from "@/data/fees";
 import { cn } from "@/lib/utils";
 import { useDocumentMeta } from "@/hooks/use-document-meta";
 import { clubPhotos } from "@/data/clubPhotos";
@@ -41,11 +43,9 @@ const FilterPills = ({
   active: string;
   onChange: (id: string) => void;
 }) => (
-  <div className="flex flex-col gap-3">
-    <span className="text-tiny font-semibold uppercase tracking-wider text-scheme-text/60">
-      {label}
-    </span>
-    <div className="flex flex-wrap gap-2" role="group" aria-label={label}>
+  // No visible eyebrow (client request, Sept 2026) — `label` still names the
+  // group for screen readers.
+  <div className="flex flex-wrap gap-2" role="group" aria-label={label}>
       {options.map((option) => {
         const isActive = option.id === active;
         return (
@@ -65,7 +65,6 @@ const FilterPills = ({
           </button>
         );
       })}
-    </div>
   </div>
 );
 
@@ -74,8 +73,8 @@ const FilterPills = ({
  *
  * The five pathway programmes come first, as wide rows in stage order — that
  * is where almost every family starts. Everything else (weekend mornings,
- * squads, seniors, trials, the summer league, the community programme) sits
- * underneath as lighter compact cards. It used to be eleven identical cards in
+ * squads, seniors, trials, the summer league) sits underneath as lighter
+ * compact cards. It used to be eleven identical cards in
  * one grid, which gave a parent no idea where to begin.
  */
 export const Programme = () => {
@@ -106,9 +105,16 @@ export const Programme = () => {
           <h2 className="mb-5 text-h3 font-medium md:mb-6">Where does my child start?</h2>
           <p className="mb-4 text-medium">
             Most families start with the age group that matches their child — FUNdamentals at two,
-            Mini-Kickers at three to four, then Pre-Academy, Foundation and Youth Development as they
+            Mini-Kickers at three to four, then Pre Club, Foundation and Youth Development as they
             grow. Each one runs three evenings a week and follows the same curriculum, pitched at
             that age.
+          </p>
+          {/* The club programme's promise, folded in here rather than kept as a
+              programme of its own (client decision, 14 Sept 2026). */}
+          <p className="mb-4 text-medium">
+            Every group is open to boys and girls of any ability — no trial needed to join. Players
+            who want more can step up to our competitive squads, and end-of-term showcases and
+            certificates mark the progress along the way.
           </p>
           <p className="text-medium">
             Around that sit the alternatives: weekend mornings if evenings don't work, selected
@@ -120,7 +126,8 @@ export const Programme = () => {
       </section>
 
       <div className="border-y border-scheme-border/20 px-[5%] py-8">
-        <div className="container">
+        {/* Pills on the left, "Clear filter" pushed to the right. */}
+        <div className="container flex flex-col items-start gap-4 md:flex-row md:items-center md:justify-between md:gap-12">
           <div className="flex flex-col gap-6 md:flex-row md:gap-12">
             {SHOW_AGE_FILTER && (
               <FilterPills
@@ -145,22 +152,23 @@ export const Programme = () => {
           </div>
 
           {isFiltered && (
-            <div className="mt-6 flex flex-wrap items-center gap-4">
-              <p className="text-small text-scheme-text/70" aria-live="polite">
-                Showing {visibleCount} of {programmes.length} programmes
-              </p>
-              <button
-                type="button"
-                onClick={() => {
-                  setAge(ALL);
-                  setBranch(ALL);
-                }}
-                className="text-small font-semibold underline underline-offset-2"
-              >
-                Clear filter
-              </button>
-            </div>
+            <button
+              type="button"
+              onClick={() => {
+                setAge(ALL);
+                setBranch(ALL);
+              }}
+              className="inline-flex min-h-11 shrink-0 items-center text-small font-semibold underline underline-offset-2"
+            >
+              Clear filter
+            </button>
           )}
+          {/* The count is no longer shown, but a screen reader still hears
+              how many programmes a filter leaves. Always rendered so the
+              live region exists before its text changes. */}
+          <p className="sr-only" aria-live="polite">
+            {isFiltered ? `Showing ${visibleCount} of ${programmes.length} programmes` : ""}
+          </p>
         </div>
       </div>
 
@@ -178,30 +186,65 @@ export const Programme = () => {
           <div className="container flex flex-col gap-16 md:gap-24">
             {stages.length > 0 && (
               <div>
-                <div className="mb-8 max-w-lg md:mb-12">
-                  <h2 className="mb-3 text-h3 font-medium">The pathway</h2>
-                  <p className="text-medium">
-                    One programme for each age, from a first touch at two to pre-elite preparation
-                    at thirteen and over. Start with the one that matches your child.
-                  </p>
-                </div>
+                <h2 className="mb-8 text-h3 font-medium md:mb-12">Learning Pathway</h2>
                 <ol className="flex flex-col gap-6 md:gap-8">
                   {stages.map(({ programme }) => (
                     <PathwayProgrammeRow key={programme.slug} programme={programme} />
                   ))}
                 </ol>
+
+                {/* The whole fee structure in one place, from `data/fees.ts` —
+                    the same figures the cards above and the FAQ quote. */}
+                <div id="fees" className="mt-8 scroll-mt-24 rounded-card bg-white p-6 md:mt-10 md:p-8">
+                  <h3 className="text-h5 font-medium">Fees</h3>
+                  <p className="mt-2 text-scheme-text/80">
+                    The same for every age group on the pathway, {academyFees.sessionsPerWeek}{" "}
+                    sessions a week.
+                  </p>
+                  <dl className="mt-6 grid grid-cols-1 gap-x-8 gap-y-5 sm:grid-cols-3">
+                    <div>
+                      <dt className="text-small text-scheme-text/70">Each month</dt>
+                      <dd className="text-h6 font-semibold">{formatPkr(academyFees.monthly)}</dd>
+                    </div>
+                    <div>
+                      <dt className="text-small text-scheme-text/70">Joining the 6th–15th</dt>
+                      <dd className="text-h6 font-semibold">
+                        {formatPkr(academyFees.perSession)} a session
+                      </dd>
+                    </div>
+                    <div>
+                      <dt className="text-small text-scheme-text/70">Joining after the 15th</dt>
+                      <dd className="text-h6 font-semibold">
+                        {formatPkr(academyFees.halfMonth)} that month
+                      </dd>
+                    </div>
+                  </dl>
+                  <div className="mt-6 border-t border-scheme-border/15 pt-6">
+                    <h4 className="text-regular font-semibold">Included in the monthly fee</h4>
+                    <ul className="mt-3 grid grid-cols-1 gap-x-8 gap-y-2 sm:grid-cols-2">
+                      {includedInFee.map((item) => (
+                        <li key={item} className="flex gap-2 text-scheme-text/85">
+                          <span aria-hidden className="mt-2.5 size-1.5 shrink-0 rounded-full bg-brand-terracotta" />
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <p className="mt-6 text-small text-scheme-text/80">
+                    Siblings: {academyFees.siblingDiscounts.two} off for two,{" "}
+                    {academyFees.siblingDiscounts.threeOrMore} off for three or more. A one-time
+                    registration fee, which includes kit, applies when your child first joins.{" "}
+                    <Link to="/faqs#enrolment" className="font-semibold underline underline-offset-2">
+                      Fees and enrolment questions
+                    </Link>
+                  </p>
+                </div>
               </div>
             )}
 
             {others.length > 0 && (
               <div>
-                <div className="mb-8 max-w-lg md:mb-12">
-                  <h2 className="mb-3 text-h3 font-medium">Also at the club</h2>
-                  <p className="text-medium">
-                    Weekend mornings, competitive squads, seniors, the summer league and trials —
-                    alternatives to the evening pathway, and ways to try the club first.
-                  </p>
-                </div>
+                <h2 className="mb-8 text-h3 font-medium md:mb-12">Also at the club</h2>
                 <ul className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
                   {others.map((programme) => (
                     <CompactProgrammeCard key={programme.slug} programme={programme} />
@@ -216,7 +259,7 @@ export const Programme = () => {
       <Header62
         heading="Not sure which programme fits?"
         description="Tell us your child's age and your nearest branch, and we'll point you to the right group."
-        buttons={[{ ...cta.contact }, { ...cta.schedule, variant: "secondary" }]}
+        button={cta.contact}
       />
     </>
   );

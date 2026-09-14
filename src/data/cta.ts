@@ -18,12 +18,12 @@ import { getBookingUrl, type BookingKey } from "@/data/booking";
  */
 export const cta = {
   /**
-   * Primary conversion action. Lands on the portal's programme catalogue, not
-   * its shop root. Where the page is about one specific programme, prefer
-   * `getBookingUrl(programme.bookingKey)` from `data/booking.ts` so the CTA
-   * deep-links straight to that programme instead.
+   * Primary conversion action. Lands on the portal's home page (client
+   * direction, 14 Sept 2026) — its catalogue URL has been a 404. Programme
+   * pages still go through `programmeCta`, so deep links can return in one
+   * place (`getBookingUrl` in `data/booking.ts`).
    */
-  bookASpot: { title: "Book A Spot", url: club.bookingPortal.programmes },
+  bookASpot: { title: "Book A Spot", url: club.bookingPortal.url },
 
   contact: { title: "Contact us", url: "/contact" },
   programmes: { title: "See all programmes", url: "/programmes" },

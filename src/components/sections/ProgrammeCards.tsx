@@ -28,6 +28,8 @@ export type ProgrammeCardItem = {
   description: string;
   /** Optional status chip over the image, e.g. "Flagship". */
   tag?: string;
+  /** Published fee, e.g. "PKR 8,000 / month". Omit where there isn't one. */
+  price?: string;
   primaryButton: ButtonProps;
   learnMoreLabel?: string;
 };
@@ -44,6 +46,8 @@ type Props = {
   layout?: "grid" | "slider";
   /** Drop the section chrome when the page already supplies its own heading. */
   bare?: boolean;
+  /** Rendered between the heading and the cards, inside the section. */
+  header?: React.ReactNode;
   /** Rendered under the cards, inside the section. */
   footer?: React.ReactNode;
   className?: string;
@@ -340,6 +344,7 @@ export const ProgrammeCards = (props: ProgrammeCardsProps) => {
     programmes,
     layout = "grid",
     bare = false,
+    header,
     footer,
     className,
   } = { ...ProgrammeCardsDefaults, ...props };
@@ -371,21 +376,25 @@ export const ProgrammeCards = (props: ProgrammeCardsProps) => {
           </Link>
 
           <div className="flex flex-1 flex-col p-6 md:p-7">
-            {/* Age above the title — the order a parent scans in (Figma card
-                structure, Sept 2026). "3–4 Years", unit spelled out. */}
-            <p className="text-small font-semibold capitalize text-brand-terracotta">
-              <span className="sr-only">Ages </span>
-              {formatAges(programme.ages)}
-            </p>
-            <h3 className="mt-2 text-h5 font-medium text-brand-terracotta">
+            {/* Title, then the age as a pill beneath it (Figma "lvfc-website"
+                home, node 19:180). The design's orange card is not carried
+                over — the client kept the white card. */}
+            <h3 className="text-h5 font-medium text-brand-terracotta">
               <Link to={programme.url} className="hover:underline">
                 {programme.title}
               </Link>
             </h3>
+            <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-2">
+              <p className="w-fit rounded-full bg-brand-terracotta/10 px-3 py-1 text-small capitalize text-brand-terracotta">
+                <span className="sr-only">Ages </span>
+                {formatAges(programme.ages)}
+              </p>
+              {programme.price && <p className="text-small font-semibold">{programme.price}</p>}
+            </div>
 
-            <p className="mt-3 mb-8 flex-1">{programme.description}</p>
+            <p className="mt-4 mb-8 flex-1">{programme.description}</p>
 
-            <div className="mt-auto flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
+            <div className="mt-auto flex flex-wrap items-center gap-x-6 gap-y-3">
               <Button {...programme.primaryButton} size="sm">
                 {programme.primaryButton.title}
               </Button>
@@ -421,11 +430,18 @@ export const ProgrammeCards = (props: ProgrammeCardsProps) => {
     <section className={cn("px-[5%] py-16 md:py-24 lg:py-28", className)}>
       <div className="container">
         {(heading || description) && (
-          <div className="mb-12 max-w-lg md:mb-18 lg:mb-20">
-            {heading && <h2 className="mb-5 text-h2 font-medium md:mb-6">{heading}</h2>}
+          // A header row (the home page's chips) sits tight under the title,
+          // as the Figma draws it; without one the heading keeps its usual gap.
+          <div className={cn("max-w-lg", header ? "mb-5" : "mb-12 md:mb-18 lg:mb-20")}>
+            {heading && (
+              <h2 className={cn("text-h2 font-medium", description && "mb-5 md:mb-6")}>
+                {heading}
+              </h2>
+            )}
             {description && <p className="text-medium">{description}</p>}
           </div>
         )}
+        {header && <div className="mb-6">{header}</div>}
         {grid}
         {footer}
       </div>
@@ -443,7 +459,7 @@ export const ProgrammeCardsDefaults: Props = {
         src: "/placeholder-image-landscape.svg",
         alt: "Programme",
       },
-      title: "Academy Recreational Programme",
+      title: "Club Recreational Programme",
       ages: "2–18",
       description: "Our flagship programme — three sessions a week, from age 2 through to U18.",
       primaryButton: { title: "Book A Spot" },

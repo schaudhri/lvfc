@@ -32,14 +32,6 @@
       "pine-avenue"
     ],
     "description": "Where it starts. Mini-Kickers is built around small games rather than drills, so children get moving, get confident and get used to a ball at their feet. The focus is agility, balance and coordination — the things everything else is built on later.",
-    "details": [
-      "3 sessions per week",
-      "UEFA qualified Director of Coaching",
-      "Monthly player progress reports",
-      "Kit and training materials (seasonal)",
-      "Access to league fixtures"
-    ],
-    "detailsHeading": "What's included",
     "name": "Mini-Kickers",
     "season": "2026–27 season",
     "slug": "mini-kickers",
@@ -59,19 +51,11 @@
       "dha-phase-viii",
       "pine-avenue"
     ],
-    "description": "Pre-Academy is where children start to look like footballers. Sessions lean heavily on matches and small-sided games, with room to try things and get them wrong — the quickest way to build the confidence to take someone on.",
-    "details": [
-      "3 sessions per week",
-      "UEFA qualified Director of Coaching",
-      "Monthly player progress reports",
-      "Kit and training materials (seasonal)",
-      "Access to league fixtures"
-    ],
-    "detailsHeading": "What's included",
+    "description": "Pre Club is where children start to look like footballers. Sessions lean heavily on matches and small-sided games, with room to try things and get them wrong — the quickest way to build the confidence to take someone on.",
     "flagship": true,
-    "name": "LVFC Pre-Academy",
+    "name": "Pre Club",
     "season": "2026–27 season",
-    "slug": "pre-academy",
+    "slug": "pre-club",
     "summary": "Match-focused sessions that build a young player's confidence on the ball.",
     "tag": "Ball mastery"
   },
@@ -89,15 +73,7 @@
       "pine-avenue"
     ],
     "description": "Foundation builds on everything learned so far and puts it into a team. Players work on their technique in small-sided games and start to understand their part in a side — without losing the reason they started playing.",
-    "details": [
-      "3 sessions per week",
-      "UEFA qualified Director of Coaching",
-      "Monthly player progress reports",
-      "Kit and training materials (seasonal)",
-      "Access to league fixtures"
-    ],
-    "detailsHeading": "What's included",
-    "name": "Join The Foundation",
+    "name": "Foundation",
     "season": "2026–27 season",
     "slug": "foundation",
     "summary": "Learning to play as part of a team, with the emphasis still on enjoying it.",
@@ -116,14 +92,6 @@
       "dha-phase-viii"
     ],
     "description": "Youth Development is about decisions. Players work on positional awareness, team shape and how to handle the awkward moments in a match, while taking on a defined role in the side and the fitness to hold it for ninety minutes.",
-    "details": [
-      "3 sessions per week",
-      "UEFA qualified Director of Coaching",
-      "Monthly player progress reports",
-      "Kit and training materials (seasonal)",
-      "Access to league fixtures"
-    ],
-    "detailsHeading": "What's included",
     "name": "Youth Development",
     "season": "2026–27 season",
     "slug": "youth-development",
@@ -143,7 +111,7 @@
     ],
     "description": "The same coaching, on a Saturday or Sunday morning instead. Built for families whose week doesn't allow an evening session, with as much attention on character and discipline as on the football.",
     "details": [
-      "Saturday and Sunday mornings",
+      "Saturday and Sunday, 7:00–9:00 AM",
       "Ages 2–12",
       "Runs at DHA Phase V and DHA Phase VIII"
     ],
@@ -151,21 +119,21 @@
     "name": "Weekend Morning Programme",
     "season": "2026–27 season",
     "slug": "weekend-mornings",
-    "summary": "Weekend morning football for families who can't make weekday evenings.",
+    "summary": "Weekend morning football, 7–9 AM, for families who can't make weekday evenings.",
     "tag": "Saturdays & Sundays"
   },
   {
     "ageRange": {
-      "max": 14,
-      "min": 7
+      "min": 7,
+      "max": 15
     },
-    "agesLabel": "U8–Senior",
+    "agesLabel": "U8–U15",
     "bookingKey": "competitive",
     "description": "For players selected into an LVFC squad. Training is harder, the tactical work goes deeper, and the season is built around preparing for regional and national tournaments under Steve Hamilton, our Director of Football.",
     "details": [
-      "Bands: U8, U10, U12, U14",
+      "Age groups U8 to U15",
       "September 2026 – May 2027",
-      "Four days per week, structured periodisation",
+      "Five days per week, structured periodisation",
       "One-off fee"
     ],
     "detailsHeading": "At a glance",
@@ -188,7 +156,12 @@
     "season": "2026–27 season",
     "slug": "seniors",
     "summary": "The next step for players who've come through the pathway.",
-    "tag": "16+"
+    "tag": "16+",
+    "branchSlugs": [
+      "gulberg",
+      "dha-phase-v",
+      "dha-phase-viii"
+    ]
   },
   {
     "ageRange": {
@@ -221,10 +194,10 @@
       "dha-phase-v",
       "dha-phase-viii"
     ],
-    "description": "Every July and August we run a Summer League across our grounds — a proper competitive environment during the school holidays, open to academy and non-academy players alike. Teams play round-robin at Gulberg, DHA Phase V and DHA Phase VIII.",
+    "description": "Every July and August we run a Summer League across our grounds — a proper competitive environment during the school holidays, open to club and non-club players alike. Teams play round-robin at Gulberg, DHA Phase V and DHA Phase VIII.",
     "details": [
       "July – August, annually",
-      "Open to academy and non-academy players",
+      "Open to club and non-club players",
       "Age groups: U8–U14",
       "Round-robin format",
       "Played at Gulberg, DHA Phase V and DHA Phase VIII"
@@ -236,33 +209,5 @@
     "slug": "summer-leagues",
     "summary": "An organised summer league across three grounds, through the school holidays.",
     "tag": "July–August"
-  },
-  {
-    "ageRange": {
-      "max": 18,
-      "min": 2
-    },
-    "agesLabel": "All ages",
-    "branchSlugs": [
-      "gulberg",
-      "dha-phase-v",
-      "dha-phase-viii",
-      "pine-avenue"
-    ],
-    "description": "Our mass-participation programme, powered by Virgil Sports, exists to make good coaching reachable across Lahore. Open to boys and girls at any level, running at all four branches — whether you're starting out or just want somewhere supportive to keep playing.",
-    "details": [
-      "Open to all ages and abilities",
-      "Weekend and weekday session options",
-      "UEFA-trained coaching staff",
-      "Pathway into the LVFC Academy for high performers",
-      "End-of-term showcases and certificates"
-    ],
-    "detailsHeading": "Key features",
-    "name": "Lahore Virgil Football Club",
-    "ref": "1.2",
-    "season": "2026–27 season",
-    "slug": "community",
-    "summary": "Mass-participation football across all four branches, open to every age and ability.",
-    "tag": "Open to all"
   }
 ]

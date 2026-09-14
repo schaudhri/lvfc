@@ -151,6 +151,14 @@ export const matchesBranch = (programme: Programme, branchSlug: string) => {
 export const getProgramme = (slug: string) => programmes.find((p) => p.slug === slug);
 
 /**
+ * Old programme addresses and where they moved to, so shared or bookmarked
+ * links keep working. Pre-Academy became Pre Club (content pack, 1 Aug 2026).
+ */
+export const movedProgrammeSlugs: Record<string, string> = {
+  "pre-academy": "pre-club",
+};
+
+/**
  * The programmes a branch runs.
  *
  * Reuses `matchesBranch`, so a programme with no stated branches appears at

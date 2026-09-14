@@ -9,6 +9,7 @@ import { getBranch } from "@/data/locations";
 import { otherProgrammes, pathwayProgrammes, programmesAtBranch } from "@/data/programmes";
 import { daySummary, scheduleNotes } from "@/data/schedule";
 import { cta } from "@/data/cta";
+import { whatsappLink } from "@/data/site";
 import { useDocumentMeta } from "@/hooks/use-document-meta";
 import { phase5Photos, phase8Photos } from "@/data/clubPhotos";
 
@@ -255,10 +256,17 @@ export const BranchSpecific = () => {
         heading={`Come and watch a session at ${branch.name}`}
         description={
           week
-            ? `Sessions run ${week}. Book a spot, or get in touch and we'll arrange for you to watch one first.`
-            : "Book a spot, or get in touch and we'll arrange for you to watch a session first."
+            ? `Sessions run ${week}. Message us on WhatsApp and we'll arrange for you to watch one before you book.`
+            : "Message us on WhatsApp and we'll arrange for you to watch a session before you book."
         }
-        buttons={[{ ...cta.bookASpot }, { ...cta.contact, variant: "secondary" }]}
+        // WhatsApp, prefilled with the branch: watching first is the low-risk
+        // step most parents want, and WhatsApp is the club's preferred route.
+        button={{
+          title: "Arrange a visit",
+          url:
+            whatsappLink(`Hi LVFC — I'd like to come and watch a session at ${branch.name}.`) ??
+            cta.contact.url,
+        }}
       />
     </>
   );

@@ -15,15 +15,61 @@ type Props = {
   heading: string;
   buttons: ButtonProps[];
   features: FeaturesProps[];
+  /**
+   * `vertical` is the original scroll-drawn timeline. `horizontal` lays the
+   * steps out in a row with nothing to scroll through (home page, client
+   * request, 14 Sept 2026); it stacks to a column on phones.
+   */
+  orientation?: "vertical" | "horizontal";
 };
 
 export type Layout121Props = React.ComponentPropsWithoutRef<"section"> & Partial<Props>;
 
 export const Layout121 = (props: Layout121Props) => {
-  const { heading, buttons, features } = {
+  const { heading, buttons, features, orientation = "vertical" } = {
     ...Layout121Defaults,
     ...props,
   };
+
+  if (orientation === "horizontal") {
+    return (
+      <section className="px-[5%] py-16 md:py-24 lg:py-28">
+        <div className="container">
+          <div className="mb-12 flex flex-col gap-6 md:mb-16 md:flex-row md:items-end md:justify-between md:gap-12">
+            <h2 className="text-h2 font-medium">{heading}</h2>
+            <div className="flex shrink-0 flex-wrap items-center gap-x-6 gap-y-4">
+              {buttons.map((button, index) => (
+                <Button key={index} {...button}>
+                  {button.title}
+                </Button>
+              ))}
+            </div>
+          </div>
+          <ol className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+            {features.map((feature, index) => (
+              <li key={index} className="relative flex flex-col">
+                {/* Joins each step to the next across the row on desktop. */}
+                {index < features.length - 1 && (
+                  <span
+                    aria-hidden="true"
+                    className="absolute top-6 left-16 -right-6 hidden h-px bg-scheme-border/25 lg:block"
+                  />
+                )}
+                <span
+                  aria-hidden="true"
+                  className="relative z-10 mb-6 flex size-12 items-center justify-center rounded-full bg-brand-maroon text-large font-semibold text-white"
+                >
+                  {index + 1}
+                </span>
+                <h3 className="mb-3 text-h6 font-medium">{feature.heading}</h3>
+                <p className="text-scheme-text/80">{feature.description}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="px-[5%] py-16 md:py-24 lg:py-28">

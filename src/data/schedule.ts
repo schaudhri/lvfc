@@ -96,5 +96,5 @@ export const scheduleNotes = {
   variation:
     "This is the standard 2026–27 season timetable. Session times may vary slightly by branch — contact us or check the booking portal to confirm exact timings for your preferred location.",
   weekend:
-    "Weekend morning sessions (Saturday and Sunday) are available at select branches. Contact your branch for weekend availability.",
+    "Weekend Morning Programme: Saturday and Sunday, 7:00–9:00 AM, at DHA Phase V and DHA Phase VIII.",
 };

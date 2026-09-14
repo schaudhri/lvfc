@@ -62,7 +62,7 @@ export const bookableProgrammes: BookableProgramme[] = [
   },
   {
     key: "pre_academy",
-    name: "LVFC Pre-Academy",
+    name: "Pre-Academy",
     ages: "Ages 5-8",
     description:
       "Pre-Academy nurtures a love for the game with plenty of match-focused activities and freedom for self-expression, building the confidence of a footballer.",
@@ -70,7 +70,7 @@ export const bookableProgrammes: BookableProgramme[] = [
   },
   {
     key: "foundation",
-    name: "Join The Foundation",
+    name: "Foundation",
     ages: "Ages 9-12",
     description:
       "Building on the FUNdamentals, Foundation ensures players can work effectively in a team environment, with the main emphasis on fun.",
@@ -116,7 +116,10 @@ export const bookableProgrammes: BookableProgramme[] = [
   },
 ];
 
-export const getBookingUrl = (key?: BookingKey) => {
-  if (!key) return club.bookingPortal.programmes;
-  return bookableProgrammes.find((item) => item.key === key)?.url ?? club.bookingPortal.programmes;
-};
+/**
+ * Every Book A Spot lands on the portal's home page for now (client direction,
+ * 14 Sept 2026): the catalogue and every product deep link above have
+ * returned 404 since at least 4 Sept. The map stays so deep links can come
+ * back once the portal's products are live again — restore the lookup here.
+ */
+export const getBookingUrl = (_key?: BookingKey) => club.bookingPortal.url;

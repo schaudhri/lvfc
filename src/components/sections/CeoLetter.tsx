@@ -22,7 +22,7 @@ export const CeoLetter = () => {
             alt={author.image.alt}
             className="aspect-[4/5] w-full max-w-[16rem] rounded-image object-cover md:max-w-[none]"
           />
-          <p className="mt-5 text-h6 font-medium">{author.name}</p>
+          <p className="mt-5 text-h6 font-medium text-brand-terracotta">{author.name}</p>
           <p className="text-small text-scheme-text/70">{author.role}</p>
         </aside>
 
@@ -35,12 +35,12 @@ export const CeoLetter = () => {
           </div>
 
           <footer className="mt-10 border-t border-scheme-border/20 pt-6">
-            <p className="font-bold">{author.name}</p>
+            <p className="font-bold text-brand-terracotta">{author.name}</p>
             <p className="text-small text-scheme-text/70">{author.role}</p>
           </footer>
 
           <Link
-            to="/coaching#team"
+            to="/about#team"
             className="mt-8 inline-flex items-center gap-1.5 font-semibold underline-offset-4 hover:underline"
           >
             Meet the team

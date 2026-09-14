@@ -137,7 +137,7 @@ export const BlogPost = () => {
       <Header62
         heading="Don't miss a fixture"
         description="Club news, match reports and trial announcements — straight from the four branches."
-        buttons={[{ ...cta.bookASpot }, { ...cta.contact, variant: "secondary" }]}
+        button={cta.bookASpot}
       />
     </>
   );

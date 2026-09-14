@@ -29,13 +29,16 @@ type Props = {
   questions: QuestionProps[];
   /** When set, takes precedence over `questions` and renders grouped by category. */
   categories?: CategoryProps[];
-  footer: FooterProps;
+  /** A button directly under the description, with no card around it (home page). */
+  button?: ButtonProps;
+  /** A "still have questions" card under the description. Omit it to show none. */
+  footer?: FooterProps;
 };
 
 export type FaqsProps = React.ComponentPropsWithoutRef<"section"> & Partial<Props>;
 
 export const Faqs = (props: FaqsProps) => {
-  const { heading, description, questions, categories, footer } = {
+  const { heading, description, questions, categories, button, footer } = {
     ...FaqsDefaults,
     ...props,
   };
@@ -58,11 +61,14 @@ export const Faqs = (props: FaqsProps) => {
               ))}
             </nav>
           )}
-          <div className="rounded-card bg-neutral-lightest p-6">
-            <h3 className="mb-2 text-h6 font-medium">{footer.heading}</h3>
-            <p className="mb-5">{footer.description}</p>
-            <Button {...footer.button}>{footer.button.title}</Button>
-          </div>
+          {button && <Button {...button}>{button.title}</Button>}
+          {footer && (
+            <div className="rounded-card bg-neutral-lightest p-6">
+              <h3 className="mb-2 text-h6 font-medium">{footer.heading}</h3>
+              <p className="mb-5">{footer.description}</p>
+              <Button {...footer.button}>{footer.button.title}</Button>
+            </div>
+          )}
         </div>
         <div className="flex flex-col gap-10">
           {categories
@@ -98,7 +104,9 @@ const QuestionItem = ({ item }: { item: QuestionProps }) => {
         aria-expanded={isOpen}
         aria-controls={panelId}
       >
-        <span className="text-large font-bold">{item.question}</span>
+        {/* Questions set in Tiller, like the other titles (Figma
+            "lvfc-website" home, node 19:5007). */}
+        <span className="font-heading text-large font-medium">{item.question}</span>
         <motion.span
           className="shrink-0"
           variants={{ open: { rotate: 180 }, closed: { rotate: 0 } }}
@@ -157,9 +165,4 @@ export const FaqsDefaults: Props = {
         "Choose a programme, pick your branch and register — we'll confirm your first session. You're welcome to come and watch a session first.",
     },
   ],
-  footer: {
-    heading: "Still have questions?",
-    description: "Get in touch and we'll help you find the right programme for your child.",
-    button: { title: "Contact", variant: "secondary" },
-  },
 };

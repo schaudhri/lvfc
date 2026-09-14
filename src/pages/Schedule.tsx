@@ -33,7 +33,7 @@ export const Schedule = () => {
       <Header62
         heading="Not sure which session suits your child?"
         description="Tell us their age and your nearest branch, and we'll point you to the right group."
-        buttons={[{ ...cta.contact }, { ...cta.programmes, variant: "secondary" }]}
+        button={cta.contact}
       />
     </>
   );

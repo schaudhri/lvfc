@@ -6,7 +6,7 @@ import { branches } from "@/data/locations";
 import { club } from "@/data/club";
 import { cta } from "@/data/cta";
 import { internationalPartners } from "@/data/partners";
-import { aboutHeroCover, clubPhotos, coachPhotos } from "@/data/clubPhotos";
+import { aboutHeroCover, clubPhotos } from "@/data/clubPhotos";
 
 const LOGO = { url: "/", src: "/logo.svg", alt: "Lahore Virgil Football Club" };
 
@@ -23,6 +23,12 @@ export const whatsapp = {
   message: "Hi LVFC — I'd like to ask about programmes for my child.",
 };
 
+/** A wa.me link with a prefilled message, or undefined when no number is set. */
+export const whatsappLink = (message: string = whatsapp.message) =>
+  whatsapp.number
+    ? `https://wa.me/${whatsapp.number}?text=${encodeURIComponent(message)}`
+    : undefined;
+
 const LAND = "/placeholder-image-landscape.svg";
 
 /**
@@ -36,11 +42,11 @@ const LAND = "/placeholder-image-landscape.svg";
  * choosing a programme is the same parent who wants to know who coaches it.
  *
  * Resources took Blog's slot in the bar (client request, Sept 2026). The blog
- * stays reachable from the footer "Explore" column.
+ * stays reachable from the footer's link row.
  *
  * Contact is deliberately NOT here either — "Book A Spot" is the single
  * primary action in the bar, and a competing Contact link next to it split
- * that intent. Contact stays reachable from the footer "Club" column, the
+ * that intent. Contact stays reachable from the footer's link row, the
  * `cta.contact` buttons that close most pages, and the floating WhatsApp
  * button. If enquiry volume drops after launch, this is the first thing to
  * put back.
@@ -51,27 +57,29 @@ export const navbarProps: Navbar23Props = {
     {
       title: "New to LVFC",
       url: "/about",
-      // The team and partners are sections of other pages rather than pages of
-      // their own, so their cards deep-link to the section (client request,
-      // Sept 2026).
+      // Mirrors the About page's own sections — the CEO's letter, the team and
+      // the international partners — and deep-links to each (client request,
+      // 14 Sept 2026). "How to start" moved to the home page, so it isn't here.
       megaMenu: {
         title: "New to LVFC",
         description:
-          "Who we are, who leads the club, and the partners who take our players beyond Lahore.",
-        button: { title: "Start here", url: "/about", variant: "secondary", size: "sm" },
+          "Our story in the CEO's own words, the team who run the club, and the partners who take our players beyond Lahore.",
+        // Primary (terracotta), labelled like the menu item it belongs to
+        // (client request, 14 Sept 2026).
+        button: { ...cta.about, size: "sm" },
         items: [
           {
-            url: "/about",
-            image: aboutHeroCover,
-            name: "Who we are",
-            meta: "The club and how to join",
-            detail: "Read our story",
+            url: "/about#letter",
+            image: { src: "/images/hamza-letter.webp", alt: "Hamza Syed, Chief Executive Officer" },
+            name: "A letter from our CEO",
+            meta: "Why Hamza Syed started LVFC",
+            detail: "Read the letter",
           },
           {
-            url: "/coaching#team",
-            image: { src: coachPhotos[0].src, alt: "LVFC coaching staff" },
+            url: "/about#team",
+            image: aboutHeroCover,
             name: "Meet the team",
-            meta: "The people who lead the club",
+            meta: "The people who run the club",
             detail: "See who's who",
           },
           {
@@ -139,54 +147,33 @@ export const navbarProps: Navbar23Props = {
 export const footerProps: Footer2Props = {
   logo: LOGO,
   newsletterHeading: "Stay in the loop",
-  newsletterDescription: "Fixtures, trial announcements and club news, straight to your inbox.",
+  newsletterDescription: "Fixtures, trial announcements and club news.",
   inputPlaceholder: "Enter your email",
   // No mailing-list provider is wired up yet, so a subscribe request is mailed
   // to the club's general address rather than dropped. See Footer2's TODO.
   subscribeEmail: club.email,
-  columnLinks: [
-    {
-      title: "Club",
-      links: [
-        { title: "New to LVFC", url: "/about" },
-        { title: "How we coach", url: "/coaching" },
-        { title: "Private sessions & birthdays", url: "/private-events" },
-        { title: "Safeguarding", url: "/safeguarding" },
-        { title: "Contact", url: "/contact" },
-      ],
-    },
-    {
-      title: "Programmes",
-      // Eleven entries. Split across two cells so the list doesn't set the
-      // footer's height on its own — see Footer2's `wide`.
-      wide: true,
-      links: [
-        { title: "All programmes", url: "/programmes" },
-        ...programmes.map((programme) => ({
-          title: programme.name,
-          url: `/programmes/${programme.slug}`,
-        })),
-      ],
-    },
-    {
-      title: "Explore",
-      links: [
-        { title: "Locations", url: "/locations" },
-        { title: "Schedule", url: "/schedule" },
-        { title: "Resources", url: "/resources" },
-        { title: "Blog", url: "/blog" },
-        { title: "FAQs", url: "/faqs" },
-      ],
-    },
+  // Pages the main nav doesn't carry (client direction, Sept 2026), plus a
+  // direct route to booking a private session, which the client asked for
+  // here even though Private Sessions is also in the bar.
+  links: [
+    { title: "Book A Private Session", url: "/private-events" },
+    { title: "Safeguarding", url: "/safeguarding" },
+    { title: "Contact", url: "/contact" },
+    { title: "Blog", url: "/blog" },
+    { title: "FAQs", url: "/faqs" },
   ],
   // Only Instagram is confirmed. Entries with "#" are filtered out by Footer2
   // rather than rendered as links to nowhere — add real URLs to bring them back.
   socialMediaLinks: [
-    { url: club.instagram.url, icon: <InstagramLogo className="size-6 text-white" /> },
-    { url: "#", icon: <FacebookLogo className="size-6 text-white" /> },
-    { url: "#", icon: <XLogo className="size-6 p-0.5 text-white" /> },
-    { url: "#", icon: <LinkedinLogo className="size-6 text-white" /> },
-    { url: "#", icon: <YoutubeLogo className="size-6 text-white" /> },
+    {
+      url: club.instagram.url,
+      label: "LVFC on Instagram",
+      icon: <InstagramLogo className="size-6 text-white" />,
+    },
+    { url: "#", label: "LVFC on Facebook", icon: <FacebookLogo className="size-6 text-white" /> },
+    { url: "#", label: "LVFC on X", icon: <XLogo className="size-6 p-0.5 text-white" /> },
+    { url: "#", label: "LVFC on LinkedIn", icon: <LinkedinLogo className="size-6 text-white" /> },
+    { url: "#", label: "LVFC on YouTube", icon: <YoutubeLogo className="size-6 text-white" /> },
   ],
   footerText: "© 2026 Lahore Virgil Football Club. All rights reserved.",
   // TODO: a privacy statement is required before the club collects any

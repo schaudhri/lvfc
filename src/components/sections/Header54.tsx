@@ -44,6 +44,10 @@ export const Header54 = (props: Header54Props) => {
   // "full" is the landing hero: near-full-viewport with everything centred.
   // Interior pages keep the shorter, left-aligned banner.
   const isFull = size === "full";
+  // Only the landing hero carries a subtitle — interior banners are the page
+  // title alone (client direction, Sept 2026).
+  const showDescription = isFull && Boolean(description);
+  const hasButtons = Boolean(buttons && buttons.length > 0);
 
   const slides = images && images.length > 1 ? images : [image];
   const [active, setActive] = useState(0);
@@ -76,13 +80,19 @@ export const Header54 = (props: Header54Props) => {
     >
       <div className="relative z-10 container">
         <div className={cn("mx-auto w-full text-center", isFull ? "max-w-[48rem]" : "max-w-lg")}>
-          <h1 className="mb-5 text-h1 font-medium text-white md:mb-6">{heading}</h1>
-          <p className={cn("mx-auto text-medium text-white", isFull && "max-w-xl")}>
-            {description}
-          </p>
-          {buttons && buttons.length > 0 && (
+          {/* Plain string, not cn(): tailwind-merge reads the custom `text-h1`
+              size as a colour and drops it in favour of `text-white`. */}
+          <h1
+            className={`text-h1 font-medium text-white ${showDescription || hasButtons ? "mb-5 md:mb-6" : ""}`}
+          >
+            {heading}
+          </h1>
+          {showDescription && (
+            <p className="mx-auto max-w-xl text-medium text-white">{description}</p>
+          )}
+          {hasButtons && (
             <div className="mt-6 flex flex-wrap justify-center gap-4 md:mt-8">
-              {buttons.map((button, index) => (
+              {buttons?.map((button, index) => (
                 <Button key={index} {...button}>
                   {button.title}
                 </Button>

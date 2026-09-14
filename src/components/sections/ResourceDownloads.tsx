@@ -57,6 +57,8 @@ const AwaitingSummary = ({ items }: { items: ResourceItem[] }) => (
 type Props = {
   heading: string;
   description?: string;
+  /** Render without the section's own padding and container, for use inside a page column. */
+  embedded?: boolean;
 };
 
 export type ResourceDownloadsProps = React.ComponentPropsWithoutRef<"section"> & Partial<Props>;
@@ -70,12 +72,19 @@ export const ResourceDownloads = (props: ResourceDownloadsProps) => {
   const {
     heading = "Documents & forms",
     description = "Club policies, guides and registration forms. Downloads are free and open — no account needed.",
+    embedded,
   } = props;
 
   return (
-    <section className="border-t border-scheme-border/20 px-[5%] py-16 md:py-24 lg:py-28">
-      <div className="container">
-        <div className="mb-12 max-w-lg md:mb-18 lg:mb-20">
+    <section
+      className={
+        embedded
+          ? "border-t border-scheme-border/20 pt-16 md:pt-20"
+          : "border-t border-scheme-border/20 px-[5%] py-16 md:py-24 lg:py-28"
+      }
+    >
+      <div className={embedded ? "" : "container"}>
+        <div className={embedded ? "mb-10 max-w-lg md:mb-12" : "mb-12 max-w-lg md:mb-18 lg:mb-20"}>
           <h2 className="mb-5 text-h3 font-medium">{heading}</h2>
           <p className="text-medium">{description}</p>
         </div>

@@ -119,18 +119,10 @@ export const Navbar23 = (props: Navbar23Props) => {
                 alt={logo.alt}
               />
             </Link>
-            {/* Book A Spot stays in the bar on phones too — otherwise the one
-                action the site exists for is hidden behind the menu button. */}
+            {/* No Book A Spot in the bar on phones: it lives in the fixed
+                booking bar at the foot of the screen (MobileBookingBar), which
+                stays under the thumb however far the page scrolls. */}
             <div className="flex items-center gap-2 lg:hidden">
-              {buttons[0] && (
-                <Button
-                  {...buttons[0]}
-                  size="sm"
-                  variant={isTransparent ? "alternate" : buttons[0].variant}
-                >
-                  {buttons[0].title}
-                </Button>
-              )}
             <button
               className="-mr-2 flex size-12 flex-col items-center justify-center lg:hidden"
               aria-label="Toggle menu"

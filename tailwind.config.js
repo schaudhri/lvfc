@@ -97,6 +97,11 @@ module.exports = {
         // component individually.
         neutral: {
           darkest: "#130101",
+          // TEMPORARY (client request, Sept 2026): every grey panel — FAQ and
+          // resource cards, filter bars, badges, the schedule tables' fills —
+          // shows white for now. The Relume preset's value is #eeeeee; delete
+          // this line to bring the grey back everywhere at once.
+          lightest: "#ffffff",
         },
       },
       borderRadius: {

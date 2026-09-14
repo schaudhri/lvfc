@@ -2,15 +2,14 @@ import { ChevronRight } from "relume-icons";
 import { Header30 } from "@/components/sections/Header30";
 import { Layout1 } from "@/components/sections/Layout1";
 import { Layout242 } from "@/components/sections/Layout242";
-import { Layout121 } from "@/components/sections/Layout121";
-import { SafeguardingNote } from "@/components/sections/SafeguardingNote";
+import { Team16 } from "@/components/sections/Team16";
 import { Header62 } from "@/components/sections/Header62";
-import { programmes } from "@/data/programmes";
 import { cta } from "@/data/cta";
 import { useDocumentMeta } from "@/hooks/use-document-meta";
-import { aboutHeroCover, clubPhotos } from "@/data/clubPhotos";
+import { aboutHeroCover, clubPhotos, coachPhotos } from "@/data/clubPhotos";
 import { CeoLetter } from "@/components/sections/CeoLetter";
 import { internationalPartners } from "@/data/partners";
+import { leadership } from "@/data/people";
 import { cardPadded } from "@/lib/surface";
 import { cn } from "@/lib/utils";
 
@@ -21,15 +20,9 @@ export const About = () => {
   );
   return (
     <>
-      <Header30
-        heading="A club built on the spirit of Lahore"
-        description="Lahore Virgil Football Club is run by Virgil Sports — professionalising youth football in Pakistan with a UEFA-aligned curriculum and a real pathway."
-        buttons={[
-          { ...cta.bookASpot, variant: "alternate" },
-          { ...cta.programmes, variant: "secondary-alt" },
-        ]}
-        image={aboutHeroCover}
-      />
+      {/* Title only, and shorter than the full screen (client request,
+          14 Sept 2026) — the letter below is the introduction. */}
+      <Header30 heading="A club built on the spirit of Lahore" image={aboutHeroCover} />
 
       <CeoLetter />
 
@@ -63,7 +56,7 @@ export const About = () => {
           {
             heading: "Open to everyone",
             description:
-              "Our club programme is mass-participation by design — open to boys and girls of all ages and abilities across all four branches, with a route into the academy for high performers.",
+              "Every programme is open to boys and girls of any ability, across all four branches — no trial needed to join. Players who want more can step up to our competitive squads, and end-of-term showcases and certificates mark the progress along the way.",
             button: {
               title: "See programmes",
               url: "/programmes",
@@ -75,43 +68,29 @@ export const About = () => {
         ]}
       />
 
-      <Layout121
-        heading="How to start your journey?"
-        buttons={[
-          { ...cta.bookASpot, variant: "secondary" },
-          {
-            title: "Talk to us",
-            url: "/contact",
-            variant: "link",
-            size: "link",
-            iconRight: <ChevronRight className="text-scheme-text" />,
+      {/*
+        The team, where "How to start your journey" used to sit — those steps
+        moved to the home page (Figma "lvfc-website", node 19:576). Two people
+        wide, then three across.
+      */}
+      <Team16
+        id="team"
+        featured={2}
+        heading="The team"
+        description="All LVFC head coaches have extensive training and qualifications, with support coaches trained to national standards. Our Director of Football sets the curriculum and coaching standards across every branch."
+        teamMembers={leadership.map((person, index) => ({
+          // A real headshot where the club has supplied one; otherwise a stand-in.
+          image: {
+            src: person.photo?.src ?? coachPhotos[index % coachPhotos.length].src,
+            alt: person.name,
           },
-        ]}
-        features={[
-          {
-            heading: "Choose a programme",
-            description: `${programmes
-              .map((programme) => programme.name)
-              .join(", ")} — pick the track that fits your child's age and ambition.`,
-          },
-          {
-            heading: "Pick your branch",
-            description:
-              "Choose the Lahore branch and session times that work for your family — Gulberg, DHA Phase V, DHA Phase VIII or Pine Avenue.",
-          },
-          {
-            heading: "Register",
-            description:
-              "Complete registration through our booking portal. We'll confirm your spot within 24–48 hours.",
-          },
-          {
-            heading: "First session",
-            description: "Come and train. Meet the coaches, meet the group, get started.",
-          },
-        ]}
+          name: person.name,
+          jobTitle: person.alsoRole ? `${person.role} · ${person.alsoRole}` : person.role,
+          description: person.description,
+          email: person.email,
+          socialLinks: [],
+        }))}
       />
-
-      <SafeguardingNote />
 
       <section id="partners" className="scroll-mt-10 px-[5%] py-16 md:py-24 lg:py-28">
         <div className="container">
@@ -195,7 +174,7 @@ export const About = () => {
       <Header62
         heading="Come and see for yourself"
         description="Get in touch and come along to a session — the best way to understand LVFC is to stand on the touchline."
-        buttons={[{ ...cta.bookASpot }, { ...cta.contact, variant: "secondary" }]}
+        button={cta.bookASpot}
       />
     </>
   );

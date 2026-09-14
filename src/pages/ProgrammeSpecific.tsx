@@ -1,14 +1,19 @@
 import { Link, Navigate, useParams } from "react-router-dom";
 import { ChevronRight } from "relume-icons";
 import { Header54 } from "@/components/sections/Header54";
-import { PhaseTimeline } from "@/components/sections/PhaseTimeline";
 import { ScheduleGrid } from "@/components/sections/ScheduleGrid";
 import { Header62 } from "@/components/sections/Header62";
 import { RichText } from "@/components/RichText";
-import { Button } from "@/components/ui/button";
-import { getProgramme, pathwayFor } from "@/data/programmes";
+import {
+  academyAgeGroups,
+  getProgramme,
+  movedProgrammeSlugs,
+  stageFor,
+} from "@/data/programmes";
+import { PathwayBadge } from "@/components/sections/PhaseTimeline";
+import { cn } from "@/lib/utils";
 import { branches } from "@/data/locations";
-import { cta, programmeCta } from "@/data/cta";
+import { programmeCta } from "@/data/cta";
 import { useDocumentMeta } from "@/hooks/use-document-meta";
 import { clubPhotos } from "@/data/clubPhotos";
 
@@ -29,6 +34,10 @@ export const ProgrammeSpecific = () => {
       "Every route into the club, from a first touch through to selected competitive squads.",
   );
 
+  // A programme that was renamed — follow it to its new address.
+  const movedTo = slug ? movedProgrammeSlugs[slug] : undefined;
+  if (movedTo) return <Navigate to={`/programmes/${movedTo}`} replace />;
+
   // Unknown slug — send the visitor to the programme index rather than a blank page.
   if (!programme) return <Navigate to="/programmes" replace />;
 
@@ -39,21 +48,63 @@ export const ProgrammeSpecific = () => {
   // Deep-links to this programme on the booking portal where the mapping is
   // 1:1, otherwise falls back to the full catalogue. See `data/booking.ts`.
   const bookASpot = programmeCta(programme.bookingKey);
+  // The one pathway stage this programme is, if it is one (the five age
+  // groups); alternatives like Weekend Mornings span several and have none.
+  const stage = stageFor(programme);
+  const stageNumber = stage ? academyAgeGroups.indexOf(stage) + 1 : 0;
 
   return (
     <>
       <Header54
         heading={programme.name}
         description={programme.description}
-        buttons={[
-          { ...bookASpot, variant: "alternate" },
-          { ...cta.schedule, variant: "secondary-alt" },
-        ]}
+        buttons={[{ ...bookASpot, variant: "alternate" }]}
         image={programme.image ?? clubPhotos[programme.slug.length % clubPhotos.length]}
       />
 
-      {/* The full programme page, where the club has written one. Without it the
-          description in the header stands on its own, as it always has. */}
+      {/* What the programme is, in the club's words, beside a card showing the
+          one step of the pathway it is (client request, 14 Sept 2026). Heroes
+          no longer carry a subtitle, so without this the page never said what
+          the programme was. Programmes that aren't a single stage keep the
+          paragraph alone. */}
+      {programme.description && (
+        <section className="px-[5%] pt-16 md:pt-24 lg:pt-28">
+          <div
+            className={cn(
+              "container",
+              stage
+                ? "grid grid-cols-1 items-center gap-10 md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)] lg:gap-16"
+                : "max-w-[48rem]",
+            )}
+          >
+            <p className="text-large">{programme.description}</p>
+            {stage && (
+              <aside
+                aria-label="Pathway"
+                className="flex flex-col items-center rounded-card bg-white p-6 text-center md:p-8"
+              >
+                <h2 className="text-h5 font-medium">Pathway</h2>
+                <p className="mt-1 text-small text-scheme-text/70">
+                  What stage of the football journey your child is on
+                </p>
+                <div className="mt-6 flex flex-col items-center gap-2.5">
+                  <PathwayBadge>{stageNumber}</PathwayBadge>
+                  <div className="mt-2 flex flex-col items-center gap-1">
+                    <h3 className="text-h6 font-medium">{stage.name}</h3>
+                    <p className="font-heading text-small font-medium capitalize leading-[18px] text-brand-terracotta">
+                      <span className="sr-only">Ages </span>
+                      {stage.ages}
+                    </p>
+                  </div>
+                  <p className="max-w-[18rem] text-small text-scheme-text/70">{stage.focus}</p>
+                </div>
+              </aside>
+            )}
+          </div>
+        </section>
+      )}
+
+      {/* The full programme page, where the club has written one. */}
       {programme.body && programme.body.length > 0 && (
         <section className="px-[5%] pt-16 md:pt-24 lg:pt-28">
           <div className="container max-w-[48rem]">
@@ -84,20 +135,8 @@ export const ProgrammeSpecific = () => {
         </section>
       )}
 
-      {/* The whole pathway, with the stages this programme covers held at full
-          strength and the rest faded — so a parent sees where their child sits
-          and what comes either side of it, rather than a stage in isolation. */}
-      <PhaseTimeline
-        heading="Where this sits on the pathway"
-        description={`${programme.name} covers the highlighted stages. The rest of the pathway is shown faded — it's where your child goes next.`}
-        button={{ ...cta.coaching, variant: "secondary" }}
-        phases={pathwayFor(programme).map((group) => ({
-          age: group.ages,
-          title: group.name,
-          description: group.focus,
-          dimmed: group.dimmed,
-        }))}
-      />
+      {/* No full pathway here any more (client request, 14 Sept 2026): the
+          Pathway card beside the intro shows this programme's step. */}
 
       <ScheduleGrid
         heading="Training schedule"
@@ -107,14 +146,17 @@ export const ProgrammeSpecific = () => {
       <section className="border-t border-scheme-border/20 px-[5%] py-16 md:py-24 lg:py-28">
         <div className="container">
           <div className="mb-12 max-w-lg md:mb-18 lg:mb-20">
-            <h2 className="mb-4 text-h3 font-medium">Where it runs</h2>
-            <p className="text-medium">
-              {runsAt.length > 0
-                ? "Age groups shown per branch — not every branch runs the full pathway."
-                : "Branch availability for this programme is confirmed on selection. Get in touch and we'll tell you where your child's squad trains."}
-            </p>
+            <h2 className="text-h3 font-medium">Where it runs</h2>
+            {runsAt.length === 0 && (
+              <p className="mt-4 text-medium">
+                Branch availability for this programme is confirmed on selection. Get in touch
+                and we'll tell you where your child's squad trains.
+              </p>
+            )}
           </div>
 
+          {/* Just the ground and its address (client request, Sept 2026) — the
+              per-branch programme list lives on each branch's own page. */}
           {runsAt.length > 0 && (
             <ul className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
               {runsAt.map((branch) => (
@@ -123,12 +165,7 @@ export const ProgrammeSpecific = () => {
                   className="flex flex-col rounded-card bg-neutral-lightest p-6"
                 >
                   <h3 className="mb-2 text-h6 font-medium">{branch.name}</h3>
-                  <p className="mb-4 text-small text-scheme-text/70">{branch.address}</p>
-                  <ul className="mb-5 flex flex-col gap-1.5 text-small">
-                    {branch.programmes.map((entry) => (
-                      <li key={entry}>{entry}</li>
-                    ))}
-                  </ul>
+                  <p className="mb-5 text-small text-scheme-text/70">{branch.address}</p>
                   <Link
                     to={`/locations/${branch.slug}`}
                     className="mt-auto flex min-h-6 items-center gap-2 text-small font-semibold"
@@ -140,22 +177,13 @@ export const ProgrammeSpecific = () => {
               ))}
             </ul>
           )}
-
-          <div className="mt-8 flex flex-wrap gap-4">
-            <Button {...cta.branches} variant="secondary">
-              {cta.branches.title}
-            </Button>
-            <Button {...cta.programmes} variant="secondary">
-              {cta.programmes.title}
-            </Button>
-          </div>
         </div>
       </section>
 
       <Header62
         heading={`Book a place in ${programme.name}`}
         description="Register through our booking portal and we'll confirm your child's first session within 24–48 hours."
-        buttons={[{ ...bookASpot }]}
+        button={bookASpot}
       />
     </>
   );

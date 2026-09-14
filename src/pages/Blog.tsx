@@ -3,7 +3,7 @@ import { ChevronRight } from "relume-icons";
 import { Header54 } from "@/components/sections/Header54";
 import { Header62 } from "@/components/sections/Header62";
 import { Badge } from "@/components/ui/badge";
-import { launchPosts, contentFramework } from "@/data/blog";
+import { launchPosts } from "@/data/blog";
 import { cardMedia, cardBody } from "@/lib/surface";
 import { cn } from "@/lib/utils";
 import { cta } from "@/data/cta";
@@ -74,38 +74,10 @@ export const Blog = () => {
         </div>
       </section>
 
-      <section className="border-t border-scheme-border/20 px-[5%] py-16 md:py-24 lg:py-28">
-        <div className="container">
-          <div className="mb-12 max-w-lg md:mb-18 lg:mb-20">
-            <h2 className="mb-4 text-h3 font-medium">What we publish</h2>
-            <p className="text-medium">
-              The ongoing rhythm of the blog once the season is underway.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-3 md:gap-y-16">
-            {contentFramework.map((stream) => (
-              <div key={stream.cadence}>
-                <h3 className="mb-4 text-h6 font-medium">{stream.cadence}</h3>
-                <ul className="flex flex-col gap-3">
-                  {stream.items.map((item) => (
-                    <li
-                      key={item}
-                      className="border-t border-scheme-border/20 pt-3 text-scheme-text/80"
-                    >
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       <Header62
         heading="Don't miss a fixture"
         description="Match reports, trial announcements and club news land here through the season. Get in touch and we'll keep you posted."
-        buttons={[{ ...cta.bookASpot }, { ...cta.contact, variant: "secondary" }]}
+        button={cta.bookASpot}
       />
     </>
   );

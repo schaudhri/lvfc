@@ -121,7 +121,7 @@ export const Locations = () => {
       <Header62
         heading="Not sure which branch suits you?"
         description="Tell us roughly where you live and your child's age, and we'll suggest the nearest ground and the right group."
-        buttons={[{ ...cta.contact }, { ...cta.schedule, variant: "secondary" }]}
+        button={cta.contact}
       />
     </>
   );

@@ -3,7 +3,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { cn } from "@/lib/utils";
 import { FacebookLogo, InstagramLogo, LinkedinLogo, XLogo, YoutubeLogo } from "relume-icons";
 
 type ImageProps = {
@@ -17,16 +16,11 @@ type Links = {
   url: string;
 };
 
-type ColumnLinks = {
-  title: string;
-  links: Links[];
-  /** Spans two grid cells and lays its links out in two sub-columns. */
-  wide?: boolean;
-};
-
 type SocialMediaLinks = {
   url: string;
   icon: React.ReactNode;
+  /** Accessible name — the icon alone gives a screen reader nothing to say. */
+  label?: string;
 };
 
 type FooterLink = {
@@ -41,7 +35,8 @@ type Props = {
   inputPlaceholder: string;
   /** Where a subscribe request is mailed until a list provider is wired up. */
   subscribeEmail: string;
-  columnLinks: ColumnLinks[];
+  /** One flat row of links — only pages the main nav doesn't already carry. */
+  links: Links[];
   socialMediaLinks: SocialMediaLinks[];
   footerText?: string;
   footerLinks: FooterLink[];
@@ -49,6 +44,12 @@ type Props = {
 
 export type Footer2Props = React.ComponentPropsWithoutRef<"section"> & Partial<Props>;
 
+/**
+ * Simplified footer (client direction, Sept 2026): the logo with a single row
+ * of links beneath it and the newsletter signup beside them, then the social
+ * icons, then the copyright centred at the foot. The old Club / Programmes /
+ * Explore columns repeated the nav almost link for link, so they were dropped.
+ */
 export const Footer2 = (props: Footer2Props) => {
   const {
     logo,
@@ -56,7 +57,7 @@ export const Footer2 = (props: Footer2Props) => {
     newsletterDescription,
     inputPlaceholder,
     subscribeEmail,
-    columnLinks,
+    links,
     socialMediaLinks,
     footerText,
     footerLinks,
@@ -81,28 +82,17 @@ export const Footer2 = (props: Footer2Props) => {
   );
   const liveFooterLinks = footerLinks.filter((link) => link.url && link.url !== "#");
 
-  const linkSlots = 1 + columnLinks.reduce((total, column) => total + (column.wide ? 2 : 1), 0);
-
   return (
     // Maroon ground (Figma template, Sept 2026 — was neutral-darkest), white
     // type, and a white email box beside a white-outlined button. `text-white`
-    // here is what the column headings, links and credits row inherit, so the
-    // only per-element overrides below are the ones the cascade can't reach —
-    // the logo (a raster-ish SVG with baked-in #180B0C) and the divider.
+    // here is what the links and credits row inherit, so the only per-element
+    // override below is the one the cascade can't reach — the logo (a
+    // raster-ish SVG with baked-in #180B0C).
     <footer className="bg-brand-maroon px-[5%] py-12 text-white md:py-18 lg:py-20">
       <div className="container">
-        <div className="grid grid-cols-1 items-start gap-x-[8vw] gap-y-12 pb-12 md:gap-y-16 md:pb-18 lg:grid-cols-[1fr_0.5fr] lg:gap-y-4 lg:pb-20">
-          <div
-            className={cn(
-              "grid grid-cols-1 items-start gap-x-8 gap-y-10 sm:grid-cols-3 sm:gap-x-6 sm:gap-y-12 md:gap-x-8",
-              // One cell for the logo plus one per column, two for a wide one.
-              linkSlots >= 5 ? "lg:grid-cols-5" : "lg:grid-cols-4",
-            )}
-          >
-            <Link
-              to={logo.url && logo.url !== "#" ? logo.url : "/"}
-              className="sm:col-start-1 sm:col-end-4 sm:row-start-1 sm:row-end-2 lg:col-start-auto lg:col-end-auto lg:row-start-auto lg:row-end-auto"
-            >
+        <div className="grid grid-cols-1 items-start gap-x-[8vw] gap-y-10 lg:grid-cols-[1fr_0.5fr]">
+          <div className="flex flex-col items-start gap-6 md:gap-8">
+            <Link to={logo.url && logo.url !== "#" ? logo.url : "/"}>
               {/*
                 The wordmark's paths are a hard-coded #180B0C, which is all but
                 invisible on the dark ground. `brightness-0 invert` flattens it
@@ -111,40 +101,19 @@ export const Footer2 = (props: Footer2Props) => {
               */}
               <img src={logo.src} alt={logo.alt} className="brightness-0 invert" />
             </Link>
-            {columnLinks.map((column, index) => (
-              <div
-                key={index}
-                className={cn(
-                  "flex flex-col items-start justify-start",
-                  // A `wide` column takes two grid cells and splits its links
-                  // across both, under one heading. Without it the programme
-                  // list runs eleven items deep and sets the footer's height
-                  // on its own.
-                  column.wide && "sm:col-span-2 lg:col-span-2",
-                )}
-              >
-                <h2 className="mb-3 font-medium text-white md:mb-4">{column.title}</h2>
-                {/*
-                  Multi-column rather than a grid: it flows down the first
-                  column and into the second, which is the order a footer list
-                  reads in, and it doesn't couple the two columns' row heights
-                  — a grid left gaps wherever one side wrapped to two lines.
-                */}
-                <ul className={cn(column.wide && "sm:columns-2 sm:gap-x-8")}>
-                  {column.links.map((link, linkIndex) => (
-                    <li key={linkIndex} className="text-small break-inside-avoid">
-                      <Link
-                        to={link.url}
-                        className="flex min-h-11 items-center gap-3 py-2"
-                      >
-                        {link.title}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+            <nav aria-label="Footer">
+              <ul className="flex flex-wrap gap-x-6 md:gap-x-8">
+                {links.map((link) => (
+                  <li key={link.url} className="text-small">
+                    <Link to={link.url} className="flex min-h-11 items-center">
+                      {link.title}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
           </div>
+
           {/*
             The original Relume form was removed because its only submit
             handler was a console.log — it silently swallowed every address.
@@ -172,39 +141,35 @@ export const Footer2 = (props: Footer2Props) => {
                 Subscribe
               </Button>
             </form>
-            <p className="mt-3 text-tiny text-white/70">
-              Opens your email app so you can send the request. We'll only use your address to
-              send club news.
-            </p>
           </div>
         </div>
-        <div className="h-px w-full bg-white/20" />
-        <div className="flex flex-col-reverse items-start pt-6 pb-4 text-small md:justify-start md:pt-8 md:pb-0 lg:flex-row lg:items-center lg:justify-between">
-          <div className="flex flex-col items-start gap-4 md:flex-row md:gap-6 lg:items-center">
-            <p className="mt-4 md:mt-0">{footerText}</p>
-            <div className="grid grid-flow-row grid-cols-[max-content] justify-center gap-y-2 md:grid-flow-col md:justify-center md:gap-x-6 md:gap-y-0 lg:text-left">
-              {liveFooterLinks.map((link, index) => (
-                <p key={index} className="underline">
-                  <Link to={link.url} className="flex min-h-11 items-center">
-                    {link.title}
-                  </Link>
-                </p>
-              ))}
-            </div>
-          </div>
-          <div className="mb-8 flex items-center justify-center gap-3 lg:mb-0">
-            {liveSocialLinks.map((link, index) => (
-              <a
-                key={index}
-                href={link.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex size-11 items-center justify-center"
-              >
-                {link.icon}
-              </a>
-            ))}
-          </div>
+
+        {/* Pull the row out by the tap target's padding so the glyphs, not
+            their 44px hit areas, line up with the text edges. */}
+        <div className="-ml-2.5 mt-2 flex items-center gap-3 md:mt-4">
+          {liveSocialLinks.map((link, index) => (
+            <a
+              key={index}
+              href={link.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={link.label}
+              className="flex size-11 items-center justify-center"
+            >
+              {link.icon}
+            </a>
+          ))}
+        </div>
+
+        <div className="flex flex-col items-center gap-x-6 gap-y-2 pt-10 text-center text-small md:flex-row md:justify-center md:pt-12">
+          <p>{footerText}</p>
+          {liveFooterLinks.map((link, index) => (
+            <p key={index} className="underline">
+              <Link to={link.url} className="flex min-h-11 items-center">
+                {link.title}
+              </Link>
+            </p>
+          ))}
         </div>
       </div>
     </footer>
@@ -221,44 +186,17 @@ export const Footer2Defaults: Props = {
   newsletterDescription: "Join our newsletter to stay up to date on features and releases.",
   inputPlaceholder: "Enter your email",
   subscribeEmail: "",
-  columnLinks: [
-    {
-      title: "Column One",
-      links: [
-        { title: "Link One", url: "#" },
-        { title: "Link Two", url: "#" },
-        { title: "Link Three", url: "#" },
-        { title: "Link Four", url: "#" },
-        { title: "Link Five", url: "#" },
-      ],
-    },
-    {
-      title: "Column Two",
-      links: [
-        { title: "Link Six", url: "#" },
-        { title: "Link Seven", url: "#" },
-        { title: "Link Eight", url: "#" },
-        { title: "Link Nine", url: "#" },
-        { title: "Link Ten", url: "#" },
-      ],
-    },
-    {
-      title: "Column Three",
-      links: [
-        { title: "Link Eleven", url: "#" },
-        { title: "Link Twelve", url: "#" },
-        { title: "Link Thirteen", url: "#" },
-        { title: "Link Fourteen", url: "#" },
-        { title: "Link Fifteen", url: "#" },
-      ],
-    },
+  links: [
+    { title: "Link One", url: "#" },
+    { title: "Link Two", url: "#" },
+    { title: "Link Three", url: "#" },
   ],
   socialMediaLinks: [
-    { url: "#", icon: <FacebookLogo className="size-6 text-scheme-text" /> },
-    { url: "#", icon: <InstagramLogo className="size-6 text-scheme-text" /> },
-    { url: "#", icon: <XLogo className="size-6 p-0.5 text-scheme-text" /> },
-    { url: "#", icon: <LinkedinLogo className="size-6 text-scheme-text" /> },
-    { url: "#", icon: <YoutubeLogo className="size-6 text-scheme-text" /> },
+    { url: "#", label: "Facebook", icon: <FacebookLogo className="size-6 text-scheme-text" /> },
+    { url: "#", label: "Instagram", icon: <InstagramLogo className="size-6 text-scheme-text" /> },
+    { url: "#", label: "X", icon: <XLogo className="size-6 p-0.5 text-scheme-text" /> },
+    { url: "#", label: "LinkedIn", icon: <LinkedinLogo className="size-6 text-scheme-text" /> },
+    { url: "#", label: "YouTube", icon: <YoutubeLogo className="size-6 text-scheme-text" /> },
   ],
   footerText: "© 2026 LVFC. All rights reserved.",
   footerLinks: [

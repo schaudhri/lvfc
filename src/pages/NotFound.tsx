@@ -38,7 +38,7 @@ export const NotFound = () => {
       <Header62
         heading="Looking for something specific?"
         description="Tell us what you were after and we'll point you at it."
-        buttons={[{ ...cta.contact }, { ...cta.schedule, variant: "secondary" }]}
+        button={cta.contact}
       />
     </>
   );

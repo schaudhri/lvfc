@@ -2,6 +2,7 @@ import { Outlet, useLocation } from "react-router-dom";
 import { Navbar23 } from "@/components/sections/Navbar23";
 import { Footer2 } from "@/components/sections/Footer2";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
+import { MobileBookingBar } from "@/components/MobileBookingBar";
 import { navbarProps, footerProps } from "@/data/site";
 import { cn } from "@/lib/utils";
 
@@ -33,7 +34,9 @@ export const SiteLayout = () => {
   const hasHero = HERO_ROUTES.some((route) => route.test(pathname));
 
   return (
-    <div className="flex min-h-screen flex-col">
+    // Bottom padding on phones = the fixed booking bar's height, so the
+    // footer's last line is never trapped behind it.
+    <div className="flex min-h-screen flex-col pb-[calc(4.5rem+env(safe-area-inset-bottom))] lg:pb-0">
       <Navbar23 {...navbarProps} transparentAtTop={hasHero} />
       {/*
         The nav is fixed so it can overlay a hero's photo. Hero pages want
@@ -45,9 +48,10 @@ export const SiteLayout = () => {
         <Outlet />
       </main>
       {/* No Resources callout above the footer any more: Resources is in the
-          main nav and the footer's "Explore" column (Sept 2026). */}
+          main nav (Sept 2026). */}
       <Footer2 {...footerProps} />
       <WhatsAppButton />
+      <MobileBookingBar />
     </div>
   );
 };

@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { formatAges, programmeImage, type Programme } from "@/data/programmes";
 import { programmeCta } from "@/data/cta";
+import { academyFees, programmeFee } from "@/data/fees";
 import { cardMedia, cardPadded } from "@/lib/surface";
 import { cn } from "@/lib/utils";
 
@@ -45,6 +46,7 @@ export const PathwayProgrammeRow = ({ programme }: { programme: Programme }) => 
   const book = programmeCta(programme.bookingKey);
   const image = programmeImage(programme);
   const url = programmeUrl(programme);
+  const fee = programmeFee(programme);
   return (
     <li
       className={cn(
@@ -76,6 +78,15 @@ export const PathwayProgrammeRow = ({ programme }: { programme: Programme }) => 
           </Link>
         </h3>
         <p className="max-w-[36rem]">{programme.summary}</p>
+        {fee && (
+          <p className="mt-2 font-semibold">
+            {fee}
+            <span className="font-normal text-scheme-text/70">
+              {" "}
+              · {academyFees.sessionsPerWeek} sessions a week
+            </span>
+          </p>
+        )}
         <div className="mt-6 flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
           <Button {...book} size="sm">
             {book.title}
@@ -91,8 +102,9 @@ export const CompactProgrammeCard = ({ programme }: { programme: Programme }) =>
   const book = programmeCta(programme.bookingKey);
   const url = programmeUrl(programme);
   return (
+    // No age line on these (client request, Sept 2026) — the alternatives
+    // aren't chosen by age the way the pathway stages are.
     <li className={cn("group flex flex-col gap-1", cardPadded)}>
-      <AgeLabel ages={programme.agesLabel} />
       <h3 className="text-h5 font-medium">
         <Link to={url} className="hover:underline">
           {programme.name}

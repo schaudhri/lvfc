@@ -18,7 +18,7 @@
     "focus": "Ball mastery and 1v1 skills.",
     "max": 8,
     "min": 5,
-    "name": "Pre-Academy"
+    "name": "Pre Club"
   },
   {
     "ages": "9–12 years",
@@ -28,9 +28,9 @@
     "name": "Foundation"
   },
   {
-    "ages": "13+ years",
+    "ages": "13–15 years",
     "focus": "Positional awareness, tactical concepts and team shape, transition play and physical conditioning, pre-elite preparation and competitive matchplay.",
-    "max": 18,
+    "max": 15,
     "min": 13,
     "name": "Youth Development"
   }
