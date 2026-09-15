@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npm run content:pull && tsc -b && vite build",
+    "build": "tsc -b && vite build",
+    "build:cms": "npm run content:pull && tsc -b && vite build",
     "lint": "oxlint",
     "preview": "vite preview",
     "content:pull": "tsx --tsconfig tsconfig.app.json scripts/pull-content.ts",

@@ -112,7 +112,7 @@ export const Coaching = () => {
               url: "/contact",
               variant: "link",
               size: "link",
-              iconRight: <ChevronRight className="text-scheme-text" />,
+              iconRight: <ChevronRight className="size-5 text-brand-terracotta" />,
             },
           },
           {
@@ -124,7 +124,7 @@ export const Coaching = () => {
               url: "/resources",
               variant: "link",
               size: "link",
-              iconRight: <ChevronRight className="text-scheme-text" />,
+              iconRight: <ChevronRight className="size-5 text-brand-terracotta" />,
             },
           },
         ]}

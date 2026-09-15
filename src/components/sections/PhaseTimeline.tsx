@@ -91,9 +91,30 @@ export const PathwayStages = ({ phases }: { phases: Phase[] }) => (
  * The number sits over it at the badge's visual centre, which is above its
  * geometric centre because of the pointed foot.
  */
-export const PathwayBadge = ({ children }: { children: React.ReactNode }) => (
+export const PathwayBadge = ({
+  children,
+  tone = "gold",
+}: {
+  children: React.ReactNode;
+  /** `maroon` draws the same outline in the brand maroon (home "How to start"). */
+  tone?: "gold" | "maroon";
+}) => (
   <span className="relative flex h-[77px] w-[61px] shrink-0 justify-center">
-    <img src="/images/pathway-badge.svg" alt="" className="absolute inset-0 size-full" />
+    {tone === "gold" ? (
+      <img src="/images/pathway-badge.svg" alt="" className="absolute inset-0 size-full" />
+    ) : (
+      // The SVG as a mask, so one outline serves any colour.
+      <span
+        aria-hidden="true"
+        className="absolute inset-0 bg-brand-maroon"
+        style={{
+          maskImage: "url(/images/pathway-badge.svg)",
+          WebkitMaskImage: "url(/images/pathway-badge.svg)",
+          maskSize: "100% 100%",
+          WebkitMaskSize: "100% 100%",
+        }}
+      />
+    )}
     <span className="relative mt-[23px] font-heading text-large font-medium leading-[30px] text-white">
       {children}
     </span>

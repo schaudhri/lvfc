@@ -1,16 +1,11 @@
-import { Link } from "react-router-dom";
-import { ChevronRight } from "relume-icons";
 import { Button } from "@/components/ui/button";
-import { enquiryUrl, privateEvents, privateEventsPage } from "@/data/privateEvents";
+import { privateEventsPage } from "@/data/privateEvents";
 import { cn } from "@/lib/utils";
 
 /**
- * A slim banner pitching private sessions and birthday parties.
- *
- * Used to be a full wide card with a photo half the section — for something
- * that isn't the main reason a parent is on this page, that was too much
- * space. This is a single maroon strip: one line of copy and the two booking
- * buttons, each landing on the enquiry form with its option preselected.
+ * A slim maroon banner pitching private events: a Tiller title, one line of
+ * copy and a single "Get in touch" to the enquiry form (client request,
+ * 15 Sept 2026 — it used to carry two booking buttons).
  *
  * No vertical padding of its own: on the landing page it sits between the
  * "Coach with LVFC" block (bottom padding) and the gallery (top padding).
@@ -18,29 +13,26 @@ import { cn } from "@/lib/utils";
 export const PrivateEventsCallout = ({ className }: { className?: string }) => (
   <section className={cn("px-[5%]", className)}>
     <div className="container">
-      <div className="flex flex-col items-start gap-4 rounded-card bg-brand-maroon px-6 py-5 text-white sm:flex-row sm:items-center sm:justify-between md:px-8">
-        <div>
-          <p className="mb-1 text-small font-semibold uppercase tracking-wider text-white/70">
-            Private events
+      <div className="flex flex-col items-start gap-5 rounded-card bg-brand-maroon px-6 py-6 text-white sm:flex-row sm:items-center sm:justify-between md:px-8">
+        <div className="max-w-[42rem]">
+          {/* White set explicitly: headings default to maroon, which vanished
+              on this maroon card. */}
+          <h2 className="mb-2 font-heading text-h4 font-medium text-white">
+            Book us for private events
+          </h2>
+          <p className="text-white/80">
+            Get in touch to host a birthday with our coaches, or a private football session —
+            for yourself, your family or your company.
           </p>
-          <Link to={privateEventsPage.url} className="inline-flex items-center gap-1.5 font-bold">
-            <span className="text-h6">{privateEventsPage.heading}</span>
-            <ChevronRight className="size-5 shrink-0 text-white" />
-          </Link>
         </div>
-        <div className="flex flex-wrap items-center gap-3">
-          {privateEvents.map((event) => (
-            <Button
-              key={event.type}
-              title={event.cta}
-              url={enquiryUrl(event.type)}
-              variant="alternate"
-              size="sm"
-            >
-              {event.cta}
-            </Button>
-          ))}
-        </div>
+        <Button
+          title="Get in touch"
+          url={`${privateEventsPage.url}#enquire`}
+          variant="champagne"
+          className="shrink-0"
+        >
+          Get in touch
+        </Button>
       </div>
     </div>
   </section>

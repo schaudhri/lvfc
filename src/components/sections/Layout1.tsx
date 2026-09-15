@@ -56,7 +56,7 @@ export const Layout1Defaults: Props = {
       title: "Button",
       variant: "link",
       size: "link",
-      iconRight: <ChevronRight className="text-scheme-text" />,
+      iconRight: <ChevronRight className="size-5 text-brand-terracotta" />,
     },
   ],
   image: {

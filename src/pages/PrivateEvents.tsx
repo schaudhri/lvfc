@@ -8,7 +8,7 @@ import { useDocumentMeta } from "@/hooks/use-document-meta";
 
 export const PrivateEvents = () => {
   useDocumentMeta(
-    "Private sessions & birthdays",
+    "Private sessions",
     "Book an LVFC birthday party or a private coaching session in Lahore. Send an enquiry and we'll come back with dates and prices.",
   );
   return (

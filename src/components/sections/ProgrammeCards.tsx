@@ -376,21 +376,19 @@ export const ProgrammeCards = (props: ProgrammeCardsProps) => {
           </Link>
 
           <div className="flex flex-1 flex-col p-6 md:p-7">
-            {/* Title, then the age as a pill beneath it (Figma "lvfc-website"
-                home, node 19:180). The design's orange card is not carried
-                over — the client kept the white card. */}
+            {/* The age as a plain terracotta line above the title — the Figma
+                card structure (node 19:818) — rather than a pill. No price on
+                the card (client request, 15 Sept 2026): fees are on
+                /programmes. */}
+            <p className="mb-1 text-small font-semibold capitalize text-brand-terracotta">
+              <span className="sr-only">Ages </span>
+              {formatAges(programme.ages)}
+            </p>
             <h3 className="text-h5 font-medium text-brand-terracotta">
               <Link to={programme.url} className="hover:underline">
                 {programme.title}
               </Link>
             </h3>
-            <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-2">
-              <p className="w-fit rounded-full bg-brand-terracotta/10 px-3 py-1 text-small capitalize text-brand-terracotta">
-                <span className="sr-only">Ages </span>
-                {formatAges(programme.ages)}
-              </p>
-              {programme.price && <p className="text-small font-semibold">{programme.price}</p>}
-            </div>
 
             <p className="mt-4 mb-8 flex-1">{programme.description}</p>
 

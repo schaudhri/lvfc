@@ -19,7 +19,10 @@ export const MobileBookingBar = () => {
     <div
       role="region"
       aria-label="Book or message LVFC"
-      className="fixed inset-x-0 bottom-0 z-[1000] border-t border-brand-maroon/10 bg-brand-sandstone px-4 pt-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] shadow-[0_-6px_20px_rgba(19,1,1,0.08)] lg:hidden"
+      // Maroon, the same as the nav bar, so the two fixed bars frame the page
+      // as one (client request, 15 Sept 2026). Focus rings are white to show
+      // on the dark ground.
+      className="fixed inset-x-0 bottom-0 z-[1000] border-t border-white/10 bg-brand-maroon px-4 pt-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] shadow-[0_-6px_20px_rgba(19,1,1,0.18)] lg:hidden"
     >
       <div className="mx-auto flex max-w-lg gap-3">
         {chat && (
@@ -27,13 +30,17 @@ export const MobileBookingBar = () => {
             href={chat}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex h-12 flex-1 items-center justify-center gap-2 rounded-full bg-[#25D366] font-semibold text-white focus-visible:ring-2 focus-visible:ring-neutral-darkest focus-visible:ring-offset-2 focus-visible:outline-none"
+            className="flex h-12 flex-1 items-center justify-center gap-2 rounded-full bg-[#25D366] font-semibold text-white focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-brand-maroon focus-visible:outline-none"
           >
             <WhatsAppGlyph className="size-5 shrink-0" />
             WhatsApp
           </a>
         )}
-        <Button {...cta.bookASpot} variant="champagne" className="h-12 flex-1">
+        <Button
+          {...cta.bookASpot}
+          variant="champagne"
+          className="h-12 flex-1 text-white focus-visible:ring-white focus-visible:ring-offset-brand-maroon"
+        >
           {cta.bookASpot.title}
         </Button>
       </div>

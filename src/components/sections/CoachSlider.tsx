@@ -42,9 +42,8 @@ export const CoachSlider = (props: CoachSliderProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   /** Set by the effect: lets the pause button stop and restart the loop. */
   const setLoopPausedRef = useRef<((paused: boolean) => void) | null>(null);
-  const [paused, setPaused] = useState(false);
   /** Only offer a pause button when the loop actually runs. */
-  const [isAnimated, setIsAnimated] = useState(false);
+  const [, setIsAnimated] = useState(false);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -288,23 +287,10 @@ export const CoachSlider = (props: CoachSliderProps) => {
         </div>
       </div>
 
-      {/* The loop moves on its own, so anyone can stop it (WCAG 2.2.2). */}
-      {isAnimated && (
-        <div className="container -mt-6 flex justify-center pb-2">
-          <button
-            type="button"
-            aria-pressed={paused}
-            onClick={() => {
-              const next = !paused;
-              setPaused(next);
-              setLoopPausedRef.current?.(next);
-            }}
-            className="rounded-full border border-scheme-border px-5 py-2 text-small font-semibold transition-colors hover:bg-neutral-lightest"
-          >
-            {paused ? "Play" : "Pause"}
-          </button>
-        </div>
-      )}
+      {/* No visible Pause control (client request, 15 Sept 2026). The loop
+          still pauses while hovered and doesn't run at all under
+          prefers-reduced-motion; `setLoopPausedRef` remains the hook for a
+          control if one comes back. */}
     </section>
   );
 };

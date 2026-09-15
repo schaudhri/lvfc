@@ -24,7 +24,7 @@ export type PrivateEvent = {
 
 export const privateEventsPage = {
   url: "/private-events",
-  heading: "Private sessions & birthday parties",
+  heading: "Private sessions",
   summary:
     "Celebrate a birthday on the pitch, or book one-to-one time with an LVFC coach. Tell us what you have in mind and we'll come back with dates and prices.",
   image: phase8Photos[1],

@@ -38,7 +38,7 @@ export const About = () => {
               url: "/coaching",
               variant: "link",
               size: "link",
-              iconRight: <ChevronRight className="text-scheme-text" />,
+              iconRight: <ChevronRight className="size-5 text-brand-terracotta" />,
             },
           },
           {
@@ -50,7 +50,7 @@ export const About = () => {
               url: "/programmes",
               variant: "link",
               size: "link",
-              iconRight: <ChevronRight className="text-scheme-text" />,
+              iconRight: <ChevronRight className="size-5 text-brand-terracotta" />,
             },
           },
           {
@@ -62,7 +62,7 @@ export const About = () => {
               url: "/programmes",
               variant: "link",
               size: "link",
-              iconRight: <ChevronRight className="text-scheme-text" />,
+              iconRight: <ChevronRight className="size-5 text-brand-terracotta" />,
             },
           },
         ]}
@@ -130,10 +130,10 @@ export const About = () => {
                     href={partner.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-auto inline-flex min-h-6 items-center gap-1.5 text-small font-semibold underline-offset-4 hover:underline"
+                    className="mt-auto self-start inline-flex min-h-11 items-center gap-1.5 font-semibold text-brand-terracotta underline-offset-4 hover:underline lg:min-h-0"
                   >
                     Visit website
-                    <ChevronRight className="size-4" />
+                    <ChevronRight className="size-5 text-brand-terracotta transition-transform duration-200 group-hover:translate-x-0.5" />
                   </a>
                 )}
               </li>
@@ -165,7 +165,7 @@ export const About = () => {
             url: "/programmes",
             variant: "link",
             size: "link",
-            iconRight: <ChevronRight className="text-scheme-text" />,
+            iconRight: <ChevronRight className="size-5 text-brand-terracotta" />,
           },
         ]}
         image={{ src: clubPhotos[3].src, alt: "Young players training at an LVFC branch" }}

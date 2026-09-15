@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { useScroll, useTransform, motion, type MotionStyle } from "motion/react";
 import { Button, type ButtonProps } from "@/components/ui/button";
 import { ChevronRight } from "relume-icons";
+import { PathwayBadge } from "@/components/sections/PhaseTimeline";
 
 type FeaturesProps = {
   heading: string;
@@ -37,29 +38,23 @@ export const Layout121 = (props: Layout121Props) => {
         <div className="container">
           <div className="mb-12 flex flex-col gap-6 md:mb-16 md:flex-row md:items-end md:justify-between md:gap-12">
             <h2 className="text-h3 font-medium">{heading}</h2>
-            <div className="flex shrink-0 flex-wrap items-center gap-x-6 gap-y-4">
-              {buttons.map((button, index) => (
-                <Button key={index} {...button}>
-                  {button.title}
-                </Button>
-              ))}
-            </div>
+            {buttons.length > 0 && (
+              <div className="flex shrink-0 flex-wrap items-center gap-x-6 gap-y-4">
+                {buttons.map((button, index) => (
+                  <Button key={index} {...button}>
+                    {button.title}
+                  </Button>
+                ))}
+              </div>
+            )}
           </div>
           <ol className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
             {features.map((feature, index) => (
               <li key={index} className="relative flex flex-col">
-                {/* Joins each step to the next across the row on desktop. */}
-                {index < features.length - 1 && (
-                  <span
-                    aria-hidden="true"
-                    className="absolute top-6 left-16 -right-6 hidden h-px bg-scheme-border/25 lg:block"
-                  />
-                )}
-                <span
-                  aria-hidden="true"
-                  className="relative z-10 mb-6 flex size-12 items-center justify-center rounded-full bg-brand-maroon text-large font-semibold text-white"
-                >
-                  {index + 1}
+                {/* The club badge from the pathway, in maroon (client request,
+                    15 Sept 2026), numbered — these are real steps in order. */}
+                <span aria-hidden="true" className="relative z-10 mb-6 self-start">
+                  <PathwayBadge tone="maroon">{index + 1}</PathwayBadge>
                 </span>
                 <h3 className="mb-3 text-h6 font-medium">{feature.heading}</h3>
                 <p className="text-scheme-text/70">{feature.description}</p>
@@ -91,13 +86,9 @@ export const Layout121 = (props: Layout121Props) => {
               <div key={index} className="grid grid-cols-[max-content_1fr] gap-x-6 lg:gap-x-10">
                 <div className="relative flex flex-col items-center justify-start py-10">
                   <div className="relative z-10 -mt-4 bg-scheme-background px-2 py-4 md:px-4">
-                    {/* A step number, not the club badge: these are real
-                        steps in order, so the marker says which one. */}
-                    <span
-                      aria-hidden="true"
-                      className="flex size-12 items-center justify-center rounded-full bg-brand-maroon text-large font-semibold text-white"
-                    >
-                      {index + 1}
+                    {/* The club badge in maroon, numbered — real steps in order. */}
+                    <span aria-hidden="true">
+                      <PathwayBadge tone="maroon">{index + 1}</PathwayBadge>
                     </span>
                   </div>
                 </div>
@@ -141,7 +132,7 @@ export const Layout121Defaults: Props = {
       title: "Button",
       variant: "link",
       size: "link",
-      iconRight: <ChevronRight className="text-scheme-text" />,
+      iconRight: <ChevronRight className="size-5 text-brand-terracotta" />,
     },
   ],
   features: [

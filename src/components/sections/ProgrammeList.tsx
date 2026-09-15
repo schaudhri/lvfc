@@ -4,7 +4,6 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { formatAges, programmeImage, type Programme } from "@/data/programmes";
 import { programmeCta } from "@/data/cta";
-import { academyFees, programmeFee } from "@/data/fees";
 import { cardMedia, cardPadded } from "@/lib/surface";
 import { cn } from "@/lib/utils";
 
@@ -46,7 +45,6 @@ export const PathwayProgrammeRow = ({ programme }: { programme: Programme }) => 
   const book = programmeCta(programme.bookingKey);
   const image = programmeImage(programme);
   const url = programmeUrl(programme);
-  const fee = programmeFee(programme);
   return (
     <li
       className={cn(
@@ -78,15 +76,6 @@ export const PathwayProgrammeRow = ({ programme }: { programme: Programme }) => 
           </Link>
         </h3>
         <p className="max-w-[42rem]">{programme.summary}</p>
-        {fee && (
-          <p className="mt-2 font-semibold">
-            {fee}
-            <span className="font-normal text-scheme-text/70">
-              {" "}
-              · {academyFees.sessionsPerWeek} sessions a week
-            </span>
-          </p>
-        )}
         <div className="mt-6 flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
           <Button {...book} size="sm">
             {book.title}
@@ -199,9 +188,9 @@ export const ProgrammeListRow = ({
         <Button {...book} size="sm">
           {book.title}
         </Button>
-        <Link to={url} className="inline-flex min-h-6 items-center gap-1.5 text-small font-semibold">
+        <Link to={url} className="inline-flex min-h-11 items-center gap-1.5 font-semibold text-brand-terracotta underline-offset-4 hover:underline lg:min-h-0">
           Learn more
-          <ChevronRight className="size-4 text-scheme-text" />
+          <ChevronRight className="size-5 text-brand-terracotta transition-transform duration-200 group-hover:translate-x-0.5" />
         </Link>
       </div>
     </li>

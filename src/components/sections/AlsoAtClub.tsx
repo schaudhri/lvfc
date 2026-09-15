@@ -75,10 +75,10 @@ export const AlsoAtClub = ({ programmes }: { programmes: Programme[] }) => {
           </Button>
           <Link
             to={`/programmes/${selected.slug}`}
-            className="inline-flex min-h-6 items-center gap-1.5 text-small font-semibold underline-offset-4 hover:underline"
+            className="inline-flex min-h-11 items-center gap-1.5 font-semibold text-brand-terracotta underline-offset-4 hover:underline lg:min-h-0"
           >
             Learn more
-            <ChevronRight className="size-4 text-scheme-text" />
+            <ChevronRight className="size-5 text-brand-terracotta transition-transform duration-200 group-hover:translate-x-0.5" />
           </Link>
         </div>
       </div>

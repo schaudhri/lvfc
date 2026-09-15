@@ -60,7 +60,7 @@ export const Layout242Defaults: Props = {
         title: "Button",
         variant: "link",
         size: "link",
-        iconRight: <ChevronRight className="text-scheme-text" />,
+        iconRight: <ChevronRight className="size-5 text-brand-terracotta" />,
       },
     },
     {
@@ -71,7 +71,7 @@ export const Layout242Defaults: Props = {
         title: "Button",
         variant: "link",
         size: "link",
-        iconRight: <ChevronRight className="text-scheme-text" />,
+        iconRight: <ChevronRight className="size-5 text-brand-terracotta" />,
       },
     },
     {
@@ -82,7 +82,7 @@ export const Layout242Defaults: Props = {
         title: "Button",
         variant: "link",
         size: "link",
-        iconRight: <ChevronRight className="text-scheme-text" />,
+        iconRight: <ChevronRight className="size-5 text-brand-terracotta" />,
       },
     },
   ],

@@ -20,12 +20,13 @@ const buttonVariants = cva(
         // alternative. Button text is Futura, like all non-title text — only
         // titles are set in Tiller.
         default: "border border-brand-terracotta bg-brand-terracotta text-white",
-        champagne: "border border-brand-champagne bg-brand-champagne text-brand-midnight",
+        // White text on gold site-wide (client direction, 15 Sept 2026).
+        champagne: "border border-brand-champagne bg-brand-champagne text-white",
         alternate: "border border-brand-sandstone bg-brand-sandstone text-neutral-darkest",
         secondary: "border border-scheme-border text-scheme-text",
         "secondary-alt": "border border-white text-white",
-        link: "gap-2 text-scheme-text",
-        "link-alt": "gap-2 text-white",
+        link: "gap-1.5 font-semibold text-brand-terracotta underline-offset-4 hover:underline",
+        "link-alt": "gap-1.5 font-semibold text-white underline-offset-4 hover:underline",
         ghost: "hover:bg-neutral-darkest hover:text-white",
         none: "",
       },

@@ -62,10 +62,10 @@ export const Blog = () => {
                   )}
                   <Link
                     to={`/blog/${post.slug}`}
-                    className="mt-auto flex min-h-6 items-center gap-2 pt-5 text-small font-semibold text-brand-terracotta"
+                    className="mt-auto self-start pt-5 inline-flex min-h-11 items-center gap-1.5 font-semibold text-brand-terracotta underline-offset-4 hover:underline lg:min-h-0"
                   >
                     {post.body?.length ? "Read article" : "Learn more"}
-                    <ChevronRight className="size-4 text-brand-terracotta" />
+                    <ChevronRight className="size-5 text-brand-terracotta transition-transform duration-200 group-hover:translate-x-0.5" />
                   </Link>
                 </div>
               </li>

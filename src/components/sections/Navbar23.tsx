@@ -5,7 +5,7 @@ import { Link, useLocation } from "react-router-dom";
 import { motion } from "motion/react";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { Button, type ButtonProps } from "@/components/ui/button";
-import { KeyboardArrowDown } from "relume-icons";
+import { ChevronRight, KeyboardArrowDown } from "relume-icons";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
@@ -21,7 +21,10 @@ type MegaMenuItem = {
   image: ImageProps;
   name: string;
   meta: string;
-  detail: string;
+  /** Supporting copy, e.g. a programme's summary. Plain text. */
+  detail?: string;
+  /** The card's action, drawn in the site-wide "Learn more >" link style. */
+  cta?: string;
   badge?: string;
 };
 
@@ -298,57 +301,85 @@ const SubMenu = ({
         onClick={(event) => {
           if ((event.target as HTMLElement).closest("a")) onNavigate();
         }}
-        className="top-full bottom-auto left-0 w-full max-w-full min-w-full overflow-hidden bg-scheme-background text-scheme-text lg:absolute lg:w-[100vw] lg:px-[5%] lg:[--height-close:auto]"
+        // A rounded card on phones, sitting in the menu sheet; the desktop
+        // panel stays a flush full-width band under the bar.
+        className="top-full bottom-auto left-0 w-full max-w-full min-w-full overflow-hidden rounded-2xl bg-scheme-background text-scheme-text lg:absolute lg:w-[100vw] lg:rounded-none lg:px-[5%] lg:[--height-close:auto]"
       >
-        <div className="flex w-full flex-col items-start justify-start gap-6 pt-6 sm:gap-12 lg:flex-row lg:items-center lg:py-8">
-          <div className="lg:max-w-[14rem] lg:shrink-0">
-            <h4 className="mb-3 text-lg font-medium md:mb-4 md:text-xl md:leading-[1.3]">
+        {/* One pattern at every width (client request, 15 Sept 2026): the
+            title and intro above, then a row of white photo cards ending on a
+            terracotta "see all" card — the route to the full index, in place
+            of a separate button. Phones swipe the row; desktop lays it out as
+            a grid, one column per card. */}
+        <div className="flex w-full flex-col items-start justify-start gap-5 px-5 py-6 lg:gap-8 lg:px-0 lg:py-8">
+          <div className="lg:max-w-lg">
+            <h4 className="mb-2 text-lg font-medium md:text-xl md:leading-[1.3]">
               {megaMenu.title}
             </h4>
             <p className="text-sm">{megaMenu.description}</p>
-            <div className="mt-6 flex flex-wrap items-center gap-4 md:mt-8">
-              <Button {...megaMenu.button}>{megaMenu.button.title}</Button>
-            </div>
           </div>
-          <div className="relative flex w-full flex-wrap items-start justify-center lg:items-stretch">
-            {/* Columns follow the item count so a 3-item menu doesn't leave a
-                dead fourth column. Menus are a preview, not the full list —
-                the "see all" button beside them is the route to that. */}
-            <div
+          <div className="relative w-full">
+            <ul
+              aria-label={megaMenu.title}
               className={cn(
-                "grid w-full auto-rows-max grid-cols-1 gap-6 sm:grid-cols-2",
-                megaMenu.items.length <= 3 ? "lg:grid-cols-3" : "lg:grid-cols-4",
+                "-mx-5 flex snap-x snap-mandatory scroll-px-5 gap-3 overflow-x-auto px-5 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
+                "lg:mx-0 lg:grid lg:snap-none lg:gap-6 lg:overflow-visible lg:px-0 lg:pb-0",
+                // Items plus the "see all" card: 3 + 1 for Programmes and New
+                // to LVFC, 4 + 1 for Locations.
+                megaMenu.items.length >= 4 ? "lg:grid-cols-5" : "lg:grid-cols-4",
               )}
             >
               {megaMenu.items.map((item, index) => (
-                <div key={index} className="flex flex-col items-stretch">
-                  <Link to={item.url} className="group relative">
-                    <div className="mb-3 hidden md:mb-4 lg:block">
-                      <div className="h-full w-full overflow-hidden rounded-2xl md:h-auto">
-                        <img
-                          src={item.image.src}
-                          alt={item.image.alt}
-                          // A fixed height at lg+ (rather than a fluid aspect
-                          // ratio) is what makes the two mega menus match —
-                          // the 3-item Programmes grid and 4-item Locations
-                          // grid have different column widths, so the same
-                          // aspect ratio otherwise produces different image
-                          // (and so panel) heights. 228px matches Programmes,
-                          // the taller of the two.
-                          className="aspect-[4/3] size-full rounded-2xl object-cover transition-transform duration-300 group-hover:scale-[1.03] lg:h-[228px]"
-                        />
+                <li
+                  key={index}
+                  className="flex w-[72%] shrink-0 snap-start flex-col items-stretch sm:w-[45%] lg:w-auto"
+                >
+                  <Link
+                    to={item.url}
+                    className="group relative flex h-full flex-col overflow-hidden rounded-2xl bg-white"
+                  >
+                    <div className="overflow-hidden">
+                      <img
+                        src={item.image.src}
+                        alt={item.image.alt}
+                        // A fixed height on desktop (rather than a fluid aspect
+                        // ratio) keeps the three menus the same height — the
+                        // 4-column and 5-column grids have different column
+                        // widths, so one aspect ratio would give different
+                        // photo (and so panel) heights.
+                        className="aspect-[4/3] size-full object-cover transition-transform duration-300 group-hover:scale-[1.03] lg:aspect-auto lg:h-[200px]"
+                      />
+                    </div>
+                    <div className="flex flex-1 flex-col p-4 lg:p-5">
+                      <div className="mb-1">
+                        <p className="md:text-md font-semibold">{item.name}</p>
+                        <p className="text-sm">{item.meta}</p>
                       </div>
+                      {item.detail && <p className="text-sm">{item.detail}</p>}
+                      {/* The whole card is the link; this is its label, in
+                          the same style as every "Learn more >" on the site. */}
+                      {item.cta && (
+                        <span className="mt-auto inline-flex items-center gap-1.5 pt-3 font-semibold text-brand-terracotta underline-offset-4 group-hover:underline">
+                          {item.cta}
+                          <ChevronRight className="size-5 text-brand-terracotta transition-transform duration-200 group-hover:translate-x-0.5" />
+                        </span>
+                      )}
                     </div>
-                    <div className="mb-1">
-                      <p className="md:text-md font-semibold">{item.name}</p>
-                      <p className="text-sm">{item.meta}</p>
-                    </div>
-                    <p className="text-sm font-semibold">{item.detail}</p>
-                    {item.badge && <Badge className="absolute top-4 left-4">{item.badge}</Badge>}
+                    {item.badge && <Badge className="absolute top-3 left-3">{item.badge}</Badge>}
                   </Link>
-                </div>
+                </li>
               ))}
-            </div>
+              {megaMenu.button.url && (
+                <li className="flex w-[72%] shrink-0 snap-start sm:w-[45%] lg:w-auto">
+                  <Link
+                    to={megaMenu.button.url}
+                    className="flex w-full flex-col justify-between gap-6 rounded-2xl bg-brand-terracotta p-5 text-white transition-colors hover:bg-brand-terracotta/90"
+                  >
+                    <span className="text-lg font-medium leading-snug">{megaMenu.button.title}</span>
+                    <span aria-hidden="true" className="self-end text-2xl">→</span>
+                  </Link>
+                </li>
+              )}
+            </ul>
           </div>
         </div>
       </motion.div>

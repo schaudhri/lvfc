@@ -115,27 +115,9 @@ export const ProgrammeSpecific = () => {
         </section>
       )}
 
-      {/* Not every programme has a details list — Seniors deliberately has
-          none rather than carrying invented inclusions. */}
-      {programme.details && programme.details.length > 0 && (
-        <section className="px-[5%] py-16 md:py-24 lg:py-28">
-          <div className="container">
-            <h2 className="mb-12 max-w-lg text-h3 font-medium md:mb-18 lg:mb-20">
-              {programme.detailsHeading}
-            </h2>
-            <ul className="grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 md:gap-y-16 lg:grid-cols-3">
-              {programme.details.map((detail) => (
-                <li
-                  key={detail}
-                  className="border-t border-scheme-border pt-4 text-large font-semibold"
-                >
-                  {detail}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
-      )}
+      {/* No "At a glance" list (client request, 15 Sept 2026): only four
+          programmes had one, so every programme page now follows the same
+          structure. `details` stays in the data if it's wanted back. */}
 
       {/* No full pathway here any more (client request, 14 Sept 2026): the
           Pathway card beside the intro shows this programme's step. */}
@@ -184,10 +166,10 @@ export const ProgrammeSpecific = () => {
                   <p className="mb-5 text-small text-scheme-text/70">{branch.address}</p>
                   <Link
                     to={`/locations/${branch.slug}`}
-                    className="mt-auto flex min-h-6 items-center gap-2 text-small font-semibold"
+                    className="mt-auto self-start inline-flex min-h-11 items-center gap-1.5 font-semibold text-brand-terracotta underline-offset-4 hover:underline lg:min-h-0"
                   >
                     Learn more
-                    <ChevronRight className="size-4 text-scheme-text" />
+                    <ChevronRight className="size-5 text-brand-terracotta transition-transform duration-200 group-hover:translate-x-0.5" />
                   </Link>
                 </li>
               ))}

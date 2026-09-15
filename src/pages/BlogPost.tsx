@@ -117,10 +117,10 @@ export const BlogPost = () => {
                     <p className="mb-3 text-small text-scheme-text/70">{item.brief}</p>
                     <Link
                       to={`/blog/${item.slug}`}
-                      className="mt-auto flex min-h-6 items-center gap-2 pt-2 text-small font-semibold text-brand-terracotta"
+                      className="mt-auto self-start pt-2 inline-flex min-h-11 items-center gap-1.5 font-semibold text-brand-terracotta underline-offset-4 hover:underline lg:min-h-0"
                     >
                       {item.body?.length ? "Read article" : "Learn more"}
-                      <ChevronRight className="size-4 text-brand-terracotta" />
+                      <ChevronRight className="size-5 text-brand-terracotta transition-transform duration-200 group-hover:translate-x-0.5" />
                     </Link>
                   </div>
                 </li>

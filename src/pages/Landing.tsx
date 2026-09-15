@@ -4,16 +4,13 @@ import { Header54 } from "@/components/sections/Header54";
 import { ProgrammeCards } from "@/components/sections/ProgrammeCards";
 import { Layout121 } from "@/components/sections/Layout121";
 import { ClubIntro } from "@/components/sections/ClubIntro";
-import { StatsPathway } from "@/components/sections/StatsPathway";
 import { ScheduleGrid } from "@/components/sections/ScheduleGrid";
 import { CoachSlider } from "@/components/sections/CoachSlider";
 import { Layout442 } from "@/components/sections/Layout442";
 import { LifeAtLvfc } from "@/components/sections/LifeAtLvfc";
 import { PrivateEventsCallout } from "@/components/sections/PrivateEventsCallout";
-import { AlsoAtClub } from "@/components/sections/AlsoAtClub";
 import { Faqs } from "@/components/sections/Faqs";
 import { otherProgrammes, pathwayProgrammes, programmeImage } from "@/data/programmes";
-import { programmeFee } from "@/data/fees";
 import { landingFaqs } from "@/data/faqs";
 import { leadership } from "@/data/people";
 import { heroImages } from "@/data/club";
@@ -42,30 +39,30 @@ export const Landing = () => {
         video={{ src: "/videos/hero.mp4", poster: "/videos/hero-poster.jpg" }}
       />
 
-      {/* No eyebrow, no stats — "A club families stay with" further down the
-          page already carries these same four numbers. */}
+      {/* No eyebrow, no stats (client request, Sept 2026). */}
       <ClubIntro eyebrow={undefined} stats={[]} buttons={[{ ...cta.about }]} />
 
       {/*
-        The five pathway stages only — one card per age group, which is what a
-        parent is choosing between. The alternatives are a row of pills above
-        the slider (Figma home, Sept 2026) rather than six more cards in it.
+        Every programme as a card, in one grid (client request, 15 Sept 2026):
+        the five pathway stages first, in age order, then the alternatives —
+        which used to be a row of pills above a slider of the five.
       */}
       <ProgrammeCards
         heading="Programmes"
         description={undefined}
-        layout="slider"
-        programmes={pathwayProgrammes.map(({ programme }) => ({
+        layout="grid"
+        programmes={[
+          ...pathwayProgrammes.map(({ programme }) => programme),
+          ...otherProgrammes,
+        ].map((programme) => ({
           url: `/programmes/${programme.slug}`,
           image: programmeImage(programme),
           title: programme.name,
           ages: programme.agesLabel,
-          price: programmeFee(programme),
           description: programme.summary,
           tag: programme.flagship ? "Flagship" : undefined,
           primaryButton: programmeCta(programme.bookingKey),
         }))}
-        header={<AlsoAtClub programmes={otherProgrammes} />}
       />
 
       {/* Moved from About and laid out in a row rather than a scroll-drawn
@@ -74,16 +71,9 @@ export const Landing = () => {
       <Layout121
         orientation="horizontal"
         heading="How to start your journey"
-        buttons={[
-          { ...cta.bookASpot, variant: "secondary" },
-          {
-            title: "Contact us",
-            url: "/contact",
-            variant: "link",
-            size: "link",
-            iconRight: <ChevronRight className="text-scheme-text" />,
-          },
-        ]}
+        // No buttons here (client request, 15 Sept 2026) — Book A Spot is in
+        // the nav and the fixed bar, and each step says what to do.
+        buttons={[]}
         features={[
           {
             heading: "Choose a programme",
@@ -125,16 +115,9 @@ export const Landing = () => {
       {/* The pathway now lives on the programme pages (client direction,
           14 Sept 2026) — here it only repeated the five cards above. */}
 
-      <StatsPathway
-        heading="A club families stay with"
-        stats={[
-          { value: "4", label: "Branches across Lahore" },
-          { value: "2–18", label: "Age range, first touch to U18" },
-          { value: "5", label: "Age groups in the pathway" },
-          { value: "3", label: "Training sessions a week" },
-        ]}
-        buttons={[{ ...cta.programmes, variant: "alternate" }]}
-      />
+      {/* "A club families stay with" (the four-number stats band) is off the
+          home page for now (client request, 15 Sept 2026). `StatsPathway`
+          still exists to bring it back. */}
 
       {/*
         Locations (the map/address cards) is off the home page for now — see
@@ -143,7 +126,8 @@ export const Landing = () => {
       <ScheduleGrid
         heading="Training schedule"
         description="The full week across all four Lahore branches. Filter by branch to find the evenings that fit around yours."
-        buttons={[{ ...cta.branches, variant: "secondary" }, { ...cta.bookASpot, variant: "champagne" }]}
+        // On a light ground: maroon primary, outline secondary.
+        buttons={[{ ...cta.branches, variant: "secondary" }, { ...cta.bookASpot }]}
       />
 
       {/*
